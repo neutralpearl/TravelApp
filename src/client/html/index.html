@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <title>Voyage</title>
+    <!-- hard-coded stylesheets-->
+    <!-- <link rel="stylesheet" type="text/css" href="../styles/app.css">
+    <link rel="stylesheet" type="text/css" href="../styles/resets.css"> -->
+</head>
+<body>
+  <div id="app">
+    <header class ="holder">
+      <h1 class="logo">Voyage</h1>
+      <nav></nav>
+      
+    </header>
+    <main>
+        <div id="search">
+        <div class="title">
+            <h2>Add a new entry</h2>
+        </div>
+        <div class="holder zip">
+            <label for="zip">Current location</label>
+            <input type="text" id="zip" placeholder="Enter your zip code here (5 digits)" required minlength="5" maxlength="5">
+        </div>
+        <div class="holder feel">
+            <label for="feelings">How are you feeling today?</label>
+            <textarea class="myInput" id="feelings" placeholder="Enter your feelings here" required></textarea>
+        </div>
+        <div class="holder submitButton">
+            <div id="emptyValueMessage"></div>
+            <div id="invalidZipMessage"></div>
+            <button id="generate" type = "submit">Submit</button>
+        </div>
+    </div>
+    <div id="display-entry">
+        <div class="title">
+          <h2>Latest journal entry</h2>
+        </div>
+        <div id="entryHolder">
+          <div id="date"></div> 
+          <div id="temp"></div>
+          <div id="content"></div>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <p>Built for <a href="https://www.udacity.com/course/front-end-web-developer-nanodegree--nd0011" target="_blank" rel="noopener">Udacity Front End Web Developer Nanodegree Program</a></p>
+    </footer>
+  </div>
+  </body>
+  <!-- hard-coded js import-->
+  <!-- <script src="../index.js" type="text/javascript"></script> -->
+</html>
