@@ -11,6 +11,7 @@ module.exports = {
     output: {
         libraryTarget: "var",
         library: "Client",
+        assetModuleFilename: 'assets/[name][ext]'
       },
     module: {
         rules: [
@@ -22,8 +23,17 @@ module.exports = {
             {
                 test: /\.s[ac]ss$/i,
                 use: ["style-loader", "css-loader", "sass-loader"]
+            },
+            {
+                test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                type: 'asset/resource',
+
             }
         ]
+    },
+    devServer: {
+        port: 4000,
+        compress: true
     },
     plugins: [
         new HtmlWebPackPlugin({
@@ -31,12 +41,13 @@ module.exports = {
             filename: "./index.html",
         }),
         new CleanWebpackPlugin({
-            // Simulate the removal of files
-            dry: true,
+            // true = Simulate the removal of files
+            dry: false,
             // Write Logs to Console
             verbose: true,
-            // Automatically remove all unused webpack assets on rebuild
-            cleanStaleWebpackAssets: true,
+            // true = Automatically remove all unused webpack assets on rebuild
+            cleanStaleWebpackAssets: false,
+            // Do not allow removal of current webpack assets
             protectWebpackAssets: false
         }),
     ]

@@ -1,8 +1,28 @@
+// import js files
+import { chooseTheme } from './js/themePicker';
+
 // import Sass stylesheets
 import './styles/app.scss'; 
 import './styles/resets.scss';
 
-// import js files
+// import image files
+import mountains from './media/mountains.jpg'; 
+import palms from './media/palms.jpg';
+import skyline from './media/skyline.png'; 
+import temples from './media/temples.jpg';
+
+
+// add event listeners to theme options
+const themeMenu = document.getElementsByClassName('theme-menu')[0];
+const themeMenuOptions = themeMenu.children;
+for (let option of themeMenuOptions) {
+    option.addEventListener('click', chooseTheme);
+}
+
+// :::: API instructions :::: //
+//https://www.geonames.org/export/JSON-webservices.html
+//https://www.weatherbit.io/api
+//https://pixabay.com/api/docs/
 
 /* Global Variables */
 
@@ -128,6 +148,12 @@ import './styles/resets.scss';
 // const generateButton = document.getElementById('generate');
 // generateButton.addEventListener('click', displayEntry);
 
-
+export {
+    chooseTheme,
+    mountains,
+    palms,
+    skyline, 
+    temples
+}
 
 

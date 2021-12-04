@@ -1,7 +1,6 @@
 const path = require('path');
-
-// Setup empty JS object to act as endpoint for all routes
-// projectData = {};
+const dotenv = require('dotenv');
+dotenv.config();
 
 // Require Express to run server and routes
 const express = require('express');
@@ -9,7 +8,6 @@ const express = require('express');
 const app = express();
 
 /* Middleware*/
-//Here we are configuring express to use body-parser as middle-ware.
 const bodyParser = require("body-parser");
 // note that bodyParser is now included in express: https://stackoverflow.com/questions/24330014/bodyparser-is-deprecated-express-4 — app would not work using bodyParser as specified in the starter code
 app.use(express.urlencoded({ extended: false }));
@@ -29,7 +27,7 @@ app.get('/', (req, res) => {
 })
 
 // Setup Server
-const port = 8000;
+const port = 3000;
 const server = app.listen(port, ()=>{console.log(`Server running on localhost: ${port}`)});
 
 // // callback functions for GET and POST routes

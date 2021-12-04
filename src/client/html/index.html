@@ -2,50 +2,67 @@
 <html lang="en">
     <head>
     <meta charset="UTF-8">
-    <title>Voyage</title>
+    <title>viagem</title>
     <!-- hard-coded stylesheets-->
     <!-- <link rel="stylesheet" type="text/css" href="../styles/app.css">
     <link rel="stylesheet" type="text/css" href="../styles/resets.css"> -->
 </head>
 <body>
-  <div id="app">
-    <header class ="holder">
-      <h1 class="logo">Voyage</h1>
-      <nav></nav>
-      
-    </header>
+    <div id="app">
+        <header class ="holder">
+        <h1 class="logo">viagem</h1>
+        <nav>
+            <div class="dropdown">
+                <button class="dropbtn">
+                    choose theme
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="theme-menu">
+                    <li id="mountain">mountain sunset</li>
+                    <li id="city">city skyline</li>
+                    <li id="oasis">tropical oasis</li>
+                    <li id="ruins">ancient ruins</li>
+                </div>
+            </div> 
+        </nav>
+        </header>
     <main>
         <div id="search">
-        <div class="title">
-            <h2>Add a new entry</h2>
+            <div class="title">
+                <h2>Add an upcoming trip</h2>
+            </div>
+            <div>
+                <form>
+                    <label id="label-destination" for="destination">Where are you going?</label>
+                    <input type="text" id="destination" required>
+                    <label id="label-when">When are you travelling?</label>
+                    <label id="label-start-date"for="start-date">Start</label>
+                    <input type="date" id="start-date" required>
+                    <label id="label-end-date"for="end-date">End</label>
+                    <input type="date" id="end-date" required>
+                </form>
+            </div>
+            <!-- 
+            
+            <div class="holder feel">
+                <label for="feelings">How are you feeling today?</label>
+                <textarea class="myInput" id="feelings" placeholder="Enter your feelings here" required></textarea>
+            </div>
+            <div class="holder submitButton">
+                <div id="emptyValueMessage"></div>
+                <div id="invalidZipMessage"></div>
+                <button id="generate" type = "submit">Submit</button>
+            </div> 
+            --> 
         </div>
-        <div class="holder zip">
-            <label for="zip">Current location</label>
-            <input type="text" id="zip" placeholder="Enter your zip code here (5 digits)" required minlength="5" maxlength="5">
+        <div id="display-entry">
         </div>
-        <div class="holder feel">
-            <label for="feelings">How are you feeling today?</label>
-            <textarea class="myInput" id="feelings" placeholder="Enter your feelings here" required></textarea>
+        <div class="import-images">
+            <div class="alt1"></div><div class="alt2"></div><div class="alt3"></div>
         </div>
-        <div class="holder submitButton">
-            <div id="emptyValueMessage"></div>
-            <div id="invalidZipMessage"></div>
-            <button id="generate" type = "submit">Submit</button>
-        </div>
-    </div>
-    <div id="display-entry">
-        <div class="title">
-          <h2>Latest journal entry</h2>
-        </div>
-        <div id="entryHolder">
-          <div id="date"></div> 
-          <div id="temp"></div>
-          <div id="content"></div>
-        </div>
-      </div>
     </main>
     <footer>
-      <p>Built for <a href="https://www.udacity.com/course/front-end-web-developer-nanodegree--nd0011" target="_blank" rel="noopener">Udacity Front End Web Developer Nanodegree Program</a></p>
+        <p>Built for <a href="https://www.udacity.com/course/front-end-web-developer-nanodegree--nd0011" target="_blank" rel="noopener">Udacity Front End Web Developer Nanodegree Program</a></p>
     </footer>
   </div>
   </body>
