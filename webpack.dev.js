@@ -9,10 +9,13 @@ module.exports = {
     devtool: 'source-map',
     stats: 'verbose',
     output: {
+        clean: true, //clean the dist folder before output 
+        path: path.resolve(__dirname, 'dist'), 
+        filename: 'main.js', 
         libraryTarget: "var",
         library: "Client",
         assetModuleFilename: 'assets/[name][ext]'
-      },
+    },
     module: {
         rules: [
             {

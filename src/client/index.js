@@ -6,7 +6,6 @@ import { handleSubmit } from './js/formSubmission';
 import { validateCity } from './js/cityValidation';
 import { validateDateRange } from './js/dateValidation';
 
-
 // import Sass stylesheets
 import './styles/app.scss'; 
 import './styles/resets.scss';
@@ -31,19 +30,23 @@ const getClass = name => document.getElementsByClassName(name);
 
 // ============= DOM SET-UP ON LOAD =================
 
-// default the start date value to today
-let today = new Date().toISOString().substr(0, 10);
-document.querySelector("#start-date").value = today;
+// default the start date value to today [IIFE]
+(function () {
+    let today = new Date().toISOString().substr(0, 10);
+    getId('start-date').value = today;
+})();
 
-// add event listeners to theme options
-const themeMenu = document.getElementsByClassName('theme-menu')[0];
-const themeMenuOptions = themeMenu.children;
-for (let option of themeMenuOptions) {
-    option.addEventListener('click', chooseTheme);
-}
+// add event listeners to theme options [IIFE]
+(function () {
+    const themeMenuOptions = getClass('theme-menu')[0].children;
+    for (let option of themeMenuOptions) {
+        option.addEventListener('click', chooseTheme);
+    }
+})();
 
 // add event listener to form submission
-getId('submit-form').addEventListener("submit", handleSubmit);
+getId('submit-form').addEventListener('submit', handleSubmit);
+
 
 
 // ============= EXPORTS =================

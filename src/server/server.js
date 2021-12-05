@@ -47,5 +47,3 @@ const server = app.listen(port, ()=>{console.log(`Server running on localhost: $
 // // GET route (allows app.js to access projectData)
 // app.get('/retrieve-entry', retrieveEntry);
 
-
-
