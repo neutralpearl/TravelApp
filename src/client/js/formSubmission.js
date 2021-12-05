@@ -1,7 +1,3 @@
-// imports not working
-import  { getClass } from '../index.js';
-import { getId } from '../index.js';
-
 const handleSubmit = event => {
     event.preventDefault();
     const city = document.getElementById('destination').value;

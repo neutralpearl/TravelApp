@@ -8,6 +8,7 @@ module.exports = {
     mode: 'development',
     devtool: 'source-map',
     stats: 'verbose',
+    target: 'web',
     output: {
         clean: true, //clean the dist folder before output 
         path: path.resolve(__dirname, 'dist'), 

@@ -9,6 +9,7 @@ $dark-grey: #222;
 $marigold: #f89514;
 $marigold-light: #fcbf4e;
 $rounded-corners: 14px;
+$small-screen: 600px;
 
 /* ------- Mixins ------ */
 
@@ -143,6 +144,12 @@ nav {
     }
 }
 
+@media screen and (max-width: $small-screen) {
+    nav .dropdown .dropbtn {
+        padding: 0 15px;
+    }
+}
+
 main {
     font-family: $font-base;
     min-height: 100px;
@@ -156,6 +163,7 @@ main {
 #add-trip {
     margin: 10% 5%;
     width: auto;
+    max-width: 750px;
     background-color:#fff;
     z-index: 1;
     display: flex;
@@ -170,6 +178,12 @@ main {
     margin-bottom: 1.5em;
 }
 
+@media screen and (max-width: $small-screen) {
+    .title{
+        margin-bottom: .5em;
+    }
+}
+
 form {
     background-color:rgb(196, 196, 196);
     border-radius: $rounded-corners;
@@ -179,7 +193,7 @@ form {
     align-items: center;
     grid-gap: 5px;
     grid-template-columns: repeat(12,1fr);
-    grid-template-rows: repeat(3,1fr),30px,50px;
+    grid-template-rows: repeat(3,1fr) 0px 50px;
 
     #city-tip {
         grid-column: 1 / span 5;
@@ -219,6 +233,7 @@ label{
         grid-column: 7 / 8;
         grid-row: 3 / 4;
         text-align: end;
+        
     }
 }
 
@@ -239,10 +254,12 @@ input{
     &#start-date{
         grid-column: 8 / -1;
         grid-row: 2 / 3;
+        width: auto !important;
     }
     &#end-date{
         grid-column: 8 / -1;
         grid-row: 3 / 4;
+        width: auto !important;
     }
 
     // submit button
@@ -266,6 +283,53 @@ input{
             color: $marigold-light;
             border: 1px solid $marigold-light;
         }
+    }
+}
+
+@media screen and (max-width: $small-screen){
+    form {
+        grid-template-columns: repeat(6,1fr);
+        grid-template-rows: repeat(3,1fr) 0px repeat(3,1fr) 0px 50px;
+    }
+
+    label#label-destination {
+        grid-column: 1 / span 6;
+        grid-row: 1 / 2;
+    }
+    #city-tip {
+        grid-column: 1 / span 6;
+        grid-row: 2 / 3;
+    }
+    input#destination{
+        grid-column: 1 / span 6;
+        grid-row: 3 / 4;
+    }
+    label#label-when {
+        grid-column: 1 / span 6;
+        grid-row: 5 / 6;
+    }
+    label#label-start-date {
+        grid-column: 1 / 2;
+        grid-row: 6 / 7;
+        text-align: end;
+    }
+    input#start-date{
+        grid-column: 2 / span 5;
+        grid-row: 6 / 7;
+    }
+    label#label-end-date {
+        grid-column: 1 / 2;
+        grid-row: 7 / 8;
+        text-align: end;
+    }
+    input#end-date{
+        grid-column: 2 / span 5;
+        grid-row: 7 / 8;
+    }
+
+    input#submit-form{
+        grid-column: 1 / span 6;
+        grid-row: 9 / 10;
     }
 }
 
@@ -323,36 +387,7 @@ footer p {
     color: rgb(172, 172, 172)
 }
 
-/* adjustments for responsiveness */
-@media screen and (max-width: 743px) {
-    main {
-        flex-direction: column;
-    }
 
-    // #add-new-entry {
-    //     width: 100%;
-    //     max-width: 100%;
-    // }
-}
-
-
-
-
-
-
-// /* Reset style for HTML element on active to have no border*/
-// input:focus,
-// select:focus,
-// textarea:focus,
-// button:focus {
-//     outline: none;
-// }
-// /* Style for Placeholder Text*/
-// ::placeholder, /* Firefox, Chrome, Opera */ 
-// :-ms-input-placeholder, /* Internet Explorer 10-11 */
-// ::-ms-input-placeholder /* Microsoft Edge */ { 
-//     color: #6e6e6e !important; 
-// } 
 
 /* ------- Typography -------- */
 
@@ -371,7 +406,15 @@ h1{
 h2{
     font-family: $font-logo !important;
     font-size: 3em;
-    // font-weight: 700;
+}
+
+@media screen and (max-width: $small-screen){
+    h1 {
+        font-size: 3em;
+    }
+    h2 {
+        font-size: 1.5em;
+    }
 }
 
 p {

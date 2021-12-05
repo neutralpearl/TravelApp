@@ -44,10 +44,10 @@ const getClass = name => document.getElementsByClassName(name);
     }
 })();
 
+
 // add event listener to form submission
-getId('submit-form').addEventListener('submit', handleSubmit);
-
-
+// getId('submit-form').addEventListener('submit', handleSubmit);
+getId('submit-form').onsubmit = handleSubmit;
 
 // ============= EXPORTS =================
 
