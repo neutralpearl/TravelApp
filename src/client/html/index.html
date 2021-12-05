@@ -34,12 +34,14 @@
             <div>
                 <form>
                     <label class="label-main" id="label-destination" for="destination">Where are you going?</label>
-                    <input type="text" id="destination" required>
+                    <div id="city-tip">Please enter the CITY nearest to your destination</div>
+					<input type="text" id="destination" required maxlength="25">
                     <label class="label-main" id="label-when">When are you travelling?</label>
                     <label class="label-detail" id="label-start-date" for="start-date">Depart</label>
                     <input type="date" id="start-date" required>
                     <label class="label-detail" id="label-end-date" for="end-date">Return</label>
                     <input type="date" id="end-date" required>
+					<input type="submit" id="submit-form">
                 </form>
             </div>
             <!-- 

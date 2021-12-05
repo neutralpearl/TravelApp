@@ -151,15 +151,26 @@ form {
     align-items: center;
     grid-gap: 5px;
     grid-template-columns: repeat(12,1fr);
-    grid-template-rows: repeat(5,1fr);
+    grid-template-rows: repeat(3,1fr),20px,40px;
+
+    #city-tip {
+        grid-column: 1 / span 5;
+        grid-row: 2 / 3;
+        font-size: smaller;
+    }
 }
 
 label{
     display:block;
     font-weight: 600;
+    padding: 5px 0 !important;
 
     &.label-main {
         @include form-special;
+    }
+
+    &.label-detail {
+        font-size: smaller;
     }
 
     &#label-destination {
@@ -194,7 +205,7 @@ input{
 
     &#destination{
         grid-column: 1 / span 5;
-        grid-row: 2 / 3;
+        grid-row: 3 / 4;
     }
     &#start-date{
         grid-column: 8 / -1;
@@ -203,6 +214,17 @@ input{
     &#end-date{
         grid-column: 8 / -1;
         grid-row: 3 / 4;
+    }
+
+    // submit button
+    &#submit-form{
+        grid-column: 1 / -1;
+        grid-row: 5 / 6;
+        background-color: $dark-grey;
+        color: #fff;
+        border: none;
+        font-size: inherit;
+        padding: 5px;
     }
 }
 

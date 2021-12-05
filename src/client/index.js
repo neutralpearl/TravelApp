@@ -1,5 +1,11 @@
+// ============= IMPORTS =================
+
 // import js files
 import { chooseTheme } from './js/themePicker';
+import { handleSubmit } from './js/formSubmission';
+import { validateCity } from './js/cityValidation';
+import { validateDateRange } from './js/dateValidation';
+
 
 // import Sass stylesheets
 import './styles/app.scss'; 
@@ -12,6 +18,23 @@ import skyline from './media/skyline.png';
 import temples from './media/temples.jpg';
 
 
+// ============= GLOBAL VARIABLES =================
+
+
+
+// ============= GLOBAL FUNCTIONS =================
+
+// shorthand methods
+const getId = id => document.getElementById(id);
+const getClass = name => document.getElementsByClassName(name);
+
+
+// ============= DOM SET-UP ON LOAD =================
+
+// default the start date value to today
+let today = new Date().toISOString().substr(0, 10);
+document.querySelector("#start-date").value = today;
+
 // add event listeners to theme options
 const themeMenu = document.getElementsByClassName('theme-menu')[0];
 const themeMenuOptions = themeMenu.children;
@@ -19,17 +42,34 @@ for (let option of themeMenuOptions) {
     option.addEventListener('click', chooseTheme);
 }
 
+// add event listener to form submission
+getId('submit-form').addEventListener("submit", handleSubmit);
+
+
+// ============= EXPORTS =================
+
+export {
+    chooseTheme,
+    mountains,
+    palms,
+    skyline, 
+    temples,
+    getClass,
+    getId,
+    validateCity,
+    validateDateRange
+}
+
+
 // :::: API instructions :::: //
 //https://www.geonames.org/export/JSON-webservices.html
 //https://www.weatherbit.io/api
 //https://pixabay.com/api/docs/
 
+
+
+
 /* Global Variables */
-
-// OpenWeatherMap API variables
-// const apiKey = '602ea0a5e4d6cb931e1c010ba1b09c2c&units=imperial';
-// const baseURL = 'https://api.openweathermap.org/data/2.5/weather?';
-
 
 // Create a new date instance dynamically with JS
 // let d = new Date();
@@ -148,12 +188,5 @@ for (let option of themeMenuOptions) {
 // const generateButton = document.getElementById('generate');
 // generateButton.addEventListener('click', displayEntry);
 
-export {
-    chooseTheme,
-    mountains,
-    palms,
-    skyline, 
-    temples
-}
 
 
