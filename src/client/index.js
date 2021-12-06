@@ -5,6 +5,9 @@ import { chooseTheme } from './js/themePicker';
 import { handleSubmit } from './js/formSubmission';
 import { validateCity } from './js/cityValidation';
 import { validateDateRange } from './js/dateValidation';
+import { fetchCoordinates } from './js/coordinateFetch';
+import { fetchWeather } from './js/weatherFetch';
+import { fetchPhoto } from './js/photoFetch';
 
 // import Sass stylesheets
 import './styles/app.scss'; 
@@ -23,9 +26,11 @@ import temples from './media/temples.jpg';
 
 // ============= GLOBAL FUNCTIONS =================
 
-// shorthand methods
-const getId = id => document.getElementById(id);
-const getClass = name => document.getElementsByClassName(name);
+// shorthand methods set as properties of window
+const byId = id => document.getElementById(id);
+window.byId = byId;
+const byClass = name => document.getElementsByClassName(name);
+window.byClass = byClass;
 
 
 // ============= DOM SET-UP ON LOAD =================
@@ -33,21 +38,19 @@ const getClass = name => document.getElementsByClassName(name);
 // default the start date value to today [IIFE]
 (function () {
     let today = new Date().toISOString().substr(0, 10);
-    getId('start-date').value = today;
+    byId('start-date').value = today;
 })();
 
 // add event listeners to theme options [IIFE]
 (function () {
-    const themeMenuOptions = getClass('theme-menu')[0].children;
+    const themeMenuOptions = byClass('theme-menu')[0].children;
     for (let option of themeMenuOptions) {
         option.addEventListener('click', chooseTheme);
     }
 })();
 
-
 // add event listener to form submission
-// getId('submit-form').addEventListener('submit', handleSubmit);
-getId('submit-form').onsubmit = handleSubmit;
+byId('submit-form').addEventListener('submit', handleSubmit);
 
 // ============= EXPORTS =================
 
@@ -57,10 +60,13 @@ export {
     palms,
     skyline, 
     temples,
-    getClass,
-    getId,
+    byClass,
+    byId,
     validateCity,
-    validateDateRange
+    validateDateRange,
+    fetchCoordinates,
+    fetchWeather,
+    fetchPhoto
 }
 
 
