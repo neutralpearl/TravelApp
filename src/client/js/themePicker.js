@@ -1,7 +1,3 @@
-// imports not working
-import  { getClass } from '../index.js';
-import { getId } from '../index.js';
-
 const chooseTheme = event => {
 
     const appBody = document.querySelector('body');

@@ -1,4 +1,4 @@
-const photoFetch = async (city) => {
+const fetchPhoto = async (city) => {
 
     // https://pixabay.com/api/docs/
     // "If you intend to use the images, please download them to your server first."
@@ -19,4 +19,4 @@ const photoFetch = async (city) => {
 
 }
 
-export { photoFetch }
+export { fetchPhoto }

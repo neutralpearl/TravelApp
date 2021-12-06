@@ -54,5 +54,8 @@ module.exports = {
             // Do not allow removal of current webpack assets
             protectWebpackAssets: false
         }),
+        new webpack.DefinePlugin({
+            'process.env': JSON.stringify('process.env')
+        })
     ]
 }

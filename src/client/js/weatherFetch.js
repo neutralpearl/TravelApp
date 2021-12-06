@@ -1,4 +1,4 @@
-const weatherFetch = async (latitude,longitude) => {
+const fetchWeather = async (latitude,longitude) => {
     const endpoint = 'http://api.weatherbit.io/v2.0/current';
     const key = process.env.WEATHERBIT_KEY;
 
@@ -18,4 +18,4 @@ const weatherFetch = async (latitude,longitude) => {
     })
 }
 
-export { weatherFetch }
+export { fetchWeather }

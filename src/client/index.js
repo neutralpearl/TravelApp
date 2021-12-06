@@ -50,7 +50,7 @@ window.byClass = byClass;
 })();
 
 // add event listener to form submission
-byId('submit-form').addEventListener('submit', handleSubmit);
+// byId('submit-form').addEventListener('submit', handleSubmit);
 
 // ============= EXPORTS =================
 
@@ -62,6 +62,7 @@ export {
     temples,
     byClass,
     byId,
+    handleSubmit,
     validateCity,
     validateDateRange,
     fetchCoordinates,
