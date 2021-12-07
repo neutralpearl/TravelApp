@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // save API keys as environmental variables
-const GEONAMES_USERNAME = process.env.GEONAMES_USERNAME;
+const GEONAMES_KEY = process.env.GEONAMES_KEY;
 const WEATHERBIT_KEY = process.env.WEATHERBIT_KEY;
 const PIXABAY_KEY = process.env.PIXABAY_KEY;
 
@@ -49,6 +49,7 @@ app.post('/store-trip-data/', async (req, res) => {
     // initialize tripData object, into which API data will be added
     const tripData = {city: req.body.city};
 
+    // GET from geonames
     try {
         await fetch(`${serverURL}/get-geonames/${tripData.city}`)
         .then(coordinates => {
@@ -58,22 +59,26 @@ app.post('/store-trip-data/', async (req, res) => {
             // console.log(data); // prints coordinates!!!
             tripData.latitude = data.latitude;
             tripData.longitude = data.longitude;
-            return tripData;
+            if (!(typeof tripData.latitude === 'undefined')){
+                return tripData;
+            } else {
+                throw new Error('Coordinates not received');
+            }
         })
-        console.log(tripData); // prints accumulated data
+        console.log(tripData); // prints accumulated data to terminal
+
+        res.send(JSON.stringify(tripData)); // later move to after all tripData has been added to object
+
     } catch(error){
         console.log(error);
+        res.send(JSON.stringify({msg: 'city not found'}));
     }
     
     // GET from weathebit
     
     // GET from pixabay
 
-    // store specific data points from API_RESPONSES in another object to update UI
-    // tripData.coordinates = data_GEONAMES.coordinates;
-    // tripData.weather=API_RESPONSES.weather;
-
-    res.send(JSON.stringify(tripData));
+    
 })
 
 // :city becomes req.params: {"city": <city>}
@@ -81,8 +86,7 @@ app.get('/get-geonames/:city', async (req,res) => {
     
     const city = req.params.city;
     const endpoint = 'http://api.geonames.org/searchJSON'
-    const username = process.env.GEONAMES_KEY;
-    // const username = 'neutralpearl';
+    const username = GEONAMES_KEY;
     const url = `${endpoint}?formatted=true&maxRows=5&q=${city}&username=${username}`;
 
     const responseOptions = {
@@ -98,68 +102,36 @@ app.get('/get-geonames/:city', async (req,res) => {
     //initialize empty object
     const coordinates = {};
 
-    try{
-        // POST to Geonames
-        await fetch(url,responseOptions)
-        .then(response => {
-            return response.json();
-        })
-        .then(json => {
-            coordinates.latitude = json.geonames[0].lat;
-            coordinates.longitude = json.geonames[0].lng;
-            // console.log(`coordinates = ${JSON.stringify(coordinates)}`); 
-            return coordinates; 
-        })
-    } catch(error) {
-        console.log(error);
+    try {
+        // POST to Geonames & retrieve coordinates from response
+        try {  
+            await fetch(url,responseOptions)
+            .then(response => {
+                return response.json();
+            })
+            .then(json => {
+                coordinates.latitude = json.geonames[0].lat;
+                coordinates.longitude = json.geonames[0].lng;
+                // console.log(`coordinates = ${JSON.stringify(coordinates)}`); 
+                return coordinates;
+            })
+        } catch(error) {
+            throw new Error('Couldn\'t retrieve city coordinates!');
+        }
+
+        // send coordinates to GET route
+        res.status(200).send(JSON.stringify(coordinates));
+
+    } catch(error){
+
+        // send error message to GET route
+        res.status(200).send(error);
     }
-
-    //
-
-    res.status(200).send(JSON.stringify(coordinates));
 });
 
-// SET THIS UP AS A CALLBACK FUNCTION FOR A POST ROUTE
-const fetchCoordinates = async (city) => {
 
-    const endpoint = 'http://api.geonames.org/searchJSON'
-    // const username = process.env.GEONAMES_KEY;
-    const username = 'neutralpearl';
-    const url = `${endpoint}?formatted=true&maxRows=5&q=${city}&username=${username}`;
 
-    const responseOptions = {
-        method: 'POST',
-        mode: 'cors',
-        credentials: 'same-origin',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({url: `${url}`})
-    }
-
-    try{
-        // POST to Geonames
-        await fetch(url,responseOptions)
-        .then(response => {
-            return response.json();
-        })
-        .then(data => {
-            const latitude = data.geonames[0].lat;
-            const longitude = data.geonames[0].lng;
-            const coordinates = {
-                latitude: `${latitude}`,
-                longitude: `${longitude}`
-            }
-            console.log(`coordinates = ${JSON.stringify(coordinates)}`); // works!
-            return coordinates; // not sending object
-            // return JSON.stringify(coordinates); 
-        })
-    } catch(error) {
-        console.log(error);
-    }
-}
-
-// SET THIS UP AS A CALLBACK FUNCTION FOR A POST ROUTE
+// EMBED WITHIN GET ROUTE
 const fetchWeather = async (latitude,longitude) => {
     const endpoint = 'http://api.weatherbit.io/v2.0/current';
     const key = process.env.WEATHERBIT_KEY;
@@ -180,7 +152,7 @@ const fetchWeather = async (latitude,longitude) => {
     })
 }
 
-// SET THIS UP AS A CALLBACK FUNCTION FOR A POST ROUTE
+// EMBED WITHIN GET ROUTE
 const fetchPhoto = async (city) => {
 
     // https://pixabay.com/api/docs/
@@ -201,25 +173,3 @@ const fetchPhoto = async (city) => {
     // });
 
 }
-
-
-
-
-
-// // callback functions for GET and POST routes
-// const addEntry = (req, res) => {
-//     projectData = req.body;
-//     res.status(200).send(projectData);
-//     console.log(projectData);
-// }; 
-
-// const retrieveEntry = (req, res) => {
-//     res.status(200).send(JSON.stringify(projectData));
-// };
-
-// // POST route (allows app.js to submit new entry to projectData)
-// app.post('/add-entry', addEntry);
-
-// // GET route (allows app.js to access projectData)
-// app.get('/retrieve-entry', retrieveEntry);
-

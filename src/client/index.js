@@ -3,13 +3,9 @@
 // import js files
 import { chooseTheme } from './js/themePicker';
 import { handleSubmit } from './js/formSubmission';
-import { validateCity } from './js/cityValidation';
 import { validateDateRange } from './js/dateValidation';
 import { postTripData } from './js/postToServer';
-import { getTripData } from './js/getFromServer';
-import { fetchCoordinates } from './js/coordinateFetch';
-import { fetchWeather } from './js/weatherFetch';
-import { fetchPhoto } from './js/photoFetch';
+import { handleInvalidCity } from './js/inputErrorHandler';
 
 // import Sass stylesheets
 import './styles/app.scss'; 
@@ -65,13 +61,9 @@ export {
     byClass,
     byId,
     handleSubmit,
-    validateCity,
     validateDateRange,
     postTripData,
-    getTripData,
-    fetchCoordinates,
-    fetchWeather,
-    fetchPhoto
+    handleInvalidCity
 }
 
 
