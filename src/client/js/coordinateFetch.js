@@ -7,18 +7,19 @@ const fetchCoordinates = async (city) => {
 
     const responseOptions = {
         method: 'POST',
-        mode: 'cors',
+        mode: 'no-cors',
         credentials: 'same-origin',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({url: `https://cors-anywhere.herokuapp.com/${url}`})
+        body: JSON.stringify({url: `${url}`})
     }
+    // proxy: https://cors-anywhere.herokuapp.com/
 
     try{
         await fetch(url,responseOptions)
         .then( response => {
-            response.json();
+            return response.json();
         })
         .then( data => {
             console.log(data);
