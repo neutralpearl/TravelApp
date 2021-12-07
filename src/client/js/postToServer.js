@@ -1,6 +1,6 @@
 import { handleInvalidCity  } from "./inputErrorHandler";
 
-const postTripData = async (city) => {
+const postTripData = async (city,departDate,returnDate) => {
     console.log('posting city to server & calling API data . . . ');
 
     const responseOptions = {
@@ -10,7 +10,11 @@ const postTripData = async (city) => {
         headers: {
             'Content-Type': 'application/json'
         }, 
-        body: JSON.stringify({city: `${city}`})
+        body: JSON.stringify({
+            city: `${city}`,
+            departDate: `${departDate}`,
+            returnDate: `${returnDate}`
+        })
     }
 
     // fetch to server.js POST route

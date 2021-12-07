@@ -17,7 +17,7 @@ const handleSubmit = async event => {
     }
 
     //if city & dates are validated
-    const tripData = await postTripData(city)
+    const tripData = await postTripData(city,departDate,returnDate)
     .then(data => {
         console.log(data); // debugging — prints undefined
         return data
