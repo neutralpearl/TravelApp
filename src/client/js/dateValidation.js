@@ -1,8 +1,9 @@
 const validateDateRange = (departDate,returnDate) => {
     console.log('validating dates . . . ');
     
-    
     const dates = [departDate,returnDate];
+
+    // convert date strings into objects
     const convertedDates = dates.map( date => {
         let year = date.slice(0,4);
         let month = date.slice(5,7);
@@ -10,22 +11,17 @@ const validateDateRange = (departDate,returnDate) => {
         if (day[0] === '0') {
             day = day.substring(1,2);
         }
-        date = `${month}/${day}/${year}`;
-        return date;
+        //convert day, month year to numbers and populate into date object
+        let convertedDate = new Date(Number(year),Number(month - 1),Number(day));
+        return convertedDate;
     });
-    const today = new Date().toLocaleDateString('en-us');
-
-    console.log('departure: ' + convertedDates[0] + ', return: ' + convertedDates[1] + ', today: ' + today); // debugging
 
     try {
-        // NOT WORKING!
-        if (convertedDates[0] > today && convertedDates[1] > convertedDates[0]) {
-            return convertedDates;
-        } else if (convertedDates[0] < today) {
-            throw new Error('Departure date cannot be earlier than today');
-        } else if (convertedDates[1] <= convertedDates[0]) {
+        if (convertedDates[1] > convertedDates[0]) {
+            return convertedDates; // array of two dates, evaluates to truthy
+        } else {
             throw new Error('Return date must be at least one day after departure date');
-        }
+        } 
     } catch(error) {
         console.log(error);
         return false;
