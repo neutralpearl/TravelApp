@@ -1,7 +1,7 @@
 import { handleInvalidCity  } from "./inputErrorHandler";
 
 const postTripData = async (city,departDate,returnDate) => {
-    console.log('posting city to server & calling API data . . . ');
+    console.log('fetching trip data . . . ');
 
     const responseOptions = {
         method: 'POST',

@@ -13,7 +13,7 @@ const handleSubmit = async event => {
     // validate date range
     const datesValidated = validateDateRange(departDate,returnDate);
     if (!datesValidated) {
-        throw new Error('Return date must be at least one day later than departure date')
+        console.log('Error: Return date must be at least one day later than departure date')
     }
 
     //if city & dates are validated
