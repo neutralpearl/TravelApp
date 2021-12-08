@@ -11,8 +11,7 @@ UI
 
 JS
 - dateValidation
-- - do not permit dates before today
-- - validate that end date is after start date
+- - fix if/else formula
 - - show error message in UI
 
 - inputErrorHandler
@@ -23,4 +22,9 @@ JS
 - - import it into formSubmission.js & index. js
 
 - handleSubmit
+- - successfully pass object from postToServer
 - - pass data into updateUI function
+
+- server.js
+- - pixabay API get
+- - set up GET route from client to server for stored data

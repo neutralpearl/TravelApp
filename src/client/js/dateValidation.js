@@ -15,10 +15,12 @@ const validateDateRange = (departDate,returnDate) => {
     });
     const today = new Date().toLocaleDateString('en-us');
 
-    // console.log('departure: ' + convertedDates[0] + ', return: ' + convertedDates[1] + ', today: ' + today);
+    console.log('departure: ' + convertedDates[0] + ', return: ' + convertedDates[1] + ', today: ' + today); // debugging
+
     try {
+        // NOT WORKING!
         if (convertedDates[0] > today && convertedDates[1] > convertedDates[0]) {
-            return true;
+            return convertedDates;
         } else if (convertedDates[0] < today) {
             throw new Error('Departure date cannot be earlier than today');
         } else if (convertedDates[1] <= convertedDates[0]) {
