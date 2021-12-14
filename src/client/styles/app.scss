@@ -174,7 +174,7 @@ main {
     border-radius: $rounded-corners;
 
     .form-panel {
-        background-color:rgb(196, 196, 196);
+        background-color:rgb(215, 180, 191);
         border-radius: $rounded-corners;
         padding: 15px 20px !important;
         transition-duration: 400ms;
@@ -367,21 +367,64 @@ input{
         text-align: right;
     }
 
+    #no-trips {
+        text-align: center;
+    }
+
     .trips-panel {
         @extend .form-panel;
     }
 
     #trips-grid {
         display: flex;
-        flex-direction: column;
+        flex-direction: column-reverse;
         justify-content: space-evenly;
         grid-gap: 20px;
     }
 
     .trip-card {
         background-color: #fff;
-        height: 100px;
+        padding: 1em;
+        height: auto;
         border-radius: $rounded-corners;
+        display: grid;
+        grid-template-columns: repeat(8,1fr);
+        grid-template-rows: repeat(6,1fr);
+        grid-gap: 5px;
+    }
+
+    .destination {
+        font-family: $font-detail;
+        font-weight: 700;
+        font-size: 1.5em;
+        grid-column: 1 / span 3;
+        grid-row: 1 / span 1;
+    }
+
+    .dates {
+        grid-column: 1 / span 3;
+        grid-row: 2 / span 1;
+    }
+
+    .city-image {
+        grid-column: 1 / span 3;
+        grid-row: 3 / span 4;
+    }
+
+    .current-weather-icon {
+        grid-column: 7 / span 1;
+        grid-row: 1 / span 1;
+        height: 40px;
+    }
+
+    .current-weather-temp {
+        grid-column: 8 / span 1;
+        grid-row: 1 / span 1;
+    }
+
+    .current-weather-description {
+        grid-column: 7 / span 2;
+        grid-row: 2 / span 1;
     }
 }
 
@@ -397,6 +440,7 @@ button {
     &:hover,
     &:active {
         cursor: pointer;
+        color: $marigold;
     }
 }
 
@@ -437,6 +481,7 @@ h2{
     font-family: $font-logo !important;
     font-size: 3em;
     transition-duration: 400ms;
+    padding-right: 6px !important;
 }
 
 @media screen and (max-width: $small-screen){

@@ -9,7 +9,12 @@ UI
 - - provide "notebook": allow user to input itinerary / agenda / details; add this to data stored in server
 
 
+
 JS
+
+- themePicker
+- - refactor to use shortcuts
+
 - webPack dev config
 - - set up copy webpack plugin correctly to build image files into assets without loading them into DOM
 
@@ -25,3 +30,8 @@ JS
 - server.js
 - - pixabay API get
 - - set up GET route from client to server for stored data
+
+- countdown function
+
+- local storage
+- - https://www.taniarascia.com/how-to-use-local-storage-with-javascript/

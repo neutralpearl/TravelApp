@@ -118,6 +118,10 @@ app.post('/store-trip-data/', async (req, res) => {
         })
         console.log(tripData); // prints accumulated data to terminal
 
+        // tripData = new Trip; //create new Trip object
+        allTrips.push(tripData);
+        console.log(allTrips);
+
         res.send(JSON.stringify(tripData)); // later move to after all tripData has been added to object
 
     } catch(error) {

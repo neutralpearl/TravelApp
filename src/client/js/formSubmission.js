@@ -56,6 +56,9 @@ const handleSubmit = async event => {
                 // console.log(newTripData); // object containing tripData
                 if (!newTripData.msg) {
                     tripDataReceived = true;
+                    // overwrite dates with objects in lieu of strings
+                    newTripData.dates.departDate = datesValidated[0];
+                    newTripData.dates.returnDate = datesValidated[1];
                     return newTripData;
                 } else {
                     throw new Error('No data retrieved for that city');
