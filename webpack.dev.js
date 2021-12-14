@@ -2,6 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const HtmlWebPackPlugin = require("html-webpack-plugin")
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const CopyPlugin = require("copy-webpack-plugin")
 
 module.exports = {
     entry: './src/client/index.js',
@@ -45,17 +46,18 @@ module.exports = {
             filename: "./index.html",
         }),
         new CleanWebpackPlugin({
-            // true = Simulate the removal of files
-            dry: false,
-            // Write Logs to Console
-            verbose: true,
-            // true = Automatically remove all unused webpack assets on rebuild
-            cleanStaleWebpackAssets: false,
-            // Do not allow removal of current webpack assets
-            protectWebpackAssets: false
+            dry: false, 
+            verbose: true, 
+            cleanStaleWebpackAssets: false, 
+            protectWebpackAssets: false 
         }),
         new webpack.DefinePlugin({
             'process.env': JSON.stringify('process.env')
-        })
+        }),
+        new CopyPlugin({
+            patterns: [
+              { from: "src/client/media", to: "media" },
+            ]
+        }),
     ]
 }

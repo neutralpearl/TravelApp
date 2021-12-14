@@ -1,6 +1,7 @@
 import { validateDateRange } from './dateValidation';
 // import { postTripData } from './postToServer';
 import { handleInvalidCity } from './inputErrorHandler';
+import { addTripCard } from './showNewTrip';
 
 
 // helper function
@@ -20,6 +21,8 @@ const handleSubmit = async event => {
     console.log('form submitted . . . ');
 
     let datesValidated = false; // initalize to false; should be truthy only if date range passes validation
+    let tripDataReceived = false;
+    
     try {
         datesValidated = await validateDateRange(departDate,returnDate);
         // console.log('datesValidated = ' + datesValidated); // debugging
@@ -31,87 +34,47 @@ const handleSubmit = async event => {
             let newTripData = {};
 
             // fetch to server.js POST route
-            try {
-                //configure POST fetch
-                const responseOptions = {
-                    method: 'POST',
-                    mode: 'cors',
-                    credentials: 'same-origin',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }, 
-                    body: JSON.stringify({
-                        city: `${city}`,
-                        departDate: `${datesValidated[0]}`,
-                        returnDate: `${datesValidated[1]}`
-                    })
-                }
-
-                await fetch('http://localhost:3000/store-trip-data',responseOptions)
-                .then(async tripData => {
-                    // return tripData;
-                    newTripData = await tripData.json(); 
-                    // console.log(newTripData); // object containing tripData
-                    if (!newTripData.msg) {
-                        return newTripData;
-                    } else {
-                        throw new Error('No data retrieved for that city');
-                    }
-                });
-
-            } catch(error) {
-                console.log(error);
-                handleInvalidCity();
+            //configure POST fetch
+            const responseOptions = {
+                method: 'POST',
+                mode: 'cors',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json'
+                }, 
+                body: JSON.stringify({
+                    city: `${city}`,
+                    departDate: `${datesValidated[0]}`,
+                    returnDate: `${datesValidated[1]}`
+                })
             }
 
-            console.log(newTripData); // WORKS!
+            await fetch('http://localhost:3000/store-trip-data',responseOptions)
+            .then(async tripData => {
+                // return tripData;
+                newTripData = await tripData.json(); 
+                // console.log(newTripData); // object containing tripData
+                if (!newTripData.msg) {
+                    tripDataReceived = true;
+                    return newTripData;
+                } else {
+                    throw new Error('No data retrieved for that city');
+                }
+            })
+            .catch(error => {
+                console.log(error);
+                handleInvalidCity(); // show error message in UI indicating that data couldn't be retrieved for that city
+            });
 
-
+            if (tripDataReceived) {
+                console.log(newTripData);
+                addTripCard(newTripData);
+            }
         }
 
     } catch(error) {
         console.log(error);
     }
-
-    
-    
-    // needs to be parsed
-
-
-
-    //if city & dates are validated
-    // try {
-    // const newTripData = await postTripData(city,departDate,returnDate)
-    // .then (async tripData => {
-    //     let data = await tripData.json(); 
-    //     return data;
-    // });
-    // .then(data => {
-    //     return data.json();
-    // })
-    // .then(json => {
-    //     newTripData.location.city = json.location.city;
-    //     return newTripData;
-    // })
-    // TRY CHAINING A GET CALL TO SERVER
-
-    // .then(response => {
-    //     console.log(response); // debugging — prints undefined
-    //     return await response.json();
-    // })
-    // .then(data => {
-    //     console.log(data);
-    //     return data;
-    // // UI update: // add new card to "your trips"
-    // });
-    
-
-    // } catch (error) {
-    //     console.log(error);
-    // }
-    
-    
-
 }
 
 export { handleSubmit }

@@ -1,29 +1,26 @@
 UI
 - modify nav dropdowns for mobile (pop-up?)
 - format error messages
-- make "add upcoming trip" form collapsible; hide it after submission
+
 - design "your trips" listing 
 - — load stored trips
-- — load stored trips 
+
 - design listing for just-added trip
 - - provide "notebook": allow user to input itinerary / agenda / details; add this to data stored in server
 
 
 JS
+- webPack dev config
+- - set up copy webpack plugin correctly to build image files into assets without loading them into DOM
+
 - dateValidation
-- - fix if/else formula
 - - show error message in UI
 
 - inputErrorHandler
 - - show error message in UI
 
-- updateUI
-- - create function & JS file
-- - import it into formSubmission.js & index. js
-
-- handleSubmit
-- - successfully pass object from postToServer
-- - pass data into updateUI function
+- showNewTrip
+- - refine function to fill in all card content
 
 - server.js
 - - pixabay API get
