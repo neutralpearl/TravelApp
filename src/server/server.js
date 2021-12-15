@@ -68,6 +68,13 @@ app.post('/store-trip-data/', async (req, res) => {
         },
         coordinates: {},
         current_weather: {},
+        forecast_weather: {
+            tomorrow: {},
+            inTwoDays: {},
+            inThreeDays: {},
+            inFourDays: {},
+            inFiveDays: {}
+        },
         photo: {}
     };
 
@@ -97,11 +104,12 @@ app.post('/store-trip-data/', async (req, res) => {
     
     // GET from weatherbit Current Weather API
     try {
-        await fetch(`${serverURL}/get-weatherbit/${tripData.coordinates.latitude}/${tripData.coordinates.longitude}`)
+        await fetch(`${serverURL}/get-weatherbit-current/${tripData.coordinates.latitude}/${tripData.coordinates.longitude}`)
         .then(weather => {
             return weather.json();
         })
         .then( data => {
+            // console.log(data); // works
             tripData.current_weather.temp = data.temp;
             tripData.current_weather.app_temp = data.app_temp;
             tripData.current_weather.humidity = data.humidity;
@@ -116,7 +124,41 @@ app.post('/store-trip-data/', async (req, res) => {
                 throw new Error('Current weather not received');
             }
         })
-        console.log(tripData); // prints accumulated data to terminal
+        // console.log(tripData); // prints accumulated data to terminal
+
+        // res.send(JSON.stringify(tripData)); // later move to after all tripData has been added to object
+
+    } catch(error) {
+        console.log(error);
+        res.send(JSON.stringify({msg: 'current weather not found'}));
+    }
+
+    // GET weatherbit forecast
+    try {
+        await fetch(`${serverURL}/get-weatherbit-forecast/${tripData.coordinates.latitude}/${tripData.coordinates.longitude}`)
+        .then(forecast => {
+            return forecast.json();
+        })
+        .then( data => {
+            // console.log(data);
+            for (let date in data) {
+                tripData.forecast_weather[date].day = data[date].day;
+                tripData.forecast_weather[date].high_temp = data[date].high_temp;
+                tripData.forecast_weather[date].low_temp = data[date].low_temp;
+                tripData.forecast_weather[date].humidity = data[date].humidity;
+                tripData.forecast_weather[date].precip = data[date].precip;
+                tripData.forecast_weather[date].clouds = data[date].clouds;
+                tripData.forecast_weather[date].description = data[date].description;
+                tripData.forecast_weather[date].icon = data[date].icon;
+            }
+            
+            if (!(typeof tripData.forecast_weather.tomorrow.day === 'undefined')){
+                return tripData;
+            } else {
+                throw new Error('Weather forecast not received');
+            }
+        })
+        // console.log(tripData); // prints accumulated data to terminal
 
         // tripData = new Trip; //create new Trip object
         allTrips.push(tripData);
@@ -128,8 +170,6 @@ app.post('/store-trip-data/', async (req, res) => {
         console.log(error);
         res.send(JSON.stringify({msg: 'weather not found'}));
     }
-
-    // GET weatherbit forecast
 
     // GET weatherbit historical weather
 
@@ -192,7 +232,7 @@ app.get('/get-geonames/:city', async (req,res) => {
 });
 
 
-app.get('/get-weatherbit/:latitude/:longitude', async (req,res) => {
+app.get('/get-weatherbit-current/:latitude/:longitude', async (req,res) => {
     const lat = req.params.latitude;
     const lon = req.params.longitude;
 
@@ -222,11 +262,64 @@ app.get('/get-weatherbit/:latitude/:longitude', async (req,res) => {
             });
 
         } catch(error) {
-            throw new Error('Couldn\'t retrieve weather data!');
+            throw new Error('Couldn\'t retrieve current weather!');
         }
 
         // send weather to GET route
         res.status(200).send(JSON.stringify(weather));
+
+    } catch(error) {
+        // send error message to GET route
+        res.status(200).send(error);
+    }
+});
+
+app.get('/get-weatherbit-forecast/:latitude/:longitude', async (req,res) => {
+    const lat = req.params.latitude;
+    const lon = req.params.longitude;
+
+    const endpoint = 'http://api.weatherbit.io/v2.0/forecast/daily';
+    const key = process.env.WEATHERBIT_KEY;
+    const url = `${endpoint}?key=${key}&lat=${lat}&lon=${lon}&units=I&days=5`;
+
+    const forecast = {
+        tomorrow: {},
+        inTwoDays: {},
+        inThreeDays: {},
+        inFourDays: {},
+        inFiveDays: {}
+    };
+    
+    try { 
+        // GET from Weatherbit Current Weather API
+        try {
+            await fetch(url)
+            .then(response => {
+                return response.json();
+            })
+            .then(json => {
+                let i=0;
+                for (let date in forecast) {
+                    forecast[date].day = json.data[i].valid_date;
+                    forecast[date].high_temp = json.data[i].high_temp;
+                    forecast[date].low_temp = json.data[i].low_temp;
+                    forecast[date].humidity = json.data[i].rh;
+                    forecast[date].precip = json.data[i].precip;
+                    forecast[date].clouds = json.data[i].clouds;
+                    forecast[date].icon = json.data[i].weather.icon;
+                    forecast[date].description = json.data[i].weather.description;
+                    i++;
+                }
+                // console.log(forecast); // works
+                return forecast;
+            });
+
+        } catch(error) {
+            throw new Error('Couldn\'t retrieve weather forecast!');
+        }
+
+        // send weather to GET route
+        res.status(200).send(JSON.stringify(forecast));
 
     } catch(error) {
         // send error message to GET route

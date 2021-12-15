@@ -1,19 +1,10 @@
 UI
 - modify nav dropdowns for mobile (pop-up?)
 - format error messages
-
-- design "your trips" listing 
-- — load stored trips
-
-- design listing for just-added trip
-- - provide "notebook": allow user to input itinerary / agenda / details; add this to data stored in server
-
-
+- provide "notebook" in modal: allow user to input itinerary / agenda / details; add this to data stored in server
 
 JS
 
-- themePicker
-- - refactor to use shortcuts
 
 - webPack dev config
 - - set up copy webpack plugin correctly to build image files into assets without loading them into DOM
@@ -25,7 +16,8 @@ JS
 - - show error message in UI
 
 - showNewTrip
-- - refine function to fill in all card content
+- - refine function to fill in content for modal details box
+- - add toggle closure
 
 - server.js
 - - pixabay API get

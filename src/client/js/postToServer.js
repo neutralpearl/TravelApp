@@ -25,9 +25,9 @@ const postTripData = async (city,departDate,returnDate) => {
         console.log(newTripData); // object containing tripData
         if (!newTripData.msg) {
             return JSON.stringify(newTripData);
-            } else {
-                throw new Error('No data retrieved for that city');
-            }
+        } else {
+            throw new Error('No data retrieved for that city');
+        }
     })
     .catch(error => {
         console.log(error);
