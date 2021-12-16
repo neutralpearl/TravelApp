@@ -79,59 +79,53 @@ app.post('/store-trip-data/', async (req, res) => {
     };
 
     // GET from geonames
-    try {
-        await fetch(`${serverURL}/get-geonames/${tripData.location.city}`)
-        .then(coordinates => {
-            return coordinates.json();
-        })
-        .then( data => {
-            // console.log(data); // prints coordinates!!!
-            tripData.coordinates.latitude = data.latitude;
-            tripData.coordinates.longitude = data.longitude;
-            tripData.location.country_code = data.country_code;
+    
+    await fetch(`${serverURL}/get-geonames/${tripData.location.city}`)
+    .then(coordinates => {
+        return coordinates.json();
+    })
+    .then( data => {
+        // console.log(data); // prints coordinates!!!
+        tripData.coordinates.latitude = data.latitude;
+        tripData.coordinates.longitude = data.longitude;
+        tripData.location.country_code = data.country_code;
 
-            if (!(typeof tripData.coordinates.latitude === 'undefined')){
-                return tripData;
-            } else {
-                throw new Error('Coordinates not received');
-            }
-        })
-
-    } catch(error){
+        if (!(typeof tripData.coordinates.latitude === 'undefined')){
+            return tripData;
+        } else {
+            throw new Error('Coordinates not received');
+        }
+    })
+    .catch(error => {
         console.log(error);
         res.send(JSON.stringify({msg: 'city not found'}));
-    }
+    });
     
     // GET from weatherbit Current Weather API
-    try {
-        await fetch(`${serverURL}/get-weatherbit-current/${tripData.coordinates.latitude}/${tripData.coordinates.longitude}`)
-        .then(weather => {
-            return weather.json();
-        })
-        .then( data => {
-            // console.log(data); // works
-            tripData.current_weather.temp = data.temp;
-            tripData.current_weather.app_temp = data.app_temp;
-            tripData.current_weather.humidity = data.humidity;
-            tripData.current_weather.precip = data.precip;
-            tripData.current_weather.clouds = data.clouds;
-            tripData.current_weather.air_quality = data.air_quality;
-            tripData.current_weather.description = data.description;
-            tripData.current_weather.icon = data.icon;
-            if (!(typeof tripData.current_weather.temp === 'undefined')){
-                return tripData;
-            } else {
-                throw new Error('Current weather not received');
-            }
-        })
-        // console.log(tripData); // prints accumulated data to terminal
-
-        // res.send(JSON.stringify(tripData)); // later move to after all tripData has been added to object
-
-    } catch(error) {
+    await fetch(`${serverURL}/get-weatherbit-current/${tripData.coordinates.latitude}/${tripData.coordinates.longitude}`)
+    .then(weather => {
+        return weather.json();
+    })
+    .then( data => {
+        // console.log(data); // works
+        tripData.current_weather.temp = data.temp;
+        tripData.current_weather.app_temp = data.app_temp;
+        tripData.current_weather.humidity = data.humidity;
+        tripData.current_weather.precip = data.precip;
+        tripData.current_weather.clouds = data.clouds;
+        tripData.current_weather.air_quality = data.air_quality;
+        tripData.current_weather.description = data.description;
+        tripData.current_weather.icon = data.icon;
+        if (!(typeof tripData.current_weather.temp === 'undefined')){
+            return tripData;
+        } else {
+            throw new Error('Current weather not received');
+        }
+    })
+    .catch(error => {
         console.log(error);
         res.send(JSON.stringify({msg: 'current weather not found'}));
-    }
+    });
 
     // GET weatherbit forecast
     try {
@@ -168,7 +162,7 @@ app.post('/store-trip-data/', async (req, res) => {
 
     } catch(error) {
         console.log(error);
-        res.send(JSON.stringify({msg: 'weather not found'}));
+        res.send(JSON.stringify({msg: 'weather forecast not found'}));
     }
 
     // GET weatherbit historical weather
@@ -183,6 +177,7 @@ app.post('/store-trip-data/', async (req, res) => {
     // }
 })
 
+// FETCH COORDINATES
 // :city becomes req.params: {"city": <city>}
 app.get('/get-geonames/:city', async (req,res) => {
     
@@ -206,21 +201,20 @@ app.get('/get-geonames/:city', async (req,res) => {
 
     try {
         // POST to Geonames 
-        try {  
-            await fetch(url,responseOptions)
-            .then(response => {
-                return response.json();
-            })
-            .then(json => {
-                // retrieve coordinates from response
-                coordinates.latitude = json.geonames[0].lat;
-                coordinates.longitude = json.geonames[0].lng;
-                coordinates.country_code = json.geonames[0].countryCode;
-                return coordinates;
-            })
-        } catch(error) {
+        await fetch(url,responseOptions)
+        .then(response => {
+            return response.json();
+        })
+        .then(json => {
+            // retrieve coordinates from response
+            coordinates.latitude = json.geonames[0].lat;
+            coordinates.longitude = json.geonames[0].lng;
+            coordinates.country_code = json.geonames[0].countryCode;
+            return coordinates;
+        })
+        .catch (error => {
             throw new Error('Couldn\'t retrieve city coordinates!');
-        }
+        })
 
         // send coordinates to GET route
         res.status(200).send(JSON.stringify(coordinates));
@@ -231,7 +225,7 @@ app.get('/get-geonames/:city', async (req,res) => {
     }
 });
 
-
+// FETCH CURRENT WEATHER
 app.get('/get-weatherbit-current/:latitude/:longitude', async (req,res) => {
     const lat = req.params.latitude;
     const lon = req.params.longitude;
@@ -244,26 +238,24 @@ app.get('/get-weatherbit-current/:latitude/:longitude', async (req,res) => {
     
     try { 
         // GET from Weatherbit Current Weather API
-        try {
-            await fetch(url)
-            .then(response => {
-                return response.json();
-            })
-            .then(json => {
-                weather.temp = json.data[0].temp;
-                weather.app_temp = json.data[0].app_temp;
-                weather.humidity = json.data[0].rh;
-                weather.precip = json.data[0].precip;
-                weather.clouds = json.data[0].clouds;
-                weather.air_quality = json.data[0].aqi;
-                weather.icon = json.data[0].weather.icon;
-                weather.description = json.data[0].weather.description;
-                return weather;
-            });
-
-        } catch(error) {
+        await fetch(url)
+        .then(response => {
+            return response.json();
+        })
+        .then(json => {
+            weather.temp = json.data[0].temp;
+            weather.app_temp = json.data[0].app_temp;
+            weather.humidity = json.data[0].rh;
+            weather.precip = json.data[0].precip;
+            weather.clouds = json.data[0].clouds;
+            weather.air_quality = json.data[0].aqi;
+            weather.icon = json.data[0].weather.icon;
+            weather.description = json.data[0].weather.description;
+            return weather;
+        })
+        .catch(error => {
             throw new Error('Couldn\'t retrieve current weather!');
-        }
+        });
 
         // send weather to GET route
         res.status(200).send(JSON.stringify(weather));
@@ -274,6 +266,7 @@ app.get('/get-weatherbit-current/:latitude/:longitude', async (req,res) => {
     }
 });
 
+// FETCH FORECAST 
 app.get('/get-weatherbit-forecast/:latitude/:longitude', async (req,res) => {
     const lat = req.params.latitude;
     const lon = req.params.longitude;
@@ -292,31 +285,29 @@ app.get('/get-weatherbit-forecast/:latitude/:longitude', async (req,res) => {
     
     try { 
         // GET from Weatherbit Current Weather API
-        try {
-            await fetch(url)
-            .then(response => {
-                return response.json();
-            })
-            .then(json => {
-                let i=0;
-                for (let date in forecast) {
-                    forecast[date].day = json.data[i].valid_date;
-                    forecast[date].high_temp = json.data[i].high_temp;
-                    forecast[date].low_temp = json.data[i].low_temp;
-                    forecast[date].humidity = json.data[i].rh;
-                    forecast[date].precip = json.data[i].precip;
-                    forecast[date].clouds = json.data[i].clouds;
-                    forecast[date].icon = json.data[i].weather.icon;
-                    forecast[date].description = json.data[i].weather.description;
-                    i++;
-                }
-                // console.log(forecast); // works
-                return forecast;
-            });
-
-        } catch(error) {
+        await fetch(url)
+        .then(response => {
+            return response.json();
+        })
+        .then(json => {
+            let i=0;
+            for (let date in forecast) {
+                forecast[date].day = json.data[i].valid_date;
+                forecast[date].high_temp = json.data[i].high_temp;
+                forecast[date].low_temp = json.data[i].low_temp;
+                forecast[date].humidity = json.data[i].rh;
+                forecast[date].precip = json.data[i].precip;
+                forecast[date].clouds = json.data[i].clouds;
+                forecast[date].icon = json.data[i].weather.icon;
+                forecast[date].description = json.data[i].weather.description;
+                i++;
+            }
+            // console.log(forecast); // works
+            return forecast;
+        })
+        .catch(error => {
             throw new Error('Couldn\'t retrieve weather forecast!');
-        }
+        });
 
         // send weather to GET route
         res.status(200).send(JSON.stringify(forecast));

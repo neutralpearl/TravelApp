@@ -1,11 +1,13 @@
 UI
+==============================
+- countdown to trip start date
 - modify nav dropdowns for mobile (pop-up?)
 - format error messages
 - provide "notebook" in modal: allow user to input itinerary / agenda / details; add this to data stored in server
+- fix weird double icon for nav dropdowns
 
 JS
-
-
+==============================
 - webPack dev config
 - - set up copy webpack plugin correctly to build image files into assets without loading them into DOM
 

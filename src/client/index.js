@@ -7,6 +7,7 @@ import { validateDateRange } from './js/dateValidation';
 import { postTripData } from './js/postToServer';
 import { handleInvalidCity } from './js/inputErrorHandler';
 import { addTripCard } from './js/showNewTrip';
+import { loadModalContent } from './js/renderModal';
 
 // import Sass stylesheets
 import './styles/app.scss'; 
@@ -59,7 +60,7 @@ const toggleForm = event => {
         formPanel.style.display = 'block';
         byId('hide-form').style.display = 'block';
         byId('show-form').style.display = 'none';
-        formTitle.style.fontSize = '3em';
+        formTitle.style.fontSize = '2.5em';
         byClass('title')[0].style.marginBottom = '1.5em';
         byId('add-trip').style.paddingBottom = '1.5em';
     }
@@ -85,5 +86,6 @@ export {
     validateDateRange,
     postTripData,
     handleInvalidCity,
-    addTripCard
+    addTripCard,
+    loadModalContent
 }
