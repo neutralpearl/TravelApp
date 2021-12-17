@@ -11,7 +11,7 @@ const express = require('express');
 const app = express();
 
 /* Middleware*/
-const bodyParser = require("body-parser");
+// const bodyParser = require("body-parser");
 // configure Express
 app.use(express.static('dist'));
 app.use(express.urlencoded({ extended: false }));
@@ -85,7 +85,6 @@ app.post('/store-trip-data/', async (req, res) => {
         return coordinates.json();
     })
     .then( data => {
-        // console.log(data); // prints coordinates!!!
         tripData.coordinates.latitude = data.latitude;
         tripData.coordinates.longitude = data.longitude;
         tripData.location.country_code = data.country_code;
@@ -107,7 +106,6 @@ app.post('/store-trip-data/', async (req, res) => {
         return weather.json();
     })
     .then( data => {
-        // console.log(data); // works
         tripData.current_weather.temp = data.temp;
         tripData.current_weather.app_temp = data.app_temp;
         tripData.current_weather.humidity = data.humidity;
@@ -134,7 +132,6 @@ app.post('/store-trip-data/', async (req, res) => {
             return forecast.json();
         })
         .then( data => {
-            // console.log(data);
             for (let date in data) {
                 tripData.forecast_weather[date].day = data[date].day;
                 tripData.forecast_weather[date].high_temp = data[date].high_temp;
@@ -152,13 +149,6 @@ app.post('/store-trip-data/', async (req, res) => {
                 throw new Error('Weather forecast not received');
             }
         })
-        // console.log(tripData); // prints accumulated data to terminal
-
-        // tripData = new Trip; //create new Trip object
-        allTrips.push(tripData);
-        console.log(allTrips);
-
-        res.send(JSON.stringify(tripData)); // later move to after all tripData has been added to object
 
     } catch(error) {
         console.log(error);
@@ -169,12 +159,30 @@ app.post('/store-trip-data/', async (req, res) => {
 
     
     // GET from pixabay
-    // try {
+    try {
+        await fetch(`${serverURL}/get-pixabay-photo/${tripData.location.city}`)
+        .then(photo => {
+            return photo.json();
+        })
+        .then( data => {
+            tripData.photo = data.url;            
+            if (!(typeof tripData.photo === 'undefined')){
+                return tripData;
+            } else {
+                throw new Error('Photo not received');
+            }
+        })
 
-    // } catch(error) {
-    //     console.log(error);
-    //     res.send(JSON.stringify({msg: 'photo not found'}));
-    // }
+        // tripData = new Trip; //create new Trip object
+        allTrips.push(tripData);
+        // console.log(allTrips);
+
+        res.send(JSON.stringify(tripData)); // later move to after all tripData has been added to object
+
+    } catch(error) {
+        console.log(error);
+        res.send(JSON.stringify({msg: 'photo not found'}));
+    }
 })
 
 // FETCH COORDINATES
@@ -318,28 +326,44 @@ app.get('/get-weatherbit-forecast/:latitude/:longitude', async (req,res) => {
     }
 });
 
+// FETCH PHOTO
+app.get('/get-pixabay-photo/:city', async (req, res) => {
 
+    // https://pixabay.com/api/docs/
+    // "If you intend to use the images, please download them to your server first."
+    const city = req.params.city;
+    const endpoint = 'https://pixabay.com/api/';
+    const key = process.env.PIXABAY_KEY;
 
+    // https://pixabay.com/api/?key={ KEY }&q=yellow+flowers&image_type=photo
+    const url = `${endpoint}?key=${key}&q=${city}&image_type=photo`;
+    // console.log(url);
 
+    const photo = {};
 
-// EMBED WITHIN GET ROUTE
-// const fetchPhoto = async (city) => {
+    try {
+        await fetch(url)
+        .then(response => {
+            return response.json();
+        })
+        .then(json => {
+            photo.url = json.hits[1].webformatURL;
+            // if (totalHits > 0) {
+                
+            // } else {
+            //     photo.url = 'http://localhost:3000/src/client/media/wing.jpg';
+            // }
+            return photo;
+        })
+        .catch(error => {
+            throw new Error('Couldn\'t retrieve photo!');
+        });
 
-//     // https://pixabay.com/api/docs/
-//     // "If you intend to use the images, please download them to your server first."
+        // send weather to GET route
+        res.status(200).send(JSON.stringify(photo));
 
-//     const endpoint = 'https://pixabay.com/api/';
-//     const key = process.env.PIXABAY_KEY;
-
-//     // https://pixabay.com/api/?key={ KEY }&q=yellow+flowers&image_type=photo
-//     const url = `${endpoint}?key=${key}&q=${city}`;
-
-//     // GET — RESTful API
-//     // $.getJSON(URL, function(data){
-//     // if (parseInt(data.totalHits) > 0)
-//     //     $.each(data.hits, function(i, hit){ console.log(hit.pageURL); });
-//     // else
-//     //     console.log('No hits');
-//     // });
-
-// };
+    } catch(error) {
+        // send error message to GET route
+        res.status(200).send(error);
+    }
+})

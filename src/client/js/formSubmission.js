@@ -1,3 +1,4 @@
+import { byId } from '..';
 import { validateDateRange } from './dateValidation';
 // import { postTripData } from './postToServer';
 import { handleInvalidCity } from './inputErrorHandler';
@@ -13,6 +14,27 @@ import { addTripCard } from './showNewTrip';
 
 const handleSubmit = async event => {
     event.preventDefault();
+
+    if (byId('city-validation') !== null){
+        byId('city-validation').remove();
+    }
+    if (byId('dates-validation') !== null){
+        byId('dates-validation').remove();
+    }
+
+    const validationMsg = document.createElement('div');
+    validationMsg.id='input-validation';
+    validationMsg.innerHTML='verifying your destination...';
+    byId('msg-container').appendChild(validationMsg);
+    byId('input-validation').classList.add('animate__animated','animate__flipInX','animate__repeat-3');
+    
+    setTimeout( () => {
+        if(byId('input-validation') !== null){
+            byId('input-validation').remove();
+        }
+    }, 2500);
+
+
     const city = byId('destination').value;
     let departDate = byId('start-date').value;
     let returnDate = byId('end-date').value;
@@ -29,7 +51,10 @@ const handleSubmit = async event => {
         if (!datesValidated) {
             throw new Error('Dates invalid');
         } else {
-
+            //pulse animation on trips container
+            byId('view-trips').classList.add('animate__animated','animate__pulse');
+            byId('no-trips').style.display = 'none';
+            
             // initialize server-side object to store new trip variables
             let newTripData = {};
 
@@ -72,6 +97,7 @@ const handleSubmit = async event => {
             if (tripDataReceived) {
                 console.log(newTripData);
                 addTripCard(newTripData);
+                byId('view-trips').scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
             }
         }
 

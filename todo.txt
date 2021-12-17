@@ -1,31 +1,22 @@
 UI
 ==============================
-- countdown to trip start date
 - modify nav dropdowns for mobile (pop-up?)
-- format error messages
 - provide "notebook" in modal: allow user to input itinerary / agenda / details; add this to data stored in server
-- fix weird double icon for nav dropdowns
 
 JS
 ==============================
+- server.js
+- add GET for historical data
+
 - webPack dev config
 - - set up copy webpack plugin correctly to build image files into assets without loading them into DOM
 
-- dateValidation
-- - show error message in UI
+- showNewTrip 
+- - make 5-day forecast appear on pop-up
 
-- inputErrorHandler
-- - show error message in UI
-
-- showNewTrip
-- - refine function to fill in content for modal details box
-- - add toggle closure
-
-- server.js
-- - pixabay API get
-- - set up GET route from client to server for stored data
-
-- countdown function
+- renderModal
+- - make sure innerHTML is that of the clicked trip card instead of last card added
+- - swap out 5-day forecast display for 5-day historical data
 
 - local storage
 - - https://www.taniarascia.com/how-to-use-local-storage-with-javascript/
