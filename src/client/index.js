@@ -21,6 +21,7 @@ import mountains from './media/mountains.jpg';
 import palms from './media/palms.jpg';
 import skyline from './media/skyline.png'; 
 import temples from './media/temples.jpg';
+import plane from './media/wing.jpg';
 
 // ============= GLOBAL FUNCTIONS =================
 
@@ -30,6 +31,21 @@ window.byId = byId;
 const byClass = name => document.getElementsByClassName(name);
 window.byClass = byClass;
 
+// ============= GLOBAL VARIABLES =================
+let itineraryData = [];
+window.itineraryData = itineraryData;
+
+class tripItinerary {
+    constructor(city,visaInfo,departureDetails,returnDetails,accommodations,itineraryMisc,selectedTravelMethods) {
+        this.city = city;
+        this.visaInfo = visaInfo;
+        this.departureDetails = departureDetails;
+        this.returnDetails =  returnDetails;
+        this.accommodations =  accommodations;
+        this.itineraryMisc =  itineraryMisc;
+        this.selectedTravelMethods =  selectedTravelMethods;
+    }
+  }
 
 // ============= DOM SET-UP ON LOAD =================
 
@@ -83,8 +99,11 @@ export {
     palms,
     skyline, 
     temples,
+    plane,
     byClass,
     byId,
+    itineraryData,
+    tripItinerary,
     handleSubmit,
     animateValidation,
     validateDateRange,

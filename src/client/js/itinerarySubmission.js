@@ -1,37 +1,52 @@
-import { byId } from "..";
+import { byId, itineraryData } from "..";
+import { tripItinerary } from "..";
 
 const handleItineraryInput = event => {
     event.preventDefault();
 
-    itineraryData.visaInfo =  byId('visas').value;
-    itineraryData.departureDetails =  byId('departure-details').value;
-    itineraryData.returnDetails =  byId('return-details').value;
-    itineraryData.accommodations =  byId('hotel').value;
-    itineraryData.itineraryMisc =  byId('itinerary-misc').value;
+    let city = byId('itinerary-title').innerText.substring(30,byId('itinerary-title').innerText.length);
+    let visaInfo =  byId('visas').value;
+    let departureDetails =  byId('departure-details').value;
+    let returnDetails =  byId('return-details').value;
+    let accommodations =  byId('hotel').value;
+    let itineraryMisc =  byId('itinerary-misc').value;
 
-    let selectedTravelMethods = [[],[]];
+    let selectedTravelMethods = [[],[]]; // prepare array to store selected travel methods
     const travelMethodsDeparture = byId('travel-methods-departure').children;
     for (let i = 0; i < travelMethodsDeparture.length; i++) {
         let icon = travelMethodsDeparture[i].children[0];
-        console.log(icon);
         if (icon.classList.contains('selected')) {
-            selectedTravelMethods[0].push(travelMethodsDeparture[i].id);
+            selectedTravelMethods[0].push(travelMethodsDeparture[i].id); // add departure methods to subarray at index 0
         }
     }
     const travelMethodsReturn = byId('travel-methods-return').children;
     for (let i = 0; i < travelMethodsReturn.length; i++) {
         let icon = travelMethodsReturn[i].children[0];
-        console.log(icon);
         if (icon.classList.contains('selected')) {
-            selectedTravelMethods[1].push(travelMethodsReturn[i].id);
+            selectedTravelMethods[1].push(travelMethodsReturn[i].id); // add return methods to subarray at index 1
         }
     }
 
-    itineraryData.selectedTravelMethods = selectedTravelMethods;
+    // check if itinerary already exists for this trip
+    let found = itineraryData.findIndex(itinerary => {
+        return itinerary.city === city;
+    })
 
-    console.log(itineraryData);
-
-    // PUSH DATA TO WHERE IT CAN BE 
+    if(found === -1) {
+        // save itinerary info as new instance of itinerary class for later retrieval
+        const itinerary = new tripItinerary(city,visaInfo,departureDetails,returnDetails,accommodations,itineraryMisc,selectedTravelMethods);
+        itineraryData.push(itinerary);
+    } else {
+        // set new values for existing itinerary object based on itinerary form data
+        itineraryData[found].visaInfo = visaInfo;
+        itineraryData[found].departureDetails = departureDetails;
+        itineraryData[found].returnDetails = returnDetails;
+        itineraryData[found].accommodations = accommodations;
+        itineraryData[found].selectedTravelMethods = selectedTravelMethods;
+    }
+    
+    console.log(itineraryData); // debugging
+    return itineraryData;
 }
 
 export { handleItineraryInput }

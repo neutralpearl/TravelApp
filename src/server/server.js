@@ -42,17 +42,17 @@ const serverURL = `http://localhost:${port}`;
 
 //===============================================================//
 
-const allTrips = []; // will store all trips posted to server
+// const allTrips = []; // will store all trips posted to server
 
-// create class to store individual trip records
-class Trip {
-    constructor(city,departDate,returnDate) {
-        this.city = city;
-        this.departDate = departDate;
-        this.returnDate = returnDate;
-        this.tripId = ''; // create unique identifier for each trip?
-    }
-}
+// // create class to store individual trip records
+// class Trip {
+//     constructor(city,departDate,returnDate) {
+//         this.city = city;
+//         this.departDate = departDate;
+//         this.returnDate = returnDate;
+//         this.tripId = ''; // create unique identifier for each trip?
+//     }
+// }
 
 // posts city
 app.post('/store-trip-data/', async (req, res) => {
@@ -173,7 +173,7 @@ app.post('/store-trip-data/', async (req, res) => {
         }  
     })
     .then(tripData => {
-        allTrips.push(tripData);
+        // allTrips.push(tripData);
         res.send(JSON.stringify(tripData)); // sends object to client
     })
     .catch(error => {

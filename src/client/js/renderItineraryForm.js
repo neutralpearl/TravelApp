@@ -1,3 +1,5 @@
+import { byId } from "..";
+
 const prepareItineraryForm = (data,itineraryData) => {
 
     byClass('add-itinerary')[byClass('add-itinerary').length-1].addEventListener('click', event => {
@@ -17,9 +19,9 @@ const prepareItineraryForm = (data,itineraryData) => {
                     <img class="country-flag" src="https://flagcdn.com/24x18/${data.location.country_code.toLowerCase()}.png">
                     <label class="label-main" id="label-country">${data.location.country_name}</label>
                     <label class="label-detail" id="label-visas" for="visas">Travel visa details</label>
-                    <textarea type="text" id="visas" value="${itineraryData.visaInfo}" placeholder="e.g., 'Visa required for US and EU citizens, valid for up to 60 days stay...'"></textarea>
+                    <textarea type="text" id="visas" placeholder="e.g., 'Visa required for US and EU citizens, valid for up to 60 days stay...'"></textarea>
                     <label class="label-detail" id="label-hotel" for="hotel">Accommodations</label>
-                    <textarea type="text" id="hotel" value="${itineraryData.accommodations}" placeholder="hotel, AirBnB, VRBO rental, etc."></textarea>
+                    <textarea type="text" id="hotel" placeholder="hotel, AirBnB, VRBO rental, etc."></textarea>
                     <label class="label-detail" id="label-departure">Departure travel</label>
                     <ul class="travel-methods" id="travel-methods-departure">
                         <li id="departure-plane"><i class="fas fa-plane">&nbsp;</i></li>
@@ -28,7 +30,7 @@ const prepareItineraryForm = (data,itineraryData) => {
                         <li id="departure-car"><i class="fas fa-car">&nbsp;</i></li>
                         <li id="departure-boat"><i class="fas fa-anchor">&nbsp;</i></li>
                     </ul>
-                    <textarea type="text" id="departure-details" value="${itineraryData.departureDetails}" placeholder="'Delta Flight 285, confirmation #8f92sk, departing from JFK, boards 2pm...'"></textarea>
+                    <textarea type="text" id="departure-details" placeholder="'Delta Flight 285, confirmation #8f92sk, departing from JFK, boards 2pm...'"></textarea>
                     <label class="label-detail" id="label-return">Return travel</label>
                     <ul class="travel-methods" id="travel-methods-return">
                         <li id="return-plane"><i class="fas fa-plane">&nbsp;</i></li>
@@ -37,13 +39,28 @@ const prepareItineraryForm = (data,itineraryData) => {
                         <li id="return-car"><i class="fas fa-car">&nbsp;</i></li>
                         <li id="return-boat"><i class="fas fa-anchor">&nbsp;</i></li>
                     </ul>
-                    <textarea type="text" id="return-details" value="${itineraryData.returnDetails}" placeholder="e.g., 'Amtrak Train 95, confirmation #EJ79WP, departing from Union Station, boards 10:30am...'"></textarea>
+                    <textarea type="text" id="return-details" placeholder="e.g., 'Amtrak Train 95, confirmation #EJ79WP, departing from Union Station, boards 10:30am...'"></textarea>
                     <label class="label-main" id="label-misc" for="itinerary-misc">Other bookings & plans</label>
-                    <textarea id="itinerary-misc" value="${itineraryData.itineraryMisc}"></textarea>
+                    <textarea id="itinerary-misc"></textarea>
                     <input type="submit" id="submit-itinerary" value="add details to itinerary" onclick="return Client.handleItineraryInput(event)">
                 </form>
             </div>
         `;
+
+        // check if itinerary already exists for this trip
+        let found = itineraryData.findIndex(itinerary => {
+            return itinerary.city === data.location.city;
+        })
+        console.log('FOUND' + found);
+
+        // if itinerary info already exists, put previous entries into form so user can see & edit existing data
+        if (found !== -1){
+            byId('visas').value = itineraryData[found].visaInfo;
+            byId('hotel').value = itineraryData[found].accommodations;
+            byId('departure-details').value = itineraryData[found].departureDetails;
+            byId('return-details').value = itineraryData[found].returnDetails;
+            byId('itinerary-misc').value = itineraryData[found].itineraryMisc;
+        }
 
         // show modal
         byClass('itinerary-modal')[0].style.display='block';
@@ -78,19 +95,6 @@ const prepareItineraryForm = (data,itineraryData) => {
                 }
             })
         }
-
-
-        // for (let list in travelMethodLists) {
-        //     let options = list.children;
-        //     console.log(options);
-        //     for (let option in options) {
-        //         option.addEventListener('click', () => {
-        //             console.log('clicked');
-        //             const selection = option.children[0];
-        //             selection.classList.add('selected');
-        //         });
-        //     }
-        // }
     })
 
 }

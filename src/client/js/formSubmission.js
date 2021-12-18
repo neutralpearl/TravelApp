@@ -8,26 +8,26 @@ import { addTripCard } from './showNewTrip';
 const handleSubmit = async event => {
     event.preventDefault(); // block default page reload after form submission
 
+    console.log('form submitted . . . '); // debugging
+    animateValidation(); // show "verifying your destination" animation while server retrieves data
+
     // save form inputs
     const city = byId('destination').value;
     let departDate = byId('start-date').value;
     let returnDate = byId('end-date').value;
 
-    animateValidation(); // show "verifying your destination" animation while server retrieves data
-
-    console.log('form submitted . . . '); // debugging
-
     let datesValidated = false; // should become truthy only if date range passes validation
     let tripDataReceived = false; // should become truthy only if trip data is retrieved from server
     
+    // make sure return date is after departure
     datesValidated = await validateDateRange(departDate,returnDate);
     
     if (!datesValidated) {
         throw new Error('Dates invalid'); 
     } else {
-        //pulse animation on trips container
-        byId('view-trips').classList.add('animate__animated','animate__pulse');
-        byId('no-trips').style.display = 'none';
+        
+        byId('view-trips').classList.add('animate__animated','animate__pulse'); // pulse animation on trips container
+        byId('no-trips').style.display = 'none'; // remove "You don't have any saved trips" placeholder text
         
         let newTripData = {}; // initialize object to store new trip variables
 
