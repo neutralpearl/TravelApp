@@ -12,7 +12,8 @@ JS
 
 - showNewTrip 
 - move itinerary modal into its own js file
-- format itinerary grif items
+- format itinerary grid items
+- fix default image for none retrieved
 
 - export trip details to PDF? https://github.com/eKoopmans/html2pdf.js
 

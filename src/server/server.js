@@ -88,6 +88,7 @@ app.post('/store-trip-data/', async (req, res) => {
         tripData.coordinates.latitude = data.latitude;
         tripData.coordinates.longitude = data.longitude;
         tripData.location.country_code = data.country_code;
+        tripData.location.country_name = data.country_name;
 
         if (!(typeof tripData.coordinates.latitude === 'undefined')){
             return tripData;
@@ -214,6 +215,7 @@ app.get('/get-geonames/:city', async (req,res) => {
             coordinates.latitude = json.geonames[0].lat;
             coordinates.longitude = json.geonames[0].lng;
             coordinates.country_code = json.geonames[0].countryCode;
+            coordinates.country_name = json.geonames[0].countryName;
             return coordinates;
         })
         .catch (error => {

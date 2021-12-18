@@ -3,14 +3,17 @@
 // import js files
 import { chooseTheme } from './js/themePicker';
 import { handleSubmit } from './js/formSubmission';
+import { animateValidation } from './js/manageValidationUI';
 import { validateDateRange } from './js/dateValidation';
-import { postTripData } from './js/postToServer';
 import { handleInvalidCity } from './js/inputErrorHandler';
 import { addTripCard } from './js/showNewTrip';
+import { prepareItineraryForm } from './js/renderItineraryForm';
+import { handleItineraryInput } from './js/itinerarySubmission';
 import { loadModalContent } from './js/renderModal';
 
 // import Sass stylesheets
 import './styles/app.scss'; 
+import './styles/components.scss';
 import './styles/resets.scss';
 
 // import image files // NOT WORKING
@@ -83,9 +86,11 @@ export {
     byClass,
     byId,
     handleSubmit,
+    animateValidation,
     validateDateRange,
-    postTripData,
     handleInvalidCity,
     addTripCard,
+    prepareItineraryForm,
+    handleItineraryInput, 
     loadModalContent
 }

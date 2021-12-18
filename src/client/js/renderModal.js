@@ -4,7 +4,6 @@ const loadModalContent = (data,tripLength) => {
     const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "Monday"];
     const weatherbitIconURLBase='https://www.weatherbit.io/static/img/icons/';
 
-
     // add event listener to open modal for this trip card
     document.querySelectorAll('.open-modal')[document.querySelectorAll('.open-modal').length - 1].addEventListener('click', event => {
         //show overlay & darken to cover background
