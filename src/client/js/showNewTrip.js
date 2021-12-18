@@ -63,7 +63,15 @@ const addTripCard = async data => {
         }
     })
 
-    prepareItineraryForm(data);
+    let itineraryData = {};
+    itineraryData.visaInfo =  '';
+    itineraryData.departureDetails =  '';
+    itineraryData.returnDetails =  '';
+    itineraryData.accommodations =  '';
+    itineraryData.itineraryMisc =  '';
+    itineraryData.selectedTravelMethods =  '';
+
+    prepareItineraryForm(data, itineraryData);
 
     loadModalContent(data,tripLength);
 }

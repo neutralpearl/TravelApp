@@ -11,9 +11,10 @@ JS
 - - set up copy webpack plugin correctly to build image files into assets without loading them into DOM
 
 - showNewTrip 
-- move itinerary modal into its own js file
-- format itinerary grid items
 - fix default image for none retrieved
+
+- 
+- get itinerary inputs to appear as textarea values upon reopening itinerary form after submitting values
 
 - export trip details to PDF? https://github.com/eKoopmans/html2pdf.js
 
