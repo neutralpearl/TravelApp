@@ -2,21 +2,19 @@ UI
 ==============================
 - modify nav dropdowns for mobile (pop-up?)
 - provide "notebook" in modal: allow user to input itinerary / agenda / details; add this to data stored in server
+- tooltips? https://www.w3schools.com/css/css_tooltip.asp
 
 JS
 ==============================
-- server.js
-- add GET for historical data
 
 - webPack dev config
 - - set up copy webpack plugin correctly to build image files into assets without loading them into DOM
 
 - showNewTrip 
-- - make 5-day forecast appear on pop-up
+- move itinerary modal into its own js file
+- format itinerary grif items
 
-- renderModal
-- - make sure innerHTML is that of the clicked trip card instead of last card added
-- - swap out 5-day forecast display for 5-day historical data
+- export trip details to PDF? https://github.com/eKoopmans/html2pdf.js
 
-- local storage
+- local storage?
 - - https://www.taniarascia.com/how-to-use-local-storage-with-javascript/

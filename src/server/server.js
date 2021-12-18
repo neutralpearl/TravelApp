@@ -126,63 +126,59 @@ app.post('/store-trip-data/', async (req, res) => {
     });
 
     // GET weatherbit forecast
-    try {
-        await fetch(`${serverURL}/get-weatherbit-forecast/${tripData.coordinates.latitude}/${tripData.coordinates.longitude}`)
-        .then(forecast => {
-            return forecast.json();
-        })
-        .then( data => {
-            for (let date in data) {
-                tripData.forecast_weather[date].day = data[date].day;
-                tripData.forecast_weather[date].high_temp = data[date].high_temp;
-                tripData.forecast_weather[date].low_temp = data[date].low_temp;
-                tripData.forecast_weather[date].humidity = data[date].humidity;
-                tripData.forecast_weather[date].precip = data[date].precip;
-                tripData.forecast_weather[date].clouds = data[date].clouds;
-                tripData.forecast_weather[date].description = data[date].description;
-                tripData.forecast_weather[date].icon = data[date].icon;
-            }
-            
-            if (!(typeof tripData.forecast_weather.tomorrow.day === 'undefined')){
-                return tripData;
-            } else {
-                throw new Error('Weather forecast not received');
-            }
-        })
-
-    } catch(error) {
+    await fetch(`${serverURL}/get-weatherbit-forecast/${tripData.coordinates.latitude}/${tripData.coordinates.longitude}`)
+    .then(forecast => {
+        return forecast.json();
+    })
+    .then( data => {
+        for (let date in data) {
+            tripData.forecast_weather[date].day = data[date].day;
+            tripData.forecast_weather[date].high_temp = data[date].high_temp;
+            tripData.forecast_weather[date].low_temp = data[date].low_temp;
+            tripData.forecast_weather[date].humidity = data[date].humidity;
+            tripData.forecast_weather[date].precip = data[date].precip;
+            tripData.forecast_weather[date].clouds = data[date].clouds;
+            tripData.forecast_weather[date].description = data[date].description;
+            tripData.forecast_weather[date].icon = data[date].icon;
+        }
+        
+        if (!(typeof tripData.forecast_weather.tomorrow.day === 'undefined')){
+            return tripData;
+        } else {
+            throw new Error('Weather forecast not received');
+        }
+    })
+    .catch(error => {
         console.log(error);
         res.send(JSON.stringify({msg: 'weather forecast not found'}));
-    }
-
-    // GET weatherbit historical weather
+    });
 
     
     // GET from pixabay
-    try {
-        await fetch(`${serverURL}/get-pixabay-photo/${tripData.location.city}`)
-        .then(photo => {
-            return photo.json();
-        })
-        .then( data => {
-            tripData.photo = data.url;            
-            if (!(typeof tripData.photo === 'undefined')){
-                return tripData;
-            } else {
-                throw new Error('Photo not received');
-            }
-        })
 
-        // tripData = new Trip; //create new Trip object
+    await fetch(`${serverURL}/get-pixabay-photo/${tripData.location.city}`)
+    .then(photo => {
+        return photo.json();
+    })
+    .then( data => {
+        tripData.photo = data.url;
+        if (!(typeof tripData.photo === 'undefined')){
+            return tripData;
+        } else {
+            console.log('Photo not received');
+            // if no photo, add message to data sent to client so other photo can get subbed in
+            tripData.msg = 'photo not found';
+            return tripData;
+        }  
+    })
+    .then(tripData => {
         allTrips.push(tripData);
-        // console.log(allTrips);
-
-        res.send(JSON.stringify(tripData)); // later move to after all tripData has been added to object
-
-    } catch(error) {
+        res.send(JSON.stringify(tripData)); // sends object to client
+    })
+    .catch(error => {
         console.log(error);
-        res.send(JSON.stringify({msg: 'photo not found'}));
-    }
+        res.send(JSON.stringify({msg: 'Could not send data to client'}));
+    });
 })
 
 // FETCH COORDINATES

@@ -22,8 +22,16 @@ const postTripData = async (city,departDate,returnDate) => {
     .then(async tripData => {
         // return tripData;
         let newTripData = await tripData.json(); 
+        if (newTripData.msg) {
+            console.log(newTripData.msg);
+        }
         console.log(newTripData); // object containing tripData
         if (!newTripData.msg) {
+            return JSON.stringify(newTripData);
+        } else if(newTripData.msg === 'photo not found'){
+            // add key indicating if no photo could be retrieved
+            newTripData.noPhoto = 'true';
+            console.log(`no photo available for ${newTripData.location.city}`);
             return JSON.stringify(newTripData);
         } else {
             throw new Error('No data retrieved for that city');

@@ -10,6 +10,7 @@ const chooseTheme = event => {
     const setColors = color => {
         byClass('form-panel')[0].style.backgroundColor = color;
         byClass('trips-panel')[0].style.backgroundColor = color;
+        document.styleSheets[6].cssRules[64].style.border = `2px solid ${color}`;       
     }
     
     switch (themeChoice.id) {

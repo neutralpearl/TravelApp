@@ -95,7 +95,7 @@ const handleSubmit = async event => {
             });
 
             if (tripDataReceived) {
-                console.log(newTripData);
+                console.log(newTripData); // for debugging
                 addTripCard(newTripData);
                 byId('view-trips').scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
             }

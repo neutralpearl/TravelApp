@@ -15,7 +15,6 @@
 			<div class="dropdown" id="about">
                 <button class="dropbtn">
                     about viagem
-                    <!-- <i class="fa fa-caret-down"></i> -->
                 </button>
                 <div class="about-panel">
                     <li>
@@ -27,7 +26,6 @@
             <div class="dropdown" id="choose-theme">
                 <button class="dropbtn">
                     choose theme
-                    <!-- <i class="fa fa-caret-down"></i> -->
                 </button>
                 <div class="theme-menu">
                     <li id="city">city skyline</li>
@@ -44,7 +42,7 @@
 					<h2>add an upcoming trip</h2>
 				</div>
                 <div class="form-panel" style="display: block">
-                    <form onsubmit="return Client.handleSubmit(event)">
+                    <form class="new-trip" onsubmit="return Client.handleSubmit(event)">
                         <label class="label-main" id="label-destination" for="destination">Where are you going?</label>
                         <div id="city-tip">Please enter the CITY nearest to your destination</div>
                         <input type="text" id="destination" required maxlength="25">
@@ -71,6 +69,7 @@
                     <div id="trips-container">
                         <div id="app-overlay">&nbsp;</div>
                         <div class="trip-card-modal">&nbsp;</div>
+                        <div class="itinerary-modal">&nbsp;</div>
                     </div>
                 </div>
 			</div>
