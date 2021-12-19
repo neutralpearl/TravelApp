@@ -51,7 +51,6 @@ const prepareItineraryForm = (data,itineraryData) => {
         let found = itineraryData.findIndex(itinerary => {
             return itinerary.city === data.location.city;
         })
-        console.log('FOUND' + found);
 
         // if itinerary info already exists, put previous entries into form so user can see & edit existing data
         if (found !== -1){
