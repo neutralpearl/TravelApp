@@ -49,7 +49,7 @@ const addTripCard = async data => {
 
     // replaces city image with generic travel image if not retrieved from Pixabay
     if(data.noPhoto === 'true') {
-        byClass('city-image')[byClass('city-image').length-1].style.backgroundImage = `url('http://localhost:3000/src/client/media/wing.jpg')`;
+        byClass('city-image')[byClass('city-image').length-1].style.backgroundImage = `url('/assets/wing.jpg')`;
     }
     
     // add click listener for delete-trip button
@@ -63,7 +63,7 @@ const addTripCard = async data => {
         }
     })
 
-    prepareItineraryForm(data, itineraryData);
+    prepareItineraryForm(data,itineraryData);
 
     loadModalContent(data,tripLength);
 }

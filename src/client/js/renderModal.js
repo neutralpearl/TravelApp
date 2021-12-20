@@ -21,7 +21,7 @@ const loadModalContent = (data,tripLength) => {
                         <h2>your trip to ${data.location.city}</h2>
                     </div>
                     <button class="print"><i class="fas fa-print">&nbsp;</i></button>
-                    <button class="close-modal"><i class="fas fa-times">&nbsp;</i></button>
+                    <button class="close-modal" id="close-pdf"><i class="fas fa-times">&nbsp;</i></button>
                     <p class="modal-dates"><strong>${data.dates.departDate.toLocaleDateString('en-us')}</strong> — <strong>${data.dates.returnDate.toLocaleDateString('en-us')}</strong> &nbsp; (${tripLength} days, ${tripLength -1} nights)</p>
                 </div>
                 <div class="weather-forecast">   
@@ -34,11 +34,11 @@ const loadModalContent = (data,tripLength) => {
                         <p class="weekday">${days[new Date(data.forecast_weather.inFiveDays.day).getDay()]}</p> 
                     </div>
                     <div class="dates-row">
-                        <p class="calendar-date">${months[new Date(data.forecast_weather.tomorrow.day).getMonth()]} ${new Date(data.forecast_weather.tomorrow.day).getDate()}</p>
-                        <p class="calendar-date">${months[new Date(data.forecast_weather.inTwoDays.day).getMonth()]} ${new Date(data.forecast_weather.inTwoDays.day).getDate()}</p>
-                        <p class="calendar-date">${months[new Date(data.forecast_weather.inThreeDays.day).getMonth()]} ${new Date(data.forecast_weather.inThreeDays.day).getDate()}</p>
-                        <p class="calendar-date">${months[new Date(data.forecast_weather.inFourDays.day).getMonth()]} ${new Date(data.forecast_weather.inFourDays.day).getDate()}</p>
-                        <p class="calendar-date">${months[new Date(data.forecast_weather.inFiveDays.day).getMonth()]} ${new Date(data.forecast_weather.inFiveDays.day).getDate()}</p> 
+                        <p class="calendar-date">${months[new Date(data.forecast_weather.tomorrow.day).getMonth()]} ${new Date(data.forecast_weather.tomorrow.day).getDate() +1}</p>
+                        <p class="calendar-date">${months[new Date(data.forecast_weather.inTwoDays.day).getMonth()]} ${new Date(data.forecast_weather.inTwoDays.day).getDate() +1}</p>
+                        <p class="calendar-date">${months[new Date(data.forecast_weather.inThreeDays.day).getMonth()]} ${new Date(data.forecast_weather.inThreeDays.day).getDate() +1}</p>
+                        <p class="calendar-date">${months[new Date(data.forecast_weather.inFourDays.day).getMonth()]} ${new Date(data.forecast_weather.inFourDays.day).getDate() +1}</p>
+                        <p class="calendar-date">${months[new Date(data.forecast_weather.inFiveDays.day).getMonth()]} ${new Date(data.forecast_weather.inFiveDays.day).getDate() +1}</p> 
                     </div>
                     <div class="icons-row">
                         <img class="forecast-icon" src="${weatherbitIconURLBase}${data.forecast_weather.tomorrow.icon}.png">
@@ -116,19 +116,19 @@ const loadModalContent = (data,tripLength) => {
                 <p>${itineraryData[found].returnDetails}</p> 
                 <p>${itineraryData[found].accommodations}</p> 
                 <p>${itineraryData[found].visaInfo}</p>  
-        `;
-        } 
-
-        // show modal
-        byClass('trip-card-modal')[0].style.display='block';
+            `;
+        }
 
         // add event listener to close-modal button
-        byClass('close-modal')[0].addEventListener('click', event => {
+        byId('close-pdf').addEventListener('click', event => {
             byId('app-overlay').style.display='none';
             byClass('trip-card-modal')[0].style.display='none';
         });
+
+        // show modal
+        byClass('trip-card-modal')[0].style.display='block';
     })  
- 
+
 }
 
 export { loadModalContent }

@@ -48,7 +48,7 @@ const handleSubmit = async event => {
             } 
 
             // attempt to get data from server
-            await fetch('http://localhost:3000/store-trip-data',responseOptions)
+            await fetch('http://localhost:3000/retrieve-trip-data',responseOptions)
             .then(async tripData => {
                 newTripData = await tripData.json(); // object containing tripData
         

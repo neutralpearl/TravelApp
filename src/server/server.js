@@ -1,9 +1,15 @@
 const path = require('path');
-const dotenv = require('dotenv');
 const fetch = require('cross-fetch');
+
+const dotenv = require('dotenv');
 dotenv.config({ 
     path: path.resolve(__dirname, "../.env") 
 });
+
+// save API keys as environmental variables
+const GEONAMES_KEY = process.env.GEONAMES_KEY;
+const WEATHERBIT_KEY = process.env.WEATHERBIT_KEY;
+const PIXABAY_KEY = process.env.PIXABAY_KEY;
 
 // Require Express to run server and routes
 const express = require('express');
@@ -16,11 +22,6 @@ const app = express();
 app.use(express.static('dist'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-
-// save API keys as environmental variables
-const GEONAMES_KEY = process.env.GEONAMES_KEY;
-const WEATHERBIT_KEY = process.env.WEATHERBIT_KEY;
-const PIXABAY_KEY = process.env.PIXABAY_KEY;
 
 // Cors for cross origin allowance
 const cors = require('cors');
@@ -55,7 +56,7 @@ const serverURL = `http://localhost:${port}`;
 // }
 
 // posts city
-app.post('/store-trip-data/', async (req, res) => {
+app.post('/retrieve-trip-data/', async (req, res) => {
 
     // initialize tripData object, into which API data will be added
     const tripData = {
@@ -334,7 +335,7 @@ app.get('/get-pixabay-photo/:city', async (req, res) => {
     const key = process.env.PIXABAY_KEY;
 
     // https://pixabay.com/api/?key={ KEY }&q=yellow+flowers&image_type=photo
-    const url = `${endpoint}?key=${key}&q=${city}&image_type=photo`;
+    const url = `${endpoint}?key=${key}&q=${city}&image_type=photo&safesearch=true`;
     // console.log(url);
 
     const photo = {};

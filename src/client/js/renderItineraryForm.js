@@ -12,7 +12,7 @@ const prepareItineraryForm = (data,itineraryData) => {
             <div class="modal-body">
                 <div class="modal-header" id ="itinerary-header">
                     <p class="modal-section-label" id="itinerary-title"><i class="far fa-edit" aria-hidden="true"></i> &nbsp; Edit itinerary details for ${data.location.city}</p>
-                    <button class="close-modal"><i class="fas fa-times">&nbsp;</i></button>
+                    <button class="close-modal" id="close-itinerary"><i class="fas fa-times">&nbsp;</i></button>
                 </div>
                 <form class="itinerary">
                     <div class="visas-container">&nbsp;</div>
@@ -51,7 +51,6 @@ const prepareItineraryForm = (data,itineraryData) => {
         let found = itineraryData.findIndex(itinerary => {
             return itinerary.city === data.location.city;
         })
-
         // if itinerary info already exists, put previous entries into form so user can see & edit existing data
         if (found !== -1){
             byId('visas').value = itineraryData[found].visaInfo;
@@ -61,11 +60,8 @@ const prepareItineraryForm = (data,itineraryData) => {
             byId('itinerary-misc').value = itineraryData[found].itineraryMisc;
         }
 
-        // show modal
-        byClass('itinerary-modal')[0].style.display='block';
-
         // add event listener to close-modal button
-        byClass('close-modal')[0].addEventListener('click', event => {
+        byId('close-itinerary').addEventListener('click', event => {
             byId('app-overlay').style.display='none';
             byClass('itinerary-modal')[0].style.display='none';
         });
@@ -94,6 +90,9 @@ const prepareItineraryForm = (data,itineraryData) => {
                 }
             })
         }
+
+        // show modal
+        byClass('itinerary-modal')[0].style.display='block';
     })
 
 }

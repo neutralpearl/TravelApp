@@ -434,7 +434,7 @@ textarea{
         .weather-forecast {
             display: grid;
             grid-template-columns: 100%;
-            grid-template-rows: repeat(3,1.5em) 60px 2em 2em;
+            grid-template-rows: repeat(2,1.5em) 1em 60px 2em 1.5em;
             border: 2px solid $dark-grey;
             padding: 10px;
             border-radius: $rounded-corners;
@@ -480,17 +480,20 @@ textarea{
             @include trip-card-label;
         }
 
-        .temp-high{ 
+        .temp-high,
+        .temp-low{ 
+            font-size: smaller;
+
+            span {
+                font-weight: 600;
+            }
+        }
+        .temp-high {
             text-align: right;
         }
 
         .temp-low {
             text-align: left;
-        }
-
-        .temp-high span,
-        .temp-low span {
-            font-weight: 600;
         }
 
         .forecast-icon {
