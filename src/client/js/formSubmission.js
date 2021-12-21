@@ -1,64 +1,37 @@
 import { byId } from '..';
+import { animateValidation } from './manageValidationUI';
 import { validateDateRange } from './dateValidation';
-// import { postTripData } from './postToServer';
 import { handleInvalidCity } from './inputErrorHandler';
 import { addTripCard } from './showNewTrip';
 
 
-// helper function
-// const checkDates = async (departDate,returnDates) => {
-//     // validate date range
-//     datesValidated = await validateDateRange(departDate,returnDate);
-//     console.log('datesValidated = ' + datesValidated);
-// }
-
 const handleSubmit = async event => {
-    event.preventDefault();
+    event.preventDefault(); // block default page reload after form submission
 
-    if (byId('city-validation') !== null){
-        byId('city-validation').remove();
-    }
-    if (byId('dates-validation') !== null){
-        byId('dates-validation').remove();
-    }
+    console.log('form submitted . . . '); // debugging
+    animateValidation(); // show "verifying your destination" animation while server retrieves data
 
-    const validationMsg = document.createElement('div');
-    validationMsg.id='input-validation';
-    validationMsg.innerHTML='verifying your destination...';
-    byId('msg-container').appendChild(validationMsg);
-    byId('input-validation').classList.add('animate__animated','animate__flipInX','animate__repeat-3');
-    
-    setTimeout( () => {
-        if(byId('input-validation') !== null){
-            byId('input-validation').remove();
-        }
-    }, 2500);
-
-
+    // save form inputs
     const city = byId('destination').value;
     let departDate = byId('start-date').value;
     let returnDate = byId('end-date').value;
 
-    // console.log(`city = ${city} departing ${departDate} returning ${returnDate}`); // debugging
-    console.log('form submitted . . . ');
-
-    let datesValidated = false; // initalize to false; should be truthy only if date range passes validation
-    let tripDataReceived = false;
+    let datesValidated = false; // should become truthy only if date range passes validation
+    let tripDataReceived = false; // should become truthy only if trip data is retrieved from server
     
     try {
+        // make sure return date is after departure
         datesValidated = await validateDateRange(departDate,returnDate);
-        // console.log('datesValidated = ' + datesValidated); // debugging
+    
         if (!datesValidated) {
-            throw new Error('Dates invalid');
+            throw new Error('Dates invalid'); 
         } else {
-            //pulse animation on trips container
-            byId('view-trips').classList.add('animate__animated','animate__pulse');
-            byId('no-trips').style.display = 'none';
             
-            // initialize server-side object to store new trip variables
-            let newTripData = {};
+            byId('view-trips').classList.add('animate__animated','animate__pulse'); // pulse animation on trips container
+            byId('no-trips').style.display = 'none'; // remove "You don't have any saved trips" placeholder text
+            
+            let newTripData = {}; // initialize object to store new trip variables
 
-            // fetch to server.js POST route
             //configure POST fetch
             const responseOptions = {
                 method: 'POST',
@@ -72,38 +45,46 @@ const handleSubmit = async event => {
                     departDate: `${datesValidated[0]}`,
                     returnDate: `${datesValidated[1]}`
                 })
-            }
+            } 
 
-            await fetch('http://localhost:3000/store-trip-data',responseOptions)
+            // attempt to get data from server
+            await fetch('http://localhost:3000/retrieve-trip-data',responseOptions)
             .then(async tripData => {
-                // return tripData;
-                newTripData = await tripData.json(); 
-                // console.log(newTripData); // object containing tripData
+                newTripData = await tripData.json(); // object containing tripData
+        
+                // overwrite dates with objects in lieu of strings
+                newTripData.dates.departDate = datesValidated[0];
+                newTripData.dates.returnDate = datesValidated[1];
+        
+                // msg object indicates server-side error
                 if (!newTripData.msg) {
                     tripDataReceived = true;
-                    // overwrite dates with objects in lieu of strings
-                    newTripData.dates.departDate = datesValidated[0];
-                    newTripData.dates.returnDate = datesValidated[1];
+                    return newTripData;
+                } else if (newTripData.msg === 'photo not found'){
+                    newTripData.noPhoto = 'true'; // add key indicating if no photo could be retrieved
+                    console.log(`no photo available for ${newTripData.location.city}`);
+                    tripDataReceived = true; // because rest of data is available even if photo is not
                     return newTripData;
                 } else {
                     throw new Error('No data retrieved for that city');
+                }
+            })
+            .then(() => {
+                if (tripDataReceived) {
+                    console.log(newTripData); // for debugging
+                    addTripCard(newTripData); // parses retrieved data and adds corresponding trip card
+                    byId('view-trips').scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"}); // scrolls window to newly-added trip card
                 }
             })
             .catch(error => {
                 console.log(error);
                 handleInvalidCity(); // show error message in UI indicating that data couldn't be retrieved for that city
             });
-
-            if (tripDataReceived) {
-                console.log(newTripData); // for debugging
-                addTripCard(newTripData);
-                byId('view-trips').scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
-            }
         }
-
     } catch(error) {
         console.log(error);
     }
+    
 }
 
 export { handleSubmit }

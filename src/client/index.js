@@ -3,14 +3,17 @@
 // import js files
 import { chooseTheme } from './js/themePicker';
 import { handleSubmit } from './js/formSubmission';
+import { animateValidation } from './js/manageValidationUI';
 import { validateDateRange } from './js/dateValidation';
-import { postTripData } from './js/postToServer';
 import { handleInvalidCity } from './js/inputErrorHandler';
 import { addTripCard } from './js/showNewTrip';
+import { prepareItineraryForm } from './js/renderItineraryForm';
+import { handleItineraryInput } from './js/itinerarySubmission';
 import { loadModalContent } from './js/renderModal';
 
 // import Sass stylesheets
 import './styles/app.scss'; 
+import './styles/components.scss';
 import './styles/resets.scss';
 
 // import image files // NOT WORKING
@@ -18,6 +21,7 @@ import mountains from './media/mountains.jpg';
 import palms from './media/palms.jpg';
 import skyline from './media/skyline.png'; 
 import temples from './media/temples.jpg';
+import plane from './media/wing.jpg';
 
 // ============= GLOBAL FUNCTIONS =================
 
@@ -27,6 +31,21 @@ window.byId = byId;
 const byClass = name => document.getElementsByClassName(name);
 window.byClass = byClass;
 
+// ============= GLOBAL VARIABLES =================
+let itineraryData = [];
+window.itineraryData = itineraryData;
+
+class tripItinerary {
+    constructor(city,visaInfo,departureDetails,returnDetails,accommodations,itineraryMisc,selectedTravelMethods) {
+        this.city = city;
+        this.visaInfo = visaInfo;
+        this.departureDetails = departureDetails;
+        this.returnDetails =  returnDetails;
+        this.accommodations =  accommodations;
+        this.itineraryMisc =  itineraryMisc;
+        this.selectedTravelMethods =  selectedTravelMethods;
+    }
+  }
 
 // ============= DOM SET-UP ON LOAD =================
 
@@ -80,12 +99,17 @@ export {
     palms,
     skyline, 
     temples,
+    plane,
     byClass,
     byId,
+    itineraryData,
+    tripItinerary,
     handleSubmit,
+    animateValidation,
     validateDateRange,
-    postTripData,
     handleInvalidCity,
     addTripCard,
+    prepareItineraryForm,
+    handleItineraryInput, 
     loadModalContent
 }

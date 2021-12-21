@@ -7,11 +7,14 @@ $font-logo: 'Meow Script', serif;
 $font-base: 'Source Sans Pro', sans-serif;
 $font-detail: 'Readex Pro', sans-serif;
 $dark-grey: #222;
+$medium-grey:#949494;
 $marigold: #ffb14a;
 $marigold-light: #ffca68;
 $error-red: rgb(182, 0, 0);
+$go-green: #79d55b;
 $rounded-corners: 14px;
-$small-screen: 600px;
+$small-screen: 400px;
+$medium-screen: 836px;
 
 /* ------- Mixins ------ */
 
@@ -59,10 +62,6 @@ $small-screen: 600px;
     }
 }
 
-// button > i {
-//     padding: 0 !important;
-// }
-
 /* ------- Structural Elements ------ */
 
 #app-overlay {
@@ -70,8 +69,8 @@ $small-screen: 600px;
     top: -100vh;
     left: -50vh;
     display: none;
-    width: 200vw;
-    height: 200vh;
+    width: 150vw;
+    height: 300vh;
     background-color: #111;
     opacity: 0; // default transparent
     z-index: 5;
@@ -126,6 +125,7 @@ nav {
     z-index: 1;
     position: sticky;
 
+
     .dropdown {
         overflow: hidden;
     
@@ -138,6 +138,10 @@ nav {
             background-color: inherit;
             font-family: inherit;
             margin: 0;
+
+            @media screen and (max-width: $small-screen) {  
+                padding: 0 15px;
+            }
         }
 
         &#about {
@@ -203,539 +207,19 @@ nav {
     }
 }
 
-@media screen and (max-width: $small-screen) {
-    nav .dropdown .dropbtn {
-        padding: 0 15px;
-    }
-}
-
 main {
     font-family: $font-base;
     min-height: 100px;
-    padding: 1em;
+    padding: 1em 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
 
-#add-trip {
-    margin: 10% 5% 0 5%;
-    width: auto;
-    min-width: 400px;
-    max-width: 800px;
-    background-color:#fff;
-    z-index: 0;
-    display: flex;
-    flex-direction: column;
-    flex-shrink: 2;
-    padding: 1em 1em 1.5em 1em;
-    border-radius: $rounded-corners;
-
-    .form-panel {
-        background-color:rgb(209 182 206);
-        border-radius: $rounded-corners;
-        padding: 20px !important;
-        transition-duration: 400ms;
-        box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    @media screen and (max-width: $small-screen) {
+        padding: 1em 0;
     }
 }
-
-.title{
-    height: 2em;
-    margin-bottom: 1.2em;
-}
-
-@media screen and (max-width: $small-screen) {
-    .title{
-        margin-bottom: .5em;
-    }
-}
-
-form {
-    display: grid;
-    justify-content: center;
-    align-items: center;
-    grid-gap: 5px;
-    grid-template-columns: repeat(12,1fr);
-
-    &.new-trip {
-        grid-template-rows: repeat(3,1fr) 0px 40px;
-    }
-
-    #city-tip {
-        grid-column: 1 / span 5;
-        grid-row: 2 / 3;
-        font-size: smaller;
-    }
-
-    &.itinerary {
-        grid-template-rows: repeat(12,1fr);
-
-
-    }
-}
-
-label{
-    display:block;
-    font-weight: 700;
-    padding: 5px 0 !important;
-
-    &.label-main {
-        @include form-special;
-        margin-top: -5px;
-    }
-
-    &.label-detail {
-        font-size: smaller;
-        font-weight: 600;
-    }
-
-    &#label-destination {
-        grid-column: 1 / span 6;
-        grid-row: 1 / 2;
-    }
-    &#label-when {
-        grid-column: 7 / span 6;
-        grid-row: 1 / 2;
-    }
-    &#label-start-date {
-        grid-column: 7 / 8;
-        grid-row: 2 / 3;
-        text-align: end;
-    }
-    &#label-end-date {
-        grid-column: 7 / 8;
-        grid-row: 3 / 4;
-        text-align: end;
-        
-    }
-}
-
-input{
-    display:block;
-    padding: .5em;
-    height: 32px;
-    max-width: 100%;
-    background-color: #f9f9f9;
-    color: $dark-grey; 
-    font-family: $font-base !important;
-    font-size: smaller;
-    border-radius: 4px;
-    box-shadow: inset 0 1px 4px 0 #adadad;
-    border: 1px solid #222;
-
-    &#destination{
-        grid-column: 1 / span 5;
-        grid-row: 3 / 4;
-    }
-    &#start-date{
-        grid-column: 8 / -1;
-        grid-row: 2 / 3;
-        width: auto !important;
-    }
-    &#end-date{
-        grid-column: 8 / -1;
-        grid-row: 3 / 4;
-        width: auto !important;
-    }
-
-    // submit button
-    &#submit-form{
-        grid-column: 1 / -1;
-        grid-row: 5 / 6;
-        height: 40px;
-        background-color: $dark-grey;
-        color: #fff;
-        border: none;
-        font-size: inherit;
-        padding: 5px;
-        box-shadow: none;
-
-        &:hover {
-            background-color: #111;
-            color: $marigold;
-            transition-duration: 400ms;
-        }
-
-        &:active {
-            background-color: #000;
-            color: $marigold-light;
-            border: 1px solid $marigold-light;
-        }
-    }
-}
-
-@media screen and (max-width: $small-screen){
-    form {
-        grid-template-columns: repeat(6,1fr);
-        grid-template-rows: repeat(3,1fr) 0px repeat(3,1fr) 0px 50px;
-    }
-
-    label#label-destination {
-        grid-column: 1 / span 6;
-        grid-row: 1 / 2;
-    }
-    #city-tip {
-        grid-column: 1 / span 6;
-        grid-row: 2 / 3;
-    }
-    input#destination{
-        grid-column: 1 / span 6;
-        grid-row: 3 / 4;
-    }
-    label#label-when {
-        grid-column: 1 / span 6;
-        grid-row: 5 / 6;
-    }
-    label#label-start-date {
-        grid-column: 1 / 2;
-        grid-row: 6 / 7;
-        text-align: end;
-    }
-    input#start-date{
-        grid-column: 2 / span 5;
-        grid-row: 6 / 7;
-    }
-    label#label-end-date {
-        grid-column: 1 / 2;
-        grid-row: 7 / 8;
-        text-align: end;
-    }
-    input#end-date{
-        grid-column: 2 / span 5;
-        grid-row: 7 / 8;
-    }
-
-    input#submit-form{
-        grid-column: 1 / span 6;
-        grid-row: 9 / 10;
-    }
-}
-
-#input-validation {
-    text-align: center;
-    font-family: $font-detail;
-    padding: 10px 0;
-}
-
-#city-validation,
-#dates-validation {
-    @extend #input-validation;
-    color: $error-red;
-}
-
-.toggle {
-    height: 5px;
-    display: flex;
-    justify-content: flex-end;
-}
-
-#show-form {
-    padding: 8px 0;
-    font-size: smaller;
-    &::after {
-        margin-left: 5px;
-        content: "▼";
-    }   
-}
-
-#hide-form{
-    padding: 8px 0;
-    font-size: smaller;
-    margin-top: -4px;
-
-    &::after {
-        margin-left: 5px;
-        content: "▲";
-    } 
-}
-
-#view-trips {
-    @extend #add-trip;
-    min-width: 400px;
-    max-width: 1200px;
-
-    h2 {
-        text-align: right;
-    }
-
-    #no-trips {
-        text-align: center;
-    }
-
-    .trips-panel {
-        @extend .form-panel;
-    }
-
-    #trips-container {
-        display: flex;
-        flex-wrap: wrap-reverse;
-        flex-direction: row-reverse;
-        justify-content: space-evenly;
-        grid-gap: 20px;
-    }
-
-    .trip-card {
-        background-color: #fff;
-        padding: 1em;
-        height: auto;
-        border-radius: $rounded-corners;
-        display: grid;
-        grid-template-columns: repeat(2, 66px) 10px 80px 34px 24px;
-        grid-template-rows: 30px 35px 20px repeat(6, 40px) repeat(2, 30px);
-        align-items: center;
-        box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
-        transition-duration: 400ms;
-
-        &:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 3px 10px rgb(0 0 0 / 0.5);
-        }
-    }
-
-    .countdown {
-        grid-column: 1 / span 3;
-        grid-row: 1 / span 1;
-        font-size: smaller;
-    }
-
-    .country-flag {
-        grid-column: 5;
-    }
-
-    .delete-trip {
-        grid-column: 6 / span 1;
-        grid-row: 1 / span 1;
-        text-align: right;
-
-        i {
-            font-size: smaller;
-            margin-right: -10px;
-        }
-
-        &:hover {
-            color: $error-red;
-        }
-    }
-
-    .destination {
-        @include trip-card-label;
-        font-size: 1.5em;
-        grid-column: 1 / span 7;
-        grid-row: 2 / span 1;
-    }
-
-    .dates {
-        grid-column: 1 / span 7;
-        grid-row: 3 / span 1;
-        margin-top: 5px;
-    }
-
-    #trip-length {
-        font-family: $font-detail;
-    }
-
-    .city-image {
-        grid-column: 1 / span 7;
-        grid-row: 4 / span 5;
-        background-size: cover; 
-        min-height: 170px;
-    }
-
-    .current-weather-container {
-        grid-column: 1 / span 2;
-        grid-row: 9 / span 3;
-        border: 2px solid #d1b6ce;
-        border-radius: $rounded-corners;
-        height: 100px;
-    }
-
-    .current-weather-label {
-        grid-column: 1 / span 2;
-        grid-row: 9 / span 1;
-        text-align: center;
-        @include trip-card-label;
-    }
-
-    .current-weather-temp {
-        grid-column: 1 / span 1;
-        grid-row: 10 / span 1;
-        text-align: center;
-        padding-left: 20px;
-        // font-size: larger;
-    }
-
-    .current-weather-icon {
-        grid-column: 2 / span 1;
-        grid-row: 10 / span 1;
-        height: 45px;
-    }
-
-    .current-weather-description {
-        grid-column: 1 / span 2;
-        grid-row: 11 / span 1;
-        font-size: smaller;
-        text-align: center;
-    }
-
-    button.add-itinerary {
-        grid-column: 4 / span 3;
-        grid-row: 9 / span 1;
-        border-radius: $rounded-corners;
-        font-size: smaller;
-        margin-top: 5px;
-        height: 45px;
-        background-color: #949494;
-        color: #fff;
-        font-weight: 600;
-
-        i {
-            font-size: 14px;
-        }
-    }
-
-    button.open-modal {
-        grid-column: 4/span 3;
-        grid-row: 10 /span 2;
-        height: 45px;
-        margin-top: 15px;
-        font-weight: 300;
-        @include featured-button;
-    }
-
-    .trip-card-modal,
-    .itinerary-modal {
-        position: fixed;
-        display: none;
-        padding: 20px;
-        top: 5vh;
-        z-index: 10;
-        background-color: rgb(172, 172, 172);
-        height: 90vh;
-        width: 678px; // fix later
-        border-radius: $rounded-corners;
-        box-shadow: 0 3px 10px rgb(0 0 0 / 0.9);
-
-        .modal-body {
-            display: flex;
-            flex-direction: column;
-            padding:20px;
-            background-color: #fff;
-            box-shadow: -7px -7px 8px -4px rgb(0 0 0 / 0.2);
-            grid-gap: 20px;
-            min-height: 100px;
-        }
-
-        .modal-header {
-            display: grid;
-            grid-template-columns: 90% repeat(2,1fr);
-            grid-template-rows: 70% 30%;
-
-            h2 {
-                text-align: left;
-            }
-
-            i.fas {
-                font-size: larger;
-            }
-        }
-        
-
-        .weather-forecast {
-            display: grid;
-            grid-template-columns: 100%;
-            grid-template-rows: 2em 2em 60px 2em 2em;
-            border: 2px solid $dark-grey;
-            padding: 20px;
-            border-radius: $rounded-corners;
-        }
-    
-        .modal-section-label {
-            @include trip-card-label;
-        }
-
-        .days-row{
-            @include forecast-grid-row;
-            grid-template-columns: repeat(5, 1fr);
-
-            p {
-                font-size: smaller;
-            }
-        }
-
-        .icons-row{
-            @include forecast-grid-row;
-            grid-template-columns: repeat(5, 1fr);
-        }
-
-        .temps-row {
-            @include forecast-grid-row;
-            grid-gap: 8px;
-            grid-template-columns: repeat(10, 1fr);
-
-            P {
-                font-size: smaller;
-            }
-        }
-
-        .desc-row {
-            @include forecast-grid-row;
-            grid-template-columns: repeat(5, 1fr);
-
-            P {
-                font-size: smaller;
-                // font-weight: 600;
-            }
-        }
-
-        .weekday {
-            @include trip-card-label;
-        }
-
-        .temp-high{ 
-            text-align: right;
-        }
-
-        .temp-low {
-            text-align: left;
-        }
-
-        .temp-high span,
-        .temp-low span {
-            font-weight: 600;
-        }
-
-        .forecast-icon {
-            height: 60px;
-        }
-
-        #itinerary-title {
-            grid-row: 1 / span 1;
-            grid-column: 1 / span 12;
-        }
-
-        #itinerary-title {
-            grid-row: 1 / span 1;
-            grid-column: 1 / span 12;
-        }
-
-        #label-hotel {
-            grid-row: 2 / span 1;
-            grid-column: 1 / span 4;
-        }
-
-        #hotel {
-            grid-row: 2 / span 1;
-            grid-column: 5 / span 8;
-        }
-
-        
-
-    }
-
-}
-
 
 button {
     font-family: $font-base;
@@ -752,6 +236,11 @@ button {
         cursor: pointer;
         color: $marigold;
     }
+
+    &:disabled {
+        cursor: not-allowed;
+        color: $medium-grey;
+    }
 }
 
 
@@ -761,7 +250,11 @@ footer {
     justify-content: flex-end;
     align-content: flex-end;
     background-color: $dark-grey;
-    min-height: 200px;
+    min-height: 120px;
+
+    @media screen and (max-width: $small-screen) {
+        min-height: 80px;
+    }
 }
 
 footer p {

@@ -10,7 +10,9 @@ const chooseTheme = event => {
     const setColors = color => {
         byClass('form-panel')[0].style.backgroundColor = color;
         byClass('trips-panel')[0].style.backgroundColor = color;
-        document.styleSheets[6].cssRules[64].style.border = `2px solid ${color}`;       
+        // changes border rule for .current-weather-container // MAKE SURE THE INDEX IS CORRECT!
+        document.styleSheets[8].cssRules[77].style.border = `2px solid ${color}`;   
+        document.styleSheets[8].cssRules[107].style.backgroundColor = color; 
     }
     
     switch (themeChoice.id) {

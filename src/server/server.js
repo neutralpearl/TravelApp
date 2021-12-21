@@ -1,9 +1,15 @@
 const path = require('path');
-const dotenv = require('dotenv');
 const fetch = require('cross-fetch');
+
+const dotenv = require('dotenv');
 dotenv.config({ 
     path: path.resolve(__dirname, "../.env") 
 });
+
+// save API keys as environmental variables
+const GEONAMES_KEY = process.env.GEONAMES_KEY;
+const WEATHERBIT_KEY = process.env.WEATHERBIT_KEY;
+const PIXABAY_KEY = process.env.PIXABAY_KEY;
 
 // Require Express to run server and routes
 const express = require('express');
@@ -16,11 +22,6 @@ const app = express();
 app.use(express.static('dist'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-
-// save API keys as environmental variables
-const GEONAMES_KEY = process.env.GEONAMES_KEY;
-const WEATHERBIT_KEY = process.env.WEATHERBIT_KEY;
-const PIXABAY_KEY = process.env.PIXABAY_KEY;
 
 // Cors for cross origin allowance
 const cors = require('cors');
@@ -42,20 +43,20 @@ const serverURL = `http://localhost:${port}`;
 
 //===============================================================//
 
-const allTrips = []; // will store all trips posted to server
+// const allTrips = []; // will store all trips posted to server
 
-// create class to store individual trip records
-class Trip {
-    constructor(city,departDate,returnDate) {
-        this.city = city;
-        this.departDate = departDate;
-        this.returnDate = returnDate;
-        this.tripId = ''; // create unique identifier for each trip?
-    }
-}
+// // create class to store individual trip records
+// class Trip {
+//     constructor(city,departDate,returnDate) {
+//         this.city = city;
+//         this.departDate = departDate;
+//         this.returnDate = returnDate;
+//         this.tripId = ''; // create unique identifier for each trip?
+//     }
+// }
 
 // posts city
-app.post('/store-trip-data/', async (req, res) => {
+app.post('/retrieve-trip-data/', async (req, res) => {
 
     // initialize tripData object, into which API data will be added
     const tripData = {
@@ -88,6 +89,7 @@ app.post('/store-trip-data/', async (req, res) => {
         tripData.coordinates.latitude = data.latitude;
         tripData.coordinates.longitude = data.longitude;
         tripData.location.country_code = data.country_code;
+        tripData.location.country_name = data.country_name;
 
         if (!(typeof tripData.coordinates.latitude === 'undefined')){
             return tripData;
@@ -172,7 +174,7 @@ app.post('/store-trip-data/', async (req, res) => {
         }  
     })
     .then(tripData => {
-        allTrips.push(tripData);
+        // allTrips.push(tripData);
         res.send(JSON.stringify(tripData)); // sends object to client
     })
     .catch(error => {
@@ -214,6 +216,7 @@ app.get('/get-geonames/:city', async (req,res) => {
             coordinates.latitude = json.geonames[0].lat;
             coordinates.longitude = json.geonames[0].lng;
             coordinates.country_code = json.geonames[0].countryCode;
+            coordinates.country_name = json.geonames[0].countryName;
             return coordinates;
         })
         .catch (error => {
@@ -332,7 +335,7 @@ app.get('/get-pixabay-photo/:city', async (req, res) => {
     const key = process.env.PIXABAY_KEY;
 
     // https://pixabay.com/api/?key={ KEY }&q=yellow+flowers&image_type=photo
-    const url = `${endpoint}?key=${key}&q=${city}&image_type=photo`;
+    const url = `${endpoint}?key=${key}&q=${city}&image_type=photo&safesearch=true`;
     // console.log(url);
 
     const photo = {};

@@ -1,21 +1,20 @@
 import { byClass, byId } from "..";
+import { prepareItineraryForm } from "./renderItineraryForm";
 import { loadModalContent } from "./renderModal";
 
 const addTripCard = async data => {
 
-    console.log('adding trip to UI...');
-    byClass('trips-panel')[0].style.display = 'block';
+    console.log('adding trip to UI...'); // for debugging
+    byClass('trips-panel')[0].style.display = 'block'; //
 
-    const tripsContainer = byId('trips-container');
+    const duration = data.dates.returnDate - data.dates.departDate; // returns time difference in milliseconds
+    const tripLength = Math.ceil(duration / (1000 * 60 * 60 * 24)); // returns time difference in days
 
-    const duration = data.dates.returnDate - data.dates.departDate; // milliseconds
-    const tripLength = Math.ceil(duration / (1000 * 60 * 60 * 24)); // days
+    const today = new Date(); // save today's date for countdown 
+    const daysToTrip = Math.ceil((data.dates.departDate - today) / (1000 * 60 * 60 * 24)); // returns countdown to departure in days
+    const numDays = (daysToTrip === 1) ? 'day' : 'days'; // ensures correct syntax for countdown message
 
-    const today = new Date();
-    const daysToTrip = Math.ceil((data.dates.departDate - today) / (1000 * 60 * 60 * 24));
-    const numDays = (daysToTrip === 1) ? 'day' : 'days';
-
-    const newCard = document.createElement('div');
+    const newCard = document.createElement('div'); // add new div element for trip card
     newCard.classList.add('trip-card-holder');
     newCard.innerHTML = `
         <div class="trip-card">
@@ -36,9 +35,10 @@ const addTripCard = async data => {
         </div>
     `;
 
-    // add card to DOM
-    tripsContainer.appendChild(newCard);
+    // add card to DOM as child of trip container element
+    byId('trips-container').appendChild(newCard);
 
+    // adjusts countdown messaging based on trip dates
     if (daysToTrip === 0) {
         byClass('countdown')[byClass('countdown').length-1].innerHTML = `<i class="far fa-calendar-alt" style="color: #79d55b;"></i><strong> &nbsp; Departing <em>today!</em></strong>`;
     } else if (daysToTrip < 0 && today < data.dates.returnDate){
@@ -47,8 +47,9 @@ const addTripCard = async data => {
         byClass('countdown')[byClass('countdown').length-1].innerHTML = `<i class="far fa-calendar-alt" style="color: rgb(182, 0, 0);"></i> &nbsp; Trip concluded`;
     }
 
+    // replaces city image with generic travel image if not retrieved from Pixabay
     if(data.noPhoto === 'true') {
-        byClass('city-image')[byClass('city-image').length-1].style.backgroundImage = `url('http://localhost:3000/src/client/media/wing.jpg')`;
+        byClass('city-image')[byClass('city-image').length-1].style.backgroundImage = `url('/assets/wing.jpg')`;
     }
     
     // add click listener for delete-trip button
@@ -62,57 +63,7 @@ const addTripCard = async data => {
         }
     })
 
-    byClass('add-itinerary')[byClass('add-itinerary').length-1].addEventListener('click', event => {
-        //show overlay & darken to cover background
-        byId('app-overlay').style.display='block';
-        byId('app-overlay').style.opacity='0.9';
-
-        // populate modal with content specific to this trip
-        byClass('itinerary-modal')[0].innerHTML = `
-            <div class="modal-body">
-                
-                <div class="modal-header">
-                    <button class="close-modal"><i class="fas fa-times">&nbsp;</i></button>
-                    
-                </div>
-                <form class="itinerary">
-                    <p class="modal-section-label" id="itinerary-title">Itinerary details for your trip to ${data.location.city}</p>
-                    <label class="label-detail" id="label-hotel" for="hotel">Hotel or AirBnB</label>
-                    <input type="text" id="hotel">
-                    <div class="travel-methods">
-                        <button class="travel-method"><i class="fas fa-plane">&nbsp;</i></button>
-                        <button class="travel-method"><i class="fas fa-train">&nbsp;</i></button>
-                        <button class="travel-method"><i class="fas fa-bus-alt">&nbsp;</i></button>
-                        <button class="travel-method"><i class="fas fa-car">&nbsp;</i></button>
-                        <button class="travel-method"><i class="fas fa-anchor">&nbsp;</i></button>
-                    </div>
-                    
-                    <label class="label-detail" id="label-departing-flight" for="departing-flight">departure travel details</label>
-                    <input type="text" id="departure-details">
-                    <div class="travel-methods">
-                        <button class="travel-method"><i class="fas fa-plane">&nbsp;</i></button>
-                        <button class="travel-method"><i class="fas fa-train">&nbsp;</i></button>
-                        <button class="travel-method"><i class="fas fa-bus-alt">&nbsp;</i></button>
-                        <button class="travel-method"><i class="fas fa-car">&nbsp;</i></button>
-                        <button class="travel-method"><i class="fas fa-anchor">&nbsp;</i></button>
-                    </div>
-                    <label class="label-detail" id="label-departing-flight" for="departing-flight">Return travel details</label>
-                    <input type="text" id="return-details">
-                    <textarea>
-                </form>
-            </div>
-        `;
-
-        // show modal
-        byClass('itinerary-modal')[0].style.display='block';
-
-        // add event listener to close-modal button
-        byClass('close-modal')[0].addEventListener('click', event => {
-            byId('app-overlay').style.display='none';
-            byClass('itinerary-modal')[0].style.display='none';
-        });
-    })
-
+    prepareItineraryForm(data,itineraryData);
 
     loadModalContent(data,tripLength);
 }
