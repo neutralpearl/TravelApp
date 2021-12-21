@@ -13,7 +13,8 @@ $marigold-light: #ffca68;
 $error-red: rgb(182, 0, 0);
 $go-green: #79d55b;
 $rounded-corners: 14px;
-$small-screen: 600px;
+$small-screen: 400px;
+$medium-screen: 836px;
 
 /* ------- Mixins ------ */
 
@@ -68,8 +69,8 @@ $small-screen: 600px;
     top: -100vh;
     left: -50vh;
     display: none;
-    width: 200vw;
-    height: 200vh;
+    width: 150vw;
+    height: 300vh;
     background-color: #111;
     opacity: 0; // default transparent
     z-index: 5;
@@ -124,6 +125,7 @@ nav {
     z-index: 1;
     position: sticky;
 
+
     .dropdown {
         overflow: hidden;
     
@@ -136,6 +138,10 @@ nav {
             background-color: inherit;
             font-family: inherit;
             margin: 0;
+
+            @media screen and (max-width: $small-screen) {  
+                padding: 0 15px;
+            }
         }
 
         &#about {
@@ -201,20 +207,18 @@ nav {
     }
 }
 
-@media screen and (max-width: $small-screen) {
-    nav .dropdown .dropbtn {
-        padding: 0 15px;
-    }
-}
-
 main {
     font-family: $font-base;
     min-height: 100px;
-    padding: 1em;
+    padding: 1em 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    @media screen and (max-width: $small-screen) {
+        padding: 1em 0;
+    }
 }
 
 button {
@@ -232,6 +236,11 @@ button {
         cursor: pointer;
         color: $marigold;
     }
+
+    &:disabled {
+        cursor: not-allowed;
+        color: $medium-grey;
+    }
 }
 
 
@@ -241,7 +250,11 @@ footer {
     justify-content: flex-end;
     align-content: flex-end;
     background-color: $dark-grey;
-    min-height: 200px;
+    min-height: 120px;
+
+    @media screen and (max-width: $small-screen) {
+        min-height: 80px;
+    }
 }
 
 footer p {

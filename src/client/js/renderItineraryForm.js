@@ -23,7 +23,7 @@ const prepareItineraryForm = (data,itineraryData) => {
                     <label class="label-detail" id="label-hotel" for="hotel">Accommodations</label>
                     <textarea type="text" id="hotel" placeholder="hotel, AirBnB, VRBO rental, etc."></textarea>
                     <label class="label-detail" id="label-departure">Departure travel</label>
-                    <ul class="travel-methods" id="travel-methods-departure">
+                    <ul class="travel-methods" id="travel-methods-departure" title="Select the travel methods you'll use to get to ${data.location.city}">
                         <li id="departure-plane"><i class="fas fa-plane">&nbsp;</i></li>
                         <li id="departure-train"><i class="fas fa-train">&nbsp;</i></li>
                         <li id="departure-bus"><i class="fas fa-bus-alt">&nbsp;</i></li>
@@ -32,7 +32,7 @@ const prepareItineraryForm = (data,itineraryData) => {
                     </ul>
                     <textarea type="text" id="departure-details" placeholder="'Delta Flight 285, confirmation #8f92sk, departing from JFK, boards 2pm...'"></textarea>
                     <label class="label-detail" id="label-return">Return travel</label>
-                    <ul class="travel-methods" id="travel-methods-return">
+                    <ul class="travel-methods" id="travel-methods-return" title="Select the travel methods you'll use to come home from ${data.location.city}">
                         <li id="return-plane"><i class="fas fa-plane">&nbsp;</i></li>
                         <li id="return-train"><i class="fas fa-train">&nbsp;</i></li>
                         <li id="return-bus"><i class="fas fa-bus-alt">&nbsp;</i></li>

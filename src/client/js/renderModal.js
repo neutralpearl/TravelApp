@@ -20,7 +20,7 @@ const loadModalContent = (data,tripLength) => {
                     <div class="title">
                         <h2>your trip to ${data.location.city}</h2>
                     </div>
-                    <button class="print"><i class="fas fa-print">&nbsp;</i></button>
+                    <button class="print" disabled title="Printing not currently supported"><i class="fas fa-print">&nbsp;</i></button>
                     <button class="close-modal" id="close-pdf"><i class="fas fa-times">&nbsp;</i></button>
                     <p class="modal-dates"><strong>${data.dates.departDate.toLocaleDateString('en-us')}</strong> — <strong>${data.dates.returnDate.toLocaleDateString('en-us')}</strong> &nbsp; (${tripLength} days, ${tripLength -1} nights)</p>
                 </div>
@@ -127,7 +127,7 @@ const loadModalContent = (data,tripLength) => {
 
         // show modal
         byClass('trip-card-modal')[0].style.display='block';
-    })  
+    }) 
 
 }
 
