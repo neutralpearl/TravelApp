@@ -37,7 +37,6 @@ const validateDateRange = (departDate,returnDate) => {
             throw new Error('Return date must be at least one day after departure date');
         } 
     } catch(error) {
-        // console.log(error);
         return false; // stops rest of form submission chain from proceeding
     }
 }

@@ -2,6 +2,7 @@ HTML
 ===================
 - alt tags
 - set up structure for itinerary info on pdf
+- register service worker
 
 UI
 ==============================
@@ -12,7 +13,7 @@ UI
 
 JS
 ==============================
-- export trip details to PDF? https://github.com/eKoopmans/html2pdf.js
+- add service worker to production config
 
 - local storage?
 - - https://www.taniarascia.com/how-to-use-local-storage-with-javascript/
