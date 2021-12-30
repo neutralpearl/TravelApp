@@ -62,19 +62,29 @@ $medium-screen: 836px;
     }
 }
 
+@mixin modal-section {
+    display: grid;
+    // border: 1px solid $dark-grey;
+    // background-color: $medium-grey;
+    padding: 10px;
+    border-radius: $rounded-corners;
+}
+
 /* ------- Structural Elements ------ */
 
 #app-overlay {
     position: fixed;
-    top: -100vh;
-    left: -50vh;
+    top: -150vh;
+    left: -100vh;
     display: none;
-    width: 150vw;
+    width: 200vw;
     height: 300vh;
     background-color: #111;
     opacity: 0; // default transparent
-    z-index: 5;
+    z-index: 10;
     transition-duration: 800ms;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 body{
@@ -123,11 +133,12 @@ nav {
     height: 50px;
     background-color: $dark-grey;
     z-index: 1;
-    position: sticky;
+    position: sticky !important;
 
 
     .dropdown {
         overflow: hidden;
+        z-index: 2;
     
         .dropbtn {
             color: #fff;

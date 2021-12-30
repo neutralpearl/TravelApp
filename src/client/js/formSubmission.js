@@ -1,5 +1,5 @@
 import { byId } from '..';
-import { animateValidation } from './manageValidationUI';
+import { animateValidation } from './UIhelperFunctions';
 import { validateDateRange } from './dateValidation';
 import { handleInvalidCity } from './inputErrorHandler';
 import { addTripCard } from './showNewTrip';

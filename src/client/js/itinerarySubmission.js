@@ -43,9 +43,8 @@ const handleItineraryInput = event => {
         itineraryData[found].returnDetails = returnDetails;
         itineraryData[found].accommodations = accommodations;
         itineraryData[found].selectedTravelMethods = selectedTravelMethods;
+        itineraryData[found].itineraryMisc = itineraryMisc;
     }
-    
-    // console.log(itineraryData); // for debugging
 
     // hide itinerary form
     byId('app-overlay').style.display='none';

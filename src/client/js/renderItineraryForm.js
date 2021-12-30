@@ -1,11 +1,10 @@
 import { byId } from "..";
+import { hideOverlay, showOverlay } from "./UIhelperFunctions";
 
 const prepareItineraryForm = (data,itineraryData) => {
 
     byClass('add-itinerary')[byClass('add-itinerary').length-1].addEventListener('click', event => {
-        //show overlay & darken to cover background
-        byId('app-overlay').style.display='block';
-        byId('app-overlay').style.opacity='0.9';
+        showOverlay();
 
         // populate modal with content specific to this trip
         byClass('itinerary-modal')[0].innerHTML = `
@@ -62,12 +61,11 @@ const prepareItineraryForm = (data,itineraryData) => {
 
         // add event listener to close-modal button
         byId('close-itinerary').addEventListener('click', event => {
-            byId('app-overlay').style.display='none';
             byClass('itinerary-modal')[0].style.display='none';
+            hideOverlay();
         });
 
         // add event listener to travel method icons
-        // const travelMethodLists = byClass('travel-methods');
         const travelMethodsDeparture = byId('travel-methods-departure').children;
         for (let i = 0; i < travelMethodsDeparture.length; i++) {
             travelMethodsDeparture[i].addEventListener('click', event => {

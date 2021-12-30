@@ -1,4 +1,5 @@
 import { byClass } from "..";
+import { showOverlay, hideOverlay } from "./UIhelperFunctions";
 
 const loadModalContent = (data,tripLength) => {
     // allows parsing date from date string
@@ -9,9 +10,7 @@ const loadModalContent = (data,tripLength) => {
 
     // add event listener to open modal for this trip card
     document.querySelectorAll('.open-modal')[document.querySelectorAll('.open-modal').length - 1].addEventListener('click', event => {
-        //show overlay & darken to cover background
-        byId('app-overlay').style.display='block';
-        byId('app-overlay').style.opacity='0.9';
+        showOverlay();
 
         // populate modal with content specific to this trip
         byClass('trip-card-modal')[0].innerHTML = `
@@ -26,6 +25,7 @@ const loadModalContent = (data,tripLength) => {
                 </div>
                 <div class="weather-forecast">   
                     <p class="modal-section-label">5-Day weather forecast</p>
+                    <div class="weather-forecast-container"></div>
                     <div class="days-row">
                         <p class="weekday">${days[new Date(data.forecast_weather.tomorrow.day).getDay()]}</p>
                         <p class="weekday">${days[new Date(data.forecast_weather.inTwoDays.day).getDay()]}</p>
@@ -105,24 +105,40 @@ const loadModalContent = (data,tripLength) => {
                 return icon;
             };
 
-            const departureIcons = departureMethods.map(getIconClasses);
-            const returnIcons = returnMethods.map(getIconClasses);
+            const departureIcons = departureMethods.map(getIconClasses).join('');
+            // departureIcons = departureIcons.join('');
+            const returnIcons = returnMethods.map(getIconClasses).join('');
+            // returnIcons = returnIcons.join('');
 
             byClass('trip-itinerary')[0].innerHTML=`
-                <p>${itineraryData[found].visaInfo}</p>
-                <p>${departureIcons}</p> 
-                <p>${itineraryData[found].departureDetails}</p> 
-                <p>${returnIcons}</p> 
-                <p>${itineraryData[found].returnDetails}</p> 
-                <p>${itineraryData[found].accommodations}</p> 
-                <p>${itineraryData[found].visaInfo}</p>  
+                <p class="modal-section-label">Itinerary Details</p>
+                <div class="itinerary-container"></div>
+                <div class="visa-info-label label-detail">Visa Info for ${data.location.country_name}</div>
+                <p class="visa-info">${itineraryData[found].visaInfo}</p>
+                <div class="departure-label label-detail">Departure</div>
+                <div class="departure-methods">${departureIcons}</div>
+                <p class="departure-details">${itineraryData[found].departureDetails}</p>
+                <div class="return-label label-detail">Return</div>
+                <div class="return-methods">${returnIcons}</div>
+                <p class="return-details">${itineraryData[found].returnDetails}</p> 
+                <div class="accommodations-label label-detail">Accommodations</div>
+                <p class="accommodations">${itineraryData[found].accommodations}</p> 
+                <div class="itinerary-misc-label label-detail">Miscellaneous Plans & Details</div>
+                <p class="itinerary-misc">${itineraryData[found].itineraryMisc}</p>
+            `;
+        } else {
+            byClass('trip-itinerary')[0].innerHTML=`
+                <p class="modal-section-label">Itinerary Details</p>
+                <div class="itinerary-container"></div>
+                <p class="no-itinerary"><em>No details to display</em></p>
+                <button class="add-itinerary itinerary-hint"><i class="far fa-edit"></i> &nbsp; add itinerary details</button>
             `;
         }
 
         // add event listener to close-modal button
         byId('close-pdf').addEventListener('click', event => {
-            byId('app-overlay').style.display='none';
             byClass('trip-card-modal')[0].style.display='none';
+            hideOverlay();
         });
 
         // show modal

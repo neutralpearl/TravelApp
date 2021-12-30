@@ -34,7 +34,8 @@ app.use((req,res,next) => {
     next();
 })
 
-// ============================= //
+
+// GET & POST ROUTES //
 
 const serverURL = `http://localhost:3000`;
 
