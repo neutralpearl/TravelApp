@@ -1,5 +1,6 @@
 import { byClass } from "..";
 import { showOverlay, hideOverlay } from "./UIhelperFunctions";
+import { prepareItineraryForm } from "./renderItineraryForm";
 
 const loadModalContent = (data,tripLength) => {
     // allows parsing date from date string
@@ -10,7 +11,7 @@ const loadModalContent = (data,tripLength) => {
 
     // add event listener to open modal for this trip card
     document.querySelectorAll('.open-modal')[document.querySelectorAll('.open-modal').length - 1].addEventListener('click', event => {
-        showOverlay();
+        showOverlay(); // obscure app background
 
         // populate modal with content specific to this trip
         byClass('trip-card-modal')[0].innerHTML = `
@@ -74,10 +75,12 @@ const loadModalContent = (data,tripLength) => {
         let found = itineraryData.findIndex(itinerary => {
             return itinerary.city === data.location.city;
         })
+        // if itinerary data is stored for this city
         if(found !== -1) {
             const departureMethods = itineraryData[found].selectedTravelMethods[0];
             const returnMethods = itineraryData[found].selectedTravelMethods[1];
 
+            // converts list of travel method classes into array of <i> elements
             const getIconClasses = method => {
                 if (method[0] === 'd'){
                     method = method.substring(10,15);
@@ -105,13 +108,14 @@ const loadModalContent = (data,tripLength) => {
                 return icon;
             };
 
+            // get array of <i> tags for departure/return respectively, then convert into string
             const departureIcons = departureMethods.map(getIconClasses).join('');
-            // departureIcons = departureIcons.join('');
             const returnIcons = returnMethods.map(getIconClasses).join('');
-            // returnIcons = returnIcons.join('');
 
+            // populate Itinerary section with user inputs
             byClass('trip-itinerary')[0].innerHTML=`
                 <p class="modal-section-label">Itinerary Details</p>
+                <div>&nbsp;</div>
                 <div class="itinerary-container"></div>
                 <div class="visa-info-label label-detail">Visa Info for ${data.location.country_name}</div>
                 <p class="visa-info">${itineraryData[found].visaInfo}</p>
@@ -127,12 +131,20 @@ const loadModalContent = (data,tripLength) => {
                 <p class="itinerary-misc">${itineraryData[found].itineraryMisc}</p>
             `;
         } else {
+            // if no itinerary data is available, show "No details" and direct them to itinerary form
             byClass('trip-itinerary')[0].innerHTML=`
                 <p class="modal-section-label">Itinerary Details</p>
                 <div class="itinerary-container"></div>
                 <p class="no-itinerary"><em>No details to display</em></p>
                 <button class="add-itinerary itinerary-hint"><i class="far fa-edit"></i> &nbsp; add itinerary details</button>
             `;
+
+            // add event listener to "itinerary hint" button
+            byClass('add-itinerary')[0].addEventListener('click', event => {
+                byClass('trip-card-modal')[0].style.display='none'; // close current modal
+                hideOverlay(); 
+                prepareItineraryForm(data,itineraryData); // show itinerary modal
+            });
         }
 
         // add event listener to close-modal button

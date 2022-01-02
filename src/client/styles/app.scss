@@ -64,8 +64,6 @@ $medium-screen: 836px;
 
 @mixin modal-section {
     display: grid;
-    // border: 1px solid $dark-grey;
-    // background-color: $medium-grey;
     padding: 10px;
     border-radius: $rounded-corners;
 }

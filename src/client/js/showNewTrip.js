@@ -52,7 +52,7 @@ const addTripCard = async data => {
         byClass('city-image')[byClass('city-image').length-1].style.backgroundImage = `url('/assets/wing.jpg')`;
     }
     
-    // add click listener for delete-trip button
+    // add click listener for "delete trip" button
     byClass('delete-trip')[byClass('delete-trip').length-1].addEventListener('click', event => {
         const thisCard = event.target.parentElement.parentElement.parentElement;
         thisCard.remove();
@@ -63,8 +63,11 @@ const addTripCard = async data => {
         }
     })
 
-    prepareItineraryForm(data,itineraryData);
-
+    // add event listener to "add itinerary" button
+    byClass('add-itinerary')[byClass('add-itinerary').length-1].addEventListener('click', event => {
+        prepareItineraryForm(data,itineraryData);
+    });
+    
     loadModalContent(data,tripLength);
 }
 
