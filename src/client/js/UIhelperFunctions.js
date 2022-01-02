@@ -1,3 +1,13 @@
+const formatCity = city => {
+    let cityName = '';
+    cityName = cityName.concat(city[0].toUpperCase());
+    for (let i=1; i<city.length; i++){
+        let letter = city[i].toLowerCase();
+        cityName = cityName.concat(letter);
+    }
+    return cityName;
+}
+
 const toggleForm = event => {
     const formPanel = byClass("form-panel")[0];
     const formTitle = document.getElementsByTagName('H2')[0];
@@ -61,4 +71,4 @@ const hideOverlay = event => {
     }
 }
 
-export { animateValidation, toggleForm, showOverlay, hideOverlay }
+export { formatCity, animateValidation, toggleForm, showOverlay, hideOverlay }

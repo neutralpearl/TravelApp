@@ -1,4 +1,5 @@
 import { byId } from '..';
+import { formatCity } from './UIhelperFunctions';
 import { animateValidation } from './UIhelperFunctions';
 import { validateDateRange } from './dateValidation';
 import { handleInvalidCity } from './inputErrorHandler';
@@ -12,9 +13,11 @@ const handleSubmit = async event => {
     animateValidation(); // show "verifying your destination" animation while server retrieves data
 
     // save form inputs
-    const city = byId('destination').value;
+    let city = byId('destination').value;
     let departDate = byId('start-date').value;
     let returnDate = byId('end-date').value;
+
+    city = formatCity(city); // ensures city name is capitalized as a proper noun
 
     let datesValidated = false; // should become truthy only if date range passes validation
     let tripDataReceived = false; // should become truthy only if trip data is retrieved from server

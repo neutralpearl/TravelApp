@@ -2,7 +2,7 @@
 
 // import js files
 import { chooseTheme } from './js/themePicker';
-import { animateValidation, hideOverlay, showOverlay, toggleForm } from './js/UIhelperFunctions';
+import { formatCity, animateValidation, hideOverlay, showOverlay, toggleForm } from './js/UIhelperFunctions';
 import { handleSubmit } from './js/formSubmission';
 import { validateDateRange } from './js/dateValidation';
 import { handleInvalidCity } from './js/inputErrorHandler';
@@ -74,6 +74,7 @@ class tripItinerary {
 
 export {
     chooseTheme,
+    formatCity,
     toggleForm,
     hideOverlay,
     showOverlay,

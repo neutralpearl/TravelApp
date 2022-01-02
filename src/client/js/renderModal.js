@@ -49,16 +49,16 @@ const loadModalContent = (data,tripLength) => {
                         <img class="forecast-icon" src="${weatherbitIconURLBase}${data.forecast_weather.inFiveDays.icon}.png">
                     </div>
                     <div class="temps-row">
-                        <p class="temp-high">High: <span>${data.forecast_weather.tomorrow.high_temp}</span>°F</p>
-                        <p class="temp-low">Low: <span>${data.forecast_weather.tomorrow.low_temp}</span>°F</p>
-                        <p class="temp-high"> High: <span>${data.forecast_weather.inTwoDays.high_temp}</span>°F</p>
-                        <p class="temp-low">Low: <span>${data.forecast_weather.inTwoDays.low_temp}</span>°F</p>
-                        <p class="temp-high">High: <span>${data.forecast_weather.inThreeDays.high_temp}</span>°F</p>
-                        <p class="temp-low">Low: <span>${data.forecast_weather.inThreeDays.low_temp}</span>°F</p>
-                        <p class="temp-high"> High: <span>${data.forecast_weather.inFourDays.high_temp}</span>°F</p>
-                        <p class="temp-low">Low: <span>${data.forecast_weather.inFourDays.low_temp}</span>°F</p>
-                        <p class="temp-high">High: <span>${data.forecast_weather.inFiveDays.high_temp}</span>°F</p>
-                        <p class="temp-low">Low: <span>${data.forecast_weather.inFiveDays.low_temp}</span>°F</p>
+                        <p class="temp-high">High:<br/> <span>${data.forecast_weather.tomorrow.high_temp}</span>°F</p>
+                        <p class="temp-low">Low:<br/> <span>${data.forecast_weather.tomorrow.low_temp}</span>°F</p>
+                        <p class="temp-high"> High:<br/> <span>${data.forecast_weather.inTwoDays.high_temp}</span>°F</p>
+                        <p class="temp-low">Low:<br/> <span>${data.forecast_weather.inTwoDays.low_temp}</span>°F</p>
+                        <p class="temp-high">High:<br/> <span>${data.forecast_weather.inThreeDays.high_temp}</span>°F</p>
+                        <p class="temp-low">Low:<br/> <span>${data.forecast_weather.inThreeDays.low_temp}</span>°F</p>
+                        <p class="temp-high"> High:<br/> <span>${data.forecast_weather.inFourDays.high_temp}</span>°F</p>
+                        <p class="temp-low">Low:<br/> <span>${data.forecast_weather.inFourDays.low_temp}</span>°F</p>
+                        <p class="temp-high">High:<br/> <span>${data.forecast_weather.inFiveDays.high_temp}</span>°F</p>
+                        <p class="temp-low">Low:<br/> <span>${data.forecast_weather.inFiveDays.low_temp}</span>°F</p>
                     </div>
                     <div class="desc-row">
                         <p class="forecast-desc">${data.forecast_weather.tomorrow.description}</p>

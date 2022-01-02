@@ -23,7 +23,7 @@ const chooseTheme = event => {
             byClass('logo')[0].style.color = '#000';
             setColors('rgb(209 182 206)');
             break;
-        case 'city': 
+        case 'skyline': 
             appBody.style.backgroundImage = `${urlBase}skyline.png')`; 
             byClass('logo')[0].style.color = '#fff';
             setColors('rgb(203 153 111)');
