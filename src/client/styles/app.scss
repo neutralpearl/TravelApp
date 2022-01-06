@@ -14,7 +14,7 @@ $error-red: rgb(182, 0, 0);
 $go-green: #79d55b;
 $rounded-corners: 14px;
 $small-screen: 400px;
-$pdf-break: 650px;
+$pdf-break: 600px;
 $medium-screen: 836px;
 
 /* ------- Mixins ------ */
@@ -76,7 +76,7 @@ $medium-screen: 836px;
     top: -150vh;
     left: -100vh;
     display: none;
-    width: 200vw;
+    width: 300vw;
     height: 300vh;
     background-color: #111;
     opacity: 0; // default transparent

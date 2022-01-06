@@ -17,8 +17,6 @@ const handleSubmit = async event => {
     let departDate = byId('start-date').value;
     let returnDate = byId('end-date').value;
 
-    city = formatCity(city); // ensures city name is capitalized as a proper noun
-
     let datesValidated = false; // should become truthy only if date range passes validation
     let tripDataReceived = false; // should become truthy only if trip data is retrieved from server
     
@@ -34,6 +32,8 @@ const handleSubmit = async event => {
             byId('no-trips').style.display = 'none'; // remove "You don't have any saved trips" placeholder text
             
             let newTripData = {}; // initialize object to store new trip variables
+
+            city = formatCity(city); // ensures city name is capitalized as a proper noun
 
             //configure POST fetch
             const responseOptions = {

@@ -4,7 +4,7 @@ const regeneratorRuntime = require("regenerator-runtime");
 
 const dotenv = require('dotenv');
 dotenv.config({ 
-    path: path.resolve(__dirname, "../.env") 
+    path: path.resolve(__dirname, "../../.env") 
 });
 
 // save API keys as environmental variables
@@ -203,7 +203,7 @@ app.get('/get-geonames/:city', async (req,res) => {
             coordinates.country_name = json.geonames[0].countryName;
             return coordinates;
         })
-        .catch (error => {
+        .catch(error => {
             throw new Error('Couldn\'t retrieve city coordinates!');
         })
 
