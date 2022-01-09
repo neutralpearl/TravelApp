@@ -558,7 +558,7 @@
     
     .itinerary-modal {
         @extend .trip-card-modal;
-        background-color: #d1b6ce !important;
+        background-color: $medium-grey;
         height: auto;
     
         .modal-body {

@@ -4,17 +4,14 @@ const chooseTheme = event => {
     const urlBase=`url('/assets/`;
 
     const themeChoice = event.target;
-    console.log(`changing theme to ${themeChoice.id} . . . `);
+    // console.log(`changing theme to ${themeChoice.id} . . . `); // uncomment for debugging
 
     // helper function
     const setColors = color => {
         byClass('form-panel')[0].style.backgroundColor = color;
         byClass('trips-panel')[0].style.backgroundColor = color;
-        // changes border rule for .current-weather-container // MAKE SURE THE INDEX IS CORRECT!
-        document.styleSheets[8].cssRules[77].style.border = `2px solid ${color}`;   
-        // document.styleSheets[8].cssRules[107].style.backgroundColor = color; 
-        document.styleSheets[8].cssRules[108].style.backgroundColor = color; 
-        document.styleSheets[8].cssRules[126].style.backgroundColor = color; 
+        // document.styleSheets[8].cssRules[85].style.border = `2px solid ${color} !important`; // changes border rule for .current-weather-container
+        // document.styleSheets[12].cssRules[133].style.backgroundColor = color; // changes backbground rule for .itinerary-modal 
     }
     
     switch (themeChoice.id) {

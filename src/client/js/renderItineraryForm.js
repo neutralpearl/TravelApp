@@ -13,7 +13,7 @@ const prepareItineraryForm = (data,itineraryData) => {
             </div>
             <form class="itinerary">
                 <div class="visas-container">&nbsp;</div>
-                <img class="country-flag" src="https://flagcdn.com/24x18/${data.location.country_code.toLowerCase()}.png alt="national flag of ${data.location.country_name}"">
+                <img class="country-flag" src="https://flagcdn.com/24x18/${data.location.country_code.toLowerCase()}.png" alt="national flag of ${data.location.country_name}">
                 <label class="label-main" id="label-country">${data.location.country_name}</label>
                 <label class="label-detail" id="label-visas" for="visas">Travel visa details</label>
                 <textarea type="text" id="visas" placeholder="e.g., 'Visa required for US and EU citizens, valid for up to 60 days stay...'"></textarea>

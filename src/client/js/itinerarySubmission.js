@@ -50,7 +50,7 @@ const handleItineraryInput = event => {
     byId('app-overlay').style.display='none';
     byClass('itinerary-modal')[0].style.display='none';
 
-    console.log(itineraryData); // uncomment for debuggin
+    // console.log(itineraryData); // uncomment for debuggin
     return itineraryData;
 }
 
