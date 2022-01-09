@@ -3,6 +3,7 @@
 #add-trip {
     margin: 10% 5% 0 5%;
     width: auto;
+    min-width: 360px;
     max-width: 716px; // matches width of view-trips with 2 cards
     background-color:#fff;
     z-index: 0;
@@ -11,6 +12,7 @@
     flex-shrink: 2;
     padding: 1em 1em 1.5em 1em;
     border-radius: $rounded-corners;
+
 
     @media screen and (max-width: $small-screen) {
         min-width: 80vw;
@@ -241,7 +243,8 @@ textarea{
     font-size: smaller;
     &::after {
         margin-left: 5px;
-        content: "▼";
+        content: "▾";
+        font-size: larger;
     }   
 }
 
@@ -252,7 +255,8 @@ textarea{
 
     &::after {
         margin-left: 5px;
-        content: "▲";
+        content: "▴";
+        font-size: larger;
     } 
 }
 

@@ -19,19 +19,18 @@ const addTripCard = async data => {
     newCard.innerHTML = `
         <div class="trip-card">
             <p class="countdown"><i class="far fa-calendar-alt"></i> &nbsp; <strong>${daysToTrip}</strong> ${numDays} until...</p>
-            <button class="delete-trip" title="delete trip"><i class="fas fa-plane-slash">&nbsp;</i></button>
-            <img class="country-flag" src="https://flagcdn.com/24x18/${data.location.country_code.toLowerCase()}.png">
+            <button class="delete-trip" title="delete trip" aria-label="delete trip from planner"><i class="fas fa-plane-slash">&nbsp;</i></button>
+            <img class="country-flag" src="https://flagcdn.com/24x18/${data.location.country_code.toLowerCase()}.png" alt="national flag of ${data.location.country_name}">
             <p class="destination">${data.location.city}</p>
             <p class="dates">${data.dates.departDate.toLocaleDateString('en-us')} — ${data.dates.returnDate.toLocaleDateString('en-us')} &nbsp; <span id="trip-length">(${tripLength} days)</span></p>
-            <div class="city-image" style="background-image: url('${data.photo}');">&nbsp;</div>
+            <div class="city-image" alt="photo of ${data.location.city}" style="background-image: url('${data.photo}');">&nbsp;</div>
             <div class="current-weather-container">&nbsp;</div>
             <p class="current-weather-label">Currently...</p>
-            <img class="current-weather-icon" src="https://www.weatherbit.io/static/img/icons/${data.current_weather.icon}.png">
+            <img class="current-weather-icon" src="https://www.weatherbit.io/static/img/icons/${data.current_weather.icon}.png" alt="icon representing current weather in ${data.location.city}">
             <p class="current-weather-temp">${Math.round(Number(data.current_weather.temp))}°F</p>
             <p class="current-weather-description">${data.current_weather.description}</p>
-            <div class="forecast-tooltip"></div>
-            <button class="add-itinerary"><i class="far fa-edit"></i> &nbsp; add itinerary details</button>
-            <button class="open-modal">view trip PDF</button>
+            <button class="add-itinerary" aria-label="add details to trip itinerary"><i class="far fa-edit"></i> &nbsp; add itinerary details</button>
+            <button class="open-modal" aria-label="show PDF for trip">view trip PDF</button>
         </div>
     `;
 

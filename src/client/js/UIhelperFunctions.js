@@ -1,10 +1,24 @@
 const formatCity = city => {
+    city = city.trim(); // remove starting / ending whitespace
+
     let cityName = '';
-    cityName = cityName.concat(city[0].toUpperCase());
+    cityName = cityName.concat(city[0].toUpperCase()); // capitalize first letter
     for (let i=1; i<city.length; i++){
-        let letter = city[i].toLowerCase();
+        let letter;
+        if (city.indexOf(' ') === -1){
+            // for one-word cities
+            letter = city[i].toLowerCase(); // add each additional letter in lowercase
+        } else {
+            // for multi-word cities
+            if (city[i-1] === ' '){
+                letter = city[i].toUpperCase(); // capitalize letters following spaces
+            } else {
+                letter = city[i].toLowerCase(); 
+            }
+        }
         cityName = cityName.concat(letter);
     }
+    
     return cityName;
 }
 
@@ -19,6 +33,7 @@ const toggleForm = event => {
         formTitle.style.fontSize = '2em';
         byClass('title')[0].style.marginBottom = '.5em';
         byId('add-trip').style.paddingBottom = '.5em';
+        byClass('toggle')[0].ariaLabel="form closed";
     } else {
         formPanel.style.display = 'block';
         byId('hide-form').style.display = 'block';
@@ -26,6 +41,7 @@ const toggleForm = event => {
         formTitle.style.fontSize = '2.5em';
         byClass('title')[0].style.marginBottom = '1.5em';
         byId('add-trip').style.paddingBottom = '1.5em';
+        byClass('toggle')[0].ariaLabel="form open";
     }
 }
 
