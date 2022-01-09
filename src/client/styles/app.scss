@@ -38,8 +38,12 @@ $medium-screen: 836px;
 @mixin forecast-grid-row {
     display: grid;
     justify-items: center;
-    align-items: center;
     grid-template-rows: 100%;
+
+    @media screen and (max-width: $pdf-break){
+        grid-template-rows: repeat(5,20%);
+        grid-template-columns: 100%;
+    }
 }
 
 @mixin featured-button {

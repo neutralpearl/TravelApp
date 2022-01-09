@@ -14,6 +14,7 @@ import { loadModalContent } from './js/renderModal';
 // import Sass stylesheets
 import './styles/app.scss'; 
 import './styles/components.scss';
+import './styles/modals.scss';
 import './styles/resets.scss';
 
 // import image files // NOT WORKING
@@ -78,11 +79,6 @@ export {
     toggleForm,
     hideOverlay,
     showOverlay,
-    mountains,
-    palms,
-    skyline, 
-    temples,
-    plane,
     byClass,
     byId,
     itineraryData,

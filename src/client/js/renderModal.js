@@ -16,13 +16,17 @@ const loadModalContent = (data,tripLength) => {
         // populate modal with content specific to this trip
         byClass('trip-card-modal')[0].innerHTML = `
             <div class="modal-body">
-                <div class="modal-header">
+                <div class="trip-modal-header">
                     <div class="title">
-                        <h2>your trip to ${data.location.city}</h2>
+                        <p><h2>your trip to<h2></p>
+                        <p><h2>${data.location.city}</h2></p>
                     </div>
                     <button class="print" disabled title="Printing not currently supported"><i class="fas fa-print">&nbsp;</i></button>
                     <button class="close-modal" id="close-pdf"><i class="fas fa-times">&nbsp;</i></button>
-                    <p class="modal-dates"><strong>${data.dates.departDate.toLocaleDateString('en-us')}</strong> — <strong>${data.dates.returnDate.toLocaleDateString('en-us')}</strong> &nbsp; (${tripLength} days, ${tripLength -1} nights)</p>
+                    <div class="modal-dates">
+                        <p><strong>${data.dates.departDate.toLocaleDateString('en-us')}</strong> — <strong>${data.dates.returnDate.toLocaleDateString('en-us')}</strong> &nbsp; </p>
+                        <p>(${tripLength} days, ${tripLength -1} nights)</p>
+                    </div>
                 </div>
                 <div class="weather-forecast">   
                     <p class="modal-section-label">5-Day weather forecast</p>
@@ -49,16 +53,16 @@ const loadModalContent = (data,tripLength) => {
                         <img class="forecast-icon" id="icon5" src="${weatherbitIconURLBase}${data.forecast_weather.inFiveDays.icon}.png">
                     </div>
                     <div class="temps-row">
-                        <p class="temp-high" id="temp-high1">High:<br/> <span>${Math.round(data.forecast_weather.tomorrow.high_temp)}</span>°F</p>
-                        <p class="temp-low" id="temp-low1">Low:<br/> <span>${Math.round(data.forecast_weather.tomorrow.low_temp)}</span>°F</p>
-                        <p class="temp-high" id="temp-high2"> High:<br/> <span>${Math.round(data.forecast_weather.inTwoDays.high_temp)}</span>°F</p>
-                        <p class="temp-low" id="temp-low2">Low:<br/> <span>${Math.round(data.forecast_weather.inTwoDays.low_temp)}</span>°F</p>
-                        <p class="temp-high" id="temp-high3">High:<br/> <span>${Math.round(data.forecast_weather.inThreeDays.high_temp)}</span>°F</p>
-                        <p class="temp-low" id="temp-low3">Low:<br/> <span>${Math.round(data.forecast_weather.inThreeDays.low_temp)}</span>°F</p>
-                        <p class="temp-high" id="temp-high4"> High:<br/> <span>${Math.round(data.forecast_weather.inFourDays.high_temp)}</span>°F</p>
-                        <p class="temp-low" id="temp-low4">Low:<br/> <span>${Math.round(data.forecast_weather.inFourDays.low_temp)}</span>°F</p>
-                        <p class="temp-high" id="temp-high5">High:<br/> <span>${Math.round(data.forecast_weather.inFiveDays.high_temp)}</span>°F</p>
-                        <p class="temp-low" id="temp-low5">Low:<br/> <span>${Math.round(data.forecast_weather.inFiveDays.low_temp)}</span>°F</p>
+                        <p class="temp-high" id="temp-high1"><span>${Math.round(data.forecast_weather.tomorrow.high_temp)}</span>°F<br/><em>high</em></p>
+                        <p class="temp-low" id="temp-low1"><span>${Math.round(data.forecast_weather.tomorrow.low_temp)}</span>°F<br/><em>low</em></p>
+                        <p class="temp-high" id="temp-high2"><span>${Math.round(data.forecast_weather.inTwoDays.high_temp)}</span>°F<br/><em>high</em></p>
+                        <p class="temp-low" id="temp-low2"><span>${Math.round(data.forecast_weather.inTwoDays.low_temp)}</span>°F<br/><em>low</em></p>
+                        <p class="temp-high" id="temp-high3"><span>${Math.round(data.forecast_weather.inThreeDays.high_temp)}</span>°F<br/><em>high</em></p>
+                        <p class="temp-low" id="temp-low3"><span>${Math.round(data.forecast_weather.inThreeDays.low_temp)}</span>°F<br/><em>low</em></p>
+                        <p class="temp-high" id="temp-high4"><span>${Math.round(data.forecast_weather.inFourDays.high_temp)}</span>°F<br/><em>high</em></p>
+                        <p class="temp-low" id="temp-low4"><span>${Math.round(data.forecast_weather.inFourDays.low_temp)}</span>°F<br/><em>low</em></p>
+                        <p class="temp-high" id="temp-high5"><span>${Math.round(data.forecast_weather.inFiveDays.high_temp)}</span>°F<br/><em>high</em></p>
+                        <p class="temp-low" id="temp-low5"><span>${Math.round(data.forecast_weather.inFiveDays.low_temp)}</span>°F<br/><em>low</em></p>
                     </div>
                     <div class="desc-row">
                         <p class="forecast-desc" id="desc1">${data.forecast_weather.tomorrow.description}</p>

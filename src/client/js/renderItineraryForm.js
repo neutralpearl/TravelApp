@@ -8,7 +8,7 @@ const prepareItineraryForm = (data,itineraryData) => {
     byClass('itinerary-modal')[0].innerHTML = `
         <div class="modal-body">
             <div class="modal-header" id ="itinerary-header">
-                <p class="modal-section-label" id="itinerary-title"><i class="far fa-edit" aria-hidden="true"></i> &nbsp; Edit itinerary details for ${data.location.city}</p>
+                <div class="modal-section-label" id="itinerary-title"><p><i class="far fa-edit" aria-hidden="true"></i></p><p> &nbsp; Edit itinerary details for ${data.location.city}</p></div>
                 <button class="close-modal" id="close-itinerary"><i class="fas fa-times">&nbsp;</i></button>
             </div>
             <form class="itinerary">
