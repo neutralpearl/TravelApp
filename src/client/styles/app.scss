@@ -19,6 +19,20 @@ $medium-screen: 836px;
 
 /* ------- Mixins ------ */
 
+// MEDIA QUERIES
+@mixin for-small-mobile {
+    @media screen and (max-width: $small-screen) { @content; }
+}
+@mixin for-larger-mobile {
+    @media screen and (min-width: $small-screen) and (max-width: $pdf-break) { @content; }
+}
+@mixin for-all-mobile {
+    @media screen and (max-width: $pdf-break) { @content; }
+}
+@mixin for-not-mobile {
+    @media screen and (min-width: $pdf-break) { @content; }
+}
+
 @mixin form-special {
     color: $dark-grey;
     font-family: $font-detail;
@@ -107,7 +121,6 @@ body{
     background-attachment: fixed;
     background-color: $dark-grey;
     overflow-x: hidden;
-    // transition-duration: 200ms;
 }
 
 header {
@@ -127,7 +140,6 @@ nav {
     background-color: $dark-grey;
     z-index: 1;
     position: sticky !important;
-
 
     .dropdown {
         overflow: hidden;

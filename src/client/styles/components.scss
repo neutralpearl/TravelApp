@@ -13,15 +13,14 @@
     padding: 1em 1em 1.5em 1em;
     border-radius: $rounded-corners;
 
-
-    @media screen and (max-width: $small-screen) {
+    @include for-small-mobile {
         min-width: 80vw;
         max-width: 333px;
         margin: 10% 0 0 0;
         padding: 1em .5em 1.5em .5em;
     }
     
-    @media screen and (min-width: 401px) and (max-width: $medium-screen) {
+    @media screen and (min-width: $small-screen) and (max-width: $medium-screen) {
         max-width: 480px !important;
     }
 
@@ -32,7 +31,7 @@
         transition-duration: 400ms;
         box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 
-        @media screen and (max-width: $small-screen){
+        @include for-small-mobile {
             padding: 1em .5em !important;
         }
     }
@@ -43,7 +42,7 @@
     margin-bottom: 1.2em;
     display: flex;
 
-    @media screen and (max-width: $small-screen) {
+    @include for-small-mobile {
         margin-bottom: .5em;
         flex-direction: column;
     }
@@ -81,7 +80,7 @@ label{
         @include form-special;
         margin-top: -5px;
 
-        @media screen and (max-width: $small-screen){
+        @include for-small-mobile {
           font-size: 18px;  
         }
     }
@@ -276,7 +275,7 @@ textarea{
     #no-trips {
         text-align: center;
 
-        @media screen and (max-width: $small-screen){
+        @include for-small-mobile {
             font-size: smaller;
         }
     }
@@ -284,7 +283,7 @@ textarea{
     .trips-panel {
         @extend .form-panel;
 
-        @media screen and (max-width: $small-screen) {
+        @include for-small-mobile {
             padding: .5em !important;
         }
     }
@@ -310,10 +309,10 @@ textarea{
         box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
         transition-duration: 400ms;
 
-        // @media screen and (max-width: $small-screen){
-        //     padding: 1em .5em;
-        // }
-
+        @include for-small-mobile {
+            padding: 1em .5em;
+        }
+        
         &:hover {
             transform: translateY(-5px);
             box-shadow: 0 3px 10px rgb(0 0 0 / 0.5);
@@ -356,7 +355,7 @@ textarea{
             grid-row: 3 / span 1;
             margin-top: 5px;
 
-            @media screen and (max-width: $small-screen) {
+            @include for-small-mobile {
                 font-size: smaller;
             }
         }
@@ -386,7 +385,7 @@ textarea{
             text-align: center;
             @include trip-card-label;
 
-            @media screen and (max-width: $small-screen) {
+            @include for-small-mobile {
                 font-size: smaller;
             }
         }
@@ -411,7 +410,7 @@ textarea{
             font-size: smaller;
             text-align: center;
 
-            @media screen and (max-width: $small-screen){
+            @include for-small-mobile {
                 font-size: 13px;
             }
         }
@@ -424,7 +423,7 @@ textarea{
             font-weight: 300;
             @include featured-button;
 
-            @media screen and (max-width: $small-screen){
+            @include for-small-mobile {
                 font-size: 16px;
             }
         }
@@ -446,7 +445,7 @@ textarea{
             font-size: 14px;
         }
 
-        @media screen and (max-width: $small-screen){
+        @include for-small-mobile {
             font-size: 13px;
         }
     }
