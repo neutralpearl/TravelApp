@@ -376,6 +376,7 @@
 
                 @media screen and (max-width: $pdf-break){
                     text-align: left;
+                    margin-top: 10px;
                 }
             }
     
@@ -393,6 +394,7 @@
             .visa-info {
                 grid-column: 3 / span 6;
                 grid-row: 3;
+                min-height: 25px;
 
                 @media screen and (max-width: $pdf-break){
                     grid-column: 1 / span 8;
@@ -402,18 +404,20 @@
     
             .departure-label {
                 grid-column: 2;
-                grid-row: 4 / span 2;
+                grid-row: 4;
                 padding-left: 5px;
+                margin-top: 15px;
 
                 @media screen and (max-width: $pdf-break){
                     grid-column: 1 / span 8;
                     grid-row: 4;
+                    padding-left: 15px;
                 }
             }
     
             .departure-methods {
-                grid-column: 1;
-                grid-row: 4 / span 2;
+                grid-column: 1 / span 2;
+                grid-row: 5;
                 display: flex;
                 grid-gap: 10px;
                 justify-content: end;
@@ -421,6 +425,12 @@
                 @media screen and (max-width: $pdf-break){
                     grid-column: 5 / span 4;
                     grid-row: 4;
+                    margin-right: 10px;
+
+                    i {
+                        font-size: 16px;
+                        margin-top: 10px;
+                    }
                 }
             }
     
@@ -437,18 +447,20 @@
     
             .return-label {
                 grid-column: 2;
-                grid-row: 6 / span 2;
+                grid-row: 6;
                 padding-left: 5px;
+                margin-top: 15px;
 
                 @media screen and (max-width: $pdf-break){
                     grid-column: 1 / span 8;
                     grid-row: 7;
+                    padding-left: 15px;
                 }
             }
     
             .return-methods {
-                grid-column: 1;
-                grid-row: 6 / span 2;
+                grid-column: 1 / span 2;
+                grid-row: 7;
                 display: flex;
                 grid-gap: 10px;
                 justify-content: end;
@@ -456,6 +468,12 @@
                 @media screen and (max-width: $pdf-break){
                     grid-column: 5 / span 4;
                     grid-row: 7;
+                    margin-right: 10px;
+
+                    i {
+                        font-size: 16px;
+                        margin-top: 10px;
+                    }
                 }
             }
     
@@ -484,6 +502,7 @@
             .accommodations {
                 grid-column: 3 / span 6;
                 grid-row: 8;
+                min-height: 25px;
 
                 @media screen and (max-width: $pdf-break){
                     grid-column: 1 / span 8;

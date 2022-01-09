@@ -110,20 +110,6 @@ body{
     // transition-duration: 200ms;
 }
 
-.import-images{
-    visibility: hidden;
-
-    .alt1{
-        background-image: url('../media/temples.jpg');
-    }
-    .alt2{
-        background-image: url('../media/skyline.png');
-    }
-    .alt3{
-        background-image: url('../media/palms.jpg');
-    }
-}
-
 header {
     .logo{
         min-height: 100px;

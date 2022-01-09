@@ -24,7 +24,7 @@ const chooseTheme = event => {
             setColors('rgb(209 182 206)');
             break;
         case 'skyline': 
-            appBody.style.backgroundImage = `${urlBase}skyline.png')`; 
+            appBody.style.backgroundImage = `${urlBase}skyline.jpg')`; 
             byClass('logo')[0].style.color = '#fff';
             setColors('rgb(203 153 111)');
             break;

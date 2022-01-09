@@ -17,10 +17,10 @@ import './styles/components.scss';
 import './styles/modals.scss';
 import './styles/resets.scss';
 
-// import image files // NOT WORKING
+// // import image files // NOT WORKING
 import mountains from './media/mountains.jpg'; 
 import palms from './media/palms.jpg';
-import skyline from './media/skyline.png'; 
+import skyline from './media/skyline.jpg'; 
 import temples from './media/temples.jpg';
 import plane from './media/wing.jpg';
 
