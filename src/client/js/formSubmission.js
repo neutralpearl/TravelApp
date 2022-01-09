@@ -9,7 +9,7 @@ import { addTripCard } from './showNewTrip';
 const handleSubmit = async event => {
     event.preventDefault(); // block default page reload after form submission
 
-    console.log('form submitted . . . '); // debugging
+    // console.log('form submitted . . . '); // uncomment for debugging
     animateValidation(); // show "verifying your destination" animation while server retrieves data
 
     // save form inputs
@@ -74,7 +74,7 @@ const handleSubmit = async event => {
             })
             .then(() => {
                 if (tripDataReceived) {
-                    console.log(newTripData); // for debugging
+                    // console.log(newTripData); // uncomment for debugging
                     addTripCard(newTripData); // parses retrieved data and adds corresponding trip card
                     byId('view-trips').scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"}); // scrolls window to newly-added trip card
                 }

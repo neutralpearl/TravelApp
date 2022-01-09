@@ -33,7 +33,7 @@
     
         .trip-modal-header {
             @extend .modal-header;
-            
+
             @media screen and (max-width: $small-screen){
                 grid-template-columns: 80% 10% 10%;
                 grid-template-rows: 60% 40%;
@@ -328,6 +328,11 @@
             border: 2px solid $medium-grey;
             @include modal-section;
             grid-gap: 5px;
+
+            @media screen and (max-width: $pdf-break){
+                grid-template-rows: 2em repeat(14,1.5em) 1px;
+                grid-gap: 0px;
+            }
     
             .itinerary-container {
                 background-color: #d1b6ce;
@@ -336,6 +341,12 @@
                 border-radius: $rounded-corners;
                 grid-column: 1 / span 8;
                 grid-row: 3 / span 8;
+
+                @media screen and (max-width: $pdf-break){
+                    grid-row: 2 / span 15;
+                    height: 390px;
+                    margin-top: 10px;
+                }
             }
     
             .modal-section-label {
@@ -353,28 +364,51 @@
                 margin: 5px 10px 0 5px;
                 background-color: #fff;
                 border-radius: $rounded-corners;
+
+                @media screen and (max-width: $pdf-break){
+                    margin-left: 10px;;
+                }
             }
     
             .label-detail {
                 text-align: right;
                 padding-left: 15px;
+
+                @media screen and (max-width: $pdf-break){
+                    text-align: left;
+                }
             }
     
             .visa-info-label {
                 grid-column: 1 / span 2;
                 grid-row: 3;
                 padding-left: 15px;
+
+                @media screen and (max-width: $pdf-break){
+                    grid-row: 2;
+                    grid-column: 1 / span 8;
+                }
             }
     
             .visa-info {
                 grid-column: 3 / span 6;
                 grid-row: 3;
+
+                @media screen and (max-width: $pdf-break){
+                    grid-column: 1 / span 8;
+                    grid-row: 3;
+                }
             }
     
             .departure-label {
                 grid-column: 2;
                 grid-row: 4 / span 2;
                 padding-left: 5px;
+
+                @media screen and (max-width: $pdf-break){
+                    grid-column: 1 / span 8;
+                    grid-row: 4;
+                }
             }
     
             .departure-methods {
@@ -383,18 +417,33 @@
                 display: flex;
                 grid-gap: 10px;
                 justify-content: end;
+
+                @media screen and (max-width: $pdf-break){
+                    grid-column: 5 / span 4;
+                    grid-row: 4;
+                }
             }
     
             .departure-details {
                 grid-column: 3 / span 6;
                 grid-row: 4 / span 2;
                 min-height: 50px;
+
+                @media screen and (max-width: $pdf-break){
+                    grid-column: 1 / span 8;
+                    grid-row: 5 / span 2;
+                }
             }
     
             .return-label {
                 grid-column: 2;
                 grid-row: 6 / span 2;
                 padding-left: 5px;
+
+                @media screen and (max-width: $pdf-break){
+                    grid-column: 1 / span 8;
+                    grid-row: 7;
+                }
             }
     
             .return-methods {
@@ -403,35 +452,66 @@
                 display: flex;
                 grid-gap: 10px;
                 justify-content: end;
+
+                @media screen and (max-width: $pdf-break){
+                    grid-column: 5 / span 4;
+                    grid-row: 7;
+                }
             }
     
             .return-details {
                 grid-column: 3 / span 6;
                 grid-row: 6 / span 2;
                 min-height: 50px;
+
+                @media screen and (max-width: $pdf-break){
+                    grid-column: 1 / span 8;
+                    grid-row: 8 / span 2;
+                }
             }
     
             .accommodations-label {
                 grid-column: 1 / span 2;
                 grid-row: 8;
                 padding-left: 15px;
+
+                @media screen and (max-width: $pdf-break){
+                    grid-column: 1 / span 8;
+                    grid-row: 10;
+                }
             }
     
             .accommodations {
                 grid-column: 3 / span 6;
                 grid-row: 8;
+
+                @media screen and (max-width: $pdf-break){
+                    grid-column: 1 / span 8;
+                    grid-row: 11 / span 2;
+                    min-height: 50px;
+                }
             }
     
             .itinerary-misc-label {
                 grid-column: 1 / span 2;
                 grid-row: 9 / span 2;
                 padding-left: 15px;
+
+                @media screen and (max-width: $pdf-break){
+                    grid-column: 1 / span 8;
+                    grid-row: 13;
+                }
             }
     
             .itinerary-misc {
                 grid-column: 3 / span 6;
                 grid-row: 9 / span 2;
                 min-height: 50px;
+
+                @media screen and (max-width: $pdf-break){
+                    grid-column: 1 / span 8;
+                    grid-row: 14 / span 2;
+                }
             }
     
             .no-itinerary {

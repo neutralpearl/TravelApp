@@ -4,7 +4,7 @@ import { loadModalContent } from "./renderModal";
 
 const addTripCard = async data => {
 
-    console.log('adding trip to UI...'); // for debugging
+    // console.log('adding trip to UI...'); // uncomment for debugging
     byClass('trips-panel')[0].style.display = 'block'; //
 
     const duration = data.dates.returnDate - data.dates.departDate; // returns time difference in milliseconds

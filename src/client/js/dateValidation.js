@@ -1,5 +1,5 @@
 const validateDateRange = (departDate,returnDate) => {
-    console.log('validating dates . . . ');
+    // console.log('validating dates . . . '); // uncomment for debugging
     
     const dates = [departDate,returnDate]; // save inputs as an array for iteration
 
