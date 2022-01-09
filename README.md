@@ -1,6 +1,6 @@
 # Viagem — A Travel App 
 
-##Viagem is a single-page application *built for demonstration / portfolio purposes*.
+### Viagem is a single-page application *built for demonstration / portfolio purposes*.
 
 The app integrates data parsed from the responses of four APIs to generate a trip summary card and PDF containing itinerary information input by the user.
 
@@ -14,6 +14,7 @@ The app integrates data parsed from the responses of four APIs to generate a tri
    - **Webpack Dev Server**, to view live updates during development
    - **dotenv**, to keep private information (like API keys) hidden from client view in production
  - Unit testing with **Jest**
+
 
 ## Contents
 
@@ -35,6 +36,7 @@ Some of the key requirements are:
 - Implementation of service-workers for pre-caching 
 - A countdown to the departure date for each trip
 - Fully responsive styling
+
 
 ## Additional Features
 [(Back to top)](#contents)
@@ -59,6 +61,7 @@ To run this app, you'll need the following installed globally on your machine:
 
 Additional dependencies (build tools & plugins, all listed in [package.json](./package.json)) will be installed locally within the directory containing the project files.
 
+
 ## Installation
 [(Back to top)](#contents)
 
@@ -80,7 +83,9 @@ Additional dependencies (build tools & plugins, all listed in [package.json](./p
 4. From the 'src' folder for the project, create a new file named ".env". (Do not modify this filename!) In this new file, copy-paste the following, replacing the asterisks with your own API keys. (*Note that your key for Geonames is your username*!)
 
 ```GEONAMES_KEY=**************************```
+
 ```WEATHERBIT_KEY=**************************```
+
 ```PIXABAY_KEY=**************************```
 
 3. Run the Express server by inputting this command into one terminal:
