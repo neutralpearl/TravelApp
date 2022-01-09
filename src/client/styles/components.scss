@@ -39,9 +39,11 @@
 .title{
     height: 2em;
     margin-bottom: 1.2em;
+    display: flex;
 
     @media screen and (max-width: $small-screen) {
         margin-bottom: .5em;
+        flex-direction: column;
     }
 }
 
@@ -49,9 +51,9 @@ form {
     display: grid;
     justify-content: center;
     align-items: center;
-    grid-template-columns: repeat(12,1fr);
 
     &.new-trip {
+        grid-template-columns: repeat(12,1fr);
         grid-template-rows: repeat(3,1fr) 0px 40px;
         grid-gap: 5px;
     }
@@ -61,6 +63,11 @@ form {
         grid-row: 2 / 3;
         font-size: smaller;
     }
+}
+
+.label-detail {
+    font-size: smaller;
+    font-weight: 600;
 }
 
 label{
@@ -77,10 +84,10 @@ label{
         }
     }
 
-    &.label-detail {
-        font-size: smaller;
-        font-weight: 600;
-    }
+    // &.label-detail {
+    //     font-size: smaller;
+    //     font-weight: 600;
+    // }
 
     &#label-destination {
         grid-column: 1 / span 6;
@@ -99,7 +106,6 @@ label{
         grid-column: 7 / 8;
         grid-row: 3 / 4;
         text-align: end;
-        
     }
 }
 
@@ -116,6 +122,7 @@ textarea{
     border-radius: 4px;
     box-shadow: inset 0 1px 4px 0 #adadad;
     border: 1px solid #222;
+    resize: none;
 
     &::placeholder {
         color: #adadad !important;
@@ -164,7 +171,7 @@ textarea{
 }
 
 @media screen and (max-width: $medium-screen){
-    form {
+    form.new-trip {
         grid-template-columns: repeat(6,1fr);
         grid-template-rows: repeat(3,1fr) 0px repeat(3,1fr) 0px 50px;
     }
@@ -252,7 +259,11 @@ textarea{
 
 #view-trips {
     @extend #add-trip;
-    max-width: 1080px;
+
+    @media screen and (min-width: $small-screen){
+        min-width: 360px;
+        max-width: 1080px;
+    }
 
     h2 {
         text-align: right;
@@ -260,6 +271,10 @@ textarea{
 
     #no-trips {
         text-align: center;
+
+        @media screen and (max-width: $small-screen){
+            font-size: smaller;
+        }
     }
 
     .trips-panel {
@@ -397,26 +412,6 @@ textarea{
             }
         }
     
-        button.add-itinerary {
-            grid-column: 4 / span 3;
-            grid-row: 9 / span 1;
-            border-radius: $rounded-corners;
-            font-size: smaller;
-            margin-top: 5px;
-            height: 45px;
-            background-color: $medium-grey;
-            color: #fff;
-            font-weight: 600;
-    
-            i {
-                font-size: 14px;
-            }
-
-            @media screen and (max-width: $small-screen){
-                font-size: 13px;
-            }
-        }
-    
         button.open-modal {
             grid-column: 4/span 3;
             grid-row: 10 /span 2;
@@ -432,277 +427,23 @@ textarea{
     
     }
 
-    .trip-card-modal{
-        position: fixed;
-        display: none;
-        padding: 20px;
-        top: 5vh;
-        z-index: 10;
-        background-color: rgb(172, 172, 172);
-        height: 90vh;
-        width: 678px; // fix later
+    button.add-itinerary {
+        grid-column: 4 / span 3;
+        grid-row: 9 / span 1;
         border-radius: $rounded-corners;
-        box-shadow: 0 3px 10px rgb(0 0 0 / 0.9);
+        font-size: smaller;
+        margin-top: 5px;
+        height: 45px;
+        background-color: $medium-grey;
+        color: #fff;
+        font-weight: 600;
 
-        .modal-header {
-            display: grid;
-            grid-template-columns: 90% repeat(2,1fr);
-            grid-template-rows: 70% 30%;
-
-            h2 {
-                text-align: left;
-            }
-
-            i.fas {
-                font-size: larger;
-            }
-
-            .close-modal {
-                grid-column: 3;
-                grid-row: 1;
-            }
+        i {
+            font-size: 14px;
         }
 
-        .modal-body {
-            display: flex;
-            flex-direction: column;
-            padding:20px;
-            background-color: #fff;
-            box-shadow: -7px -7px 8px -4px rgb(0 0 0 / 0.2);
-            grid-gap: 10px;
-            min-height: 100px;
-        }
-
-        .modal-section-label {
-            @include trip-card-label;
-        }
-
-        .weather-forecast {
-            display: grid;
-            grid-template-columns: 100%;
-            grid-template-rows: repeat(2,1.5em) 1em 60px 2em 1.5em;
-            border: 2px solid $dark-grey;
-            padding: 10px;
-            border-radius: $rounded-corners;
-        }
-    
-        
-        .days-row,
-        .dates-row{
-            @include forecast-grid-row;
-            grid-template-columns: repeat(5, 1fr);
-
-            p {
-                font-size: smaller;
-            }
-        }
-
-        .icons-row{
-            @include forecast-grid-row;
-            grid-template-columns: repeat(5, 1fr);
-        }
-
-        .temps-row {
-            @include forecast-grid-row;
-            grid-gap: 8px;
-            grid-template-columns: repeat(10, 1fr);
-
-            P {
-                font-size: smaller;
-            }
-        }
-
-        .desc-row {
-            @include forecast-grid-row;
-            grid-template-columns: repeat(5, 1fr);
-
-            P {
-                font-size: smaller;
-                // font-weight: 600;
-            }
-        }
-
-        .weekday {
-            @include trip-card-label;
-        }
-
-        .temp-high,
-        .temp-low{ 
-            font-size: smaller;
-
-            span {
-                font-weight: 600;
-            }
-        }
-        .temp-high {
-            text-align: right;
-        }
-
-        .temp-low {
-            text-align: left;
-        }
-
-        .forecast-icon {
-            height: 60px;
-        }
-    }
-
-
-    .itinerary-modal {
-        @extend .trip-card-modal;
-        background-color: #d1b6ce !important;
-        height: auto;
-
-        .modal-body {
-            border-radius: $rounded-corners;
-        }
-
-        .itinerary {
-            grid-template-rows: repeat(2,1fr) 10px repeat(2,1fr) 10px repeat(2,1fr) 10px repeat(6,1fr);
-    
-            .close-modal {
-                grid-column: 3;
-                grid-row: 1;
-            }
-        }
-
-        #itinerary-header {
-            grid-template-rows: 100%;
-        }
-
-        #itinerary-title {
-            grid-row: 1 / span 1;
-            grid-column: 1 / span 12;
-            font-size: 1.2em;
-        }
-
-        .label-main {
-            font-size: 1em;
-        }
-
-        .visas-container {
-            border: 2px solid $medium-grey;
-            border-radius: $rounded-corners;
-            grid-row: 1 / span 2;
-            grid-column: 1 / span 12;
-            height: 80px
-        }
-
-        .country-flag {
-            margin: 5px 0 0 15px;
-            grid-column: 1;
-            grid-row: 1 ;
-        }
-
-        #label-country {
-            margin-top: 10px;
-            grid-row: 1 / span 1;
-            grid-column: 2 / span 4;
-        }
-
-        #label-visas {
-            grid-row: 2 / span 1;
-            grid-column: 1 / span 4;
-            margin: -5px 0 0 15px;
-        }
-        
-        #visas {
-            grid-row: 1 / span 2;
-            grid-column: 6 / span 7;
-            margin-right: 10px;
-            min-height: 60px;
-            height: 60px;
-            max-width: 388px;
-        }
-        #label-departure {
-            grid-row: 4 / span 1;
-            grid-column: 1 / span 4;
-        }
-
-        .travel-methods {
-            display: flex;
-            grid-gap: 5px;
-            margin: -20px 0 0 10px;
-
-
-            i {
-                color: $medium-grey;
-                font-size: smaller;
-
-                &:hover {
-                    color: $go-green !important;
-                    transition-duration: 100ms;
-                    cursor: pointer;
-                }
-        
-                &.selected{
-                    color: $dark-grey;
-                }
-            }
-        }
-
-        #travel-methods-departure {
-            grid-row: 5 / span 1;
-            grid-column: 1 / span 4;
-        }
-
-        #departure-details {
-            grid-row: 4 / span 2;
-            grid-column: 4 / span 9;
-            min-height: 60px;
-            height: 60px;
-            max-width: 449px;
-        }
-
-        #label-return {
-            grid-row: 7 / span 1;
-            grid-column: 1 / span 4;
-        }
-
-        #travel-methods-return {
-            grid-row: 8 / span 1;
-            grid-column: 1 / span 4;
-        }
-
-        #return-details {
-            grid-row: 7 / span 2;
-            grid-column: 4 / span 9;
-            min-height: 60px;
-            height: 60px;
-            max-width: 449px;
-        }
-
-        #label-hotel {
-            grid-row: 10 / span 1;
-            grid-column: 1 / span 3;
-        }
-
-        #hotel {
-            grid-row: 10 / span 2;
-            grid-column: 4 / span 9;
-            min-height: 60px;
-            height: 60px;
-            max-width: 449px;
-        }
-
-        #label-misc {
-            grid-row: 12 / span 1;
-            grid-column: 1 / span 12;
-            padding-top: 20px !important;
-        }
-
-        #itinerary-misc {
-            grid-row: 13 / span 3;
-            grid-column: 1 / span 12;
-            min-height: 100px;
-            height: 100px;
-            max-width: 598px;
-        }
-
-        #submit-itinerary {
-            @extend #submit-form;
-            grid-row: 16 !important;
-            grid-column: 1 / span 12 !important;;
+        @media screen and (max-width: $small-screen){
+            font-size: 13px;
         }
     }
 }

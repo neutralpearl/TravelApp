@@ -4,7 +4,7 @@ import { tripItinerary } from "..";
 const handleItineraryInput = event => {
     event.preventDefault();
 
-    let city = byId('itinerary-title').innerText.substring(30,byId('itinerary-title').innerText.length);
+    let city = byId('itinerary-title').innerText.substring(29,byId('itinerary-title').innerText.length);
     let visaInfo =  byId('visas').value;
     let departureDetails =  byId('departure-details').value;
     let returnDetails =  byId('return-details').value;
@@ -43,14 +43,14 @@ const handleItineraryInput = event => {
         itineraryData[found].returnDetails = returnDetails;
         itineraryData[found].accommodations = accommodations;
         itineraryData[found].selectedTravelMethods = selectedTravelMethods;
+        itineraryData[found].itineraryMisc = itineraryMisc;
     }
-    
-    // console.log(itineraryData); // for debugging
 
     // hide itinerary form
     byId('app-overlay').style.display='none';
     byClass('itinerary-modal')[0].style.display='none';
 
+    console.log(itineraryData); // uncomment for debuggin
     return itineraryData;
 }
 

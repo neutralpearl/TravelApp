@@ -12,7 +12,9 @@ const chooseTheme = event => {
         byClass('trips-panel')[0].style.backgroundColor = color;
         // changes border rule for .current-weather-container // MAKE SURE THE INDEX IS CORRECT!
         document.styleSheets[8].cssRules[77].style.border = `2px solid ${color}`;   
-        document.styleSheets[8].cssRules[107].style.backgroundColor = color; 
+        // document.styleSheets[8].cssRules[107].style.backgroundColor = color; 
+        document.styleSheets[8].cssRules[108].style.backgroundColor = color; 
+        document.styleSheets[8].cssRules[126].style.backgroundColor = color; 
     }
     
     switch (themeChoice.id) {
@@ -21,8 +23,8 @@ const chooseTheme = event => {
             byClass('logo')[0].style.color = '#000';
             setColors('rgb(209 182 206)');
             break;
-        case 'city': 
-            appBody.style.backgroundImage = `${urlBase}skyline.png')`; 
+        case 'skyline': 
+            appBody.style.backgroundImage = `${urlBase}skyline.jpg')`; 
             byClass('logo')[0].style.color = '#fff';
             setColors('rgb(203 153 111)');
             break;

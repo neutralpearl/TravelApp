@@ -1,0 +1,822 @@
+@import 'app.scss'; // includes mixins & variables
+@import 'components.scss'; 
+
+#view-trips{
+
+    .modal-header {
+        display: grid;
+        grid-template-columns: 90% repeat(2,1fr);
+        grid-template-rows: 70% 30%;
+
+        @media screen and (min-width: $small-screen) and (max-width: $pdf-break) {
+            grid-template-columns: 85% 10% 5%;
+            grid-template-rows: 60% 40%;
+        }
+    } 
+
+    .trip-card-modal{
+        position: fixed;
+        display: none;
+        padding: 20px;
+        top: 5vh;
+        z-index: 10;
+        background-color: rgb(172, 172, 172);
+        width: 80vw; 
+        max-width: 800px;
+        border-radius: $rounded-corners;
+        box-shadow: 0 3px 10px rgb(0 0 0 / 0.9);
+    
+        @media screen and (max-width: $medium-screen) {
+            width: 90vw; 
+            padding: 10px;
+        }
+    
+        .trip-modal-header {
+            @extend .modal-header;
+
+            @media screen and (max-width: $small-screen){
+                grid-template-columns: 80% 10% 10%;
+                grid-template-rows: 60% 40%;
+                min-height: 100px;
+            }
+    
+            h2 {
+                text-align: left;
+    
+                @media screen and (max-width: $pdf-break) {
+                    font-size: 2em;
+                }
+
+                @media screen and (max-width: $small-screen) {
+                    font-size: 1.7em;
+                }
+            }
+    
+            .modal-dates{
+                grid-column: 1 / span 3;
+                display: flex;
+                @media screen and (min-width: $small-screen) and (max-width: $pdf-break) {
+                    font-size: smaller;
+                }
+
+                @media screen and (max-width: $small-screen)  {
+                    font-size: smaller;
+                    flex-direction: column;
+                    grid-gap: 5px;
+                    height: 30px;
+                    margin-top: 10px;
+                }
+            }
+    
+            i.fas {
+                font-size: larger;
+
+                @media screen and (max-width: $small-screen)  {
+                    font-size: 1em;
+                }
+            }
+    
+            .close-modal {
+                grid-column: 3;
+                grid-row: 1;
+            }
+        }
+    
+        .modal-body {
+            display: flex;
+            flex-direction: column;
+            padding:20px;
+            background-color: #fff;
+            box-shadow: -7px -7px 8px -4px rgb(0 0 0 / 0.2);
+            grid-gap: 20px;
+
+            @media screen and (max-width: $small-screen) {
+                padding:15px;
+            }
+        }
+    
+        .modal-section-label {
+            @include trip-card-label;
+
+            @media screen and (max-width: $small-screen) {
+                font-size: 16px;
+            }
+        }
+    
+        .weather-forecast {
+            background-color: #d1b6ce;
+            @include modal-section;
+    
+            @media screen and (min-width: $pdf-break) {
+                grid-template-columns: 100%;
+                grid-template-rows: repeat(2,1.5em) 1em 60px 2em 2em;
+            }
+    
+            @media screen and (max-width: $pdf-break) {
+                grid-template-columns: repeat(3,33.33%);
+                grid-template-rows: repeat(11,1.5em);
+            }
+
+            .modal-section-label {
+                @media screen and (max-width: $pdf-break) {
+                    grid-column: 1 / span 6;
+                }
+
+                @media screen and (max-width: $small-screen) {
+                    font-size: 16px;
+                }
+            }
+    
+            .weather-forecast-container {
+                background-color: #fff;
+                border-radius: $rounded-corners;
+                grid-column: 1;
+                grid-row: 2 / span 6;
+
+                @media screen and (max-width: $pdf-break) {
+                    grid-column: 1 / span 3;
+                    grid-row: 2 / span 10;
+                }
+            }
+    
+            .days-row {
+                @include forecast-grid-row;
+                grid-template-columns: repeat(5, 1fr);
+                grid-row: 2;
+                grid-column: 1;
+    
+                p {
+                    font-size: smaller;
+                }
+                @media screen and (min-width: $pdf-break){
+                    margin-top: 10px;
+                    align-items: center;
+                }
+
+                @media screen and (max-width: $pdf-break){
+                    align-items: start;
+                    grid-column: 1;
+                    grid-row: 2 / span 11;
+                }
+            }
+
+            .weekday {
+                @include trip-card-label;
+
+                @media screen and (max-width: $pdf-break){
+                    margin-top: 10px;
+                }
+
+                @media screen and (max-width: $small-screen){
+                    font-size: 13px !important;
+                }
+            }
+    
+            .dates-row{
+                @include forecast-grid-row;
+                grid-template-columns: repeat(5, 1fr);
+                grid-row: 3;
+                grid-column: 1;
+    
+                p {
+                    font-size: smaller;
+                }
+
+                @media screen and (max-width: $pdf-break){
+                    align-items: end;
+                    grid-column: 1;
+                    grid-row: 2 / span 11;
+                }
+            }
+
+            .calendar-date{
+                @media screen and (max-width: $pdf-break){
+                    margin-bottom: 10px;
+                }
+
+                @media screen and (max-width: $small-screen){
+                    font-size: 13px !important;
+                }
+            }
+    
+            .icons-row{
+                @include forecast-grid-row;
+                grid-template-columns: repeat(5, 1fr);
+                grid-row: 4;
+                grid-column: 1;
+
+                @media screen and (max-width: $pdf-break){
+                    align-items: start;
+                    grid-column: 2;
+                    grid-row: 2 / span 11;
+                }
+            }
+
+            .forecast-icon {
+                height: 60px;
+
+                @media screen and (min-width: $small-screen) and (max-width: $pdf-break){
+                    height: 40px;
+                }
+
+                @media screen and (max-width: $small-screen){
+                    margin-top: 5px;
+                    height: 30px;
+                }
+            }
+    
+            .temps-row {
+                @include forecast-grid-row;
+                justify-items: normal;
+                
+    
+                P {
+                    font-size: smaller;
+    
+                    @media screen and (min-width: $pdf-break) and (max-width: $medium-screen) {
+                        font-size: 14px;
+                    }
+                    @media screen and (max-width: $pdf-break){
+                        font-size: 13px;
+                    }
+                }
+
+                @media screen and (min-width: $pdf-break){
+                    grid-gap: 8px;
+                    grid-template-columns: repeat(10, 1fr);
+                    grid-row: 5;
+                    grid-column: 1;
+                }
+                @media screen and (min-width: $small-screen) and (max-width: $pdf-break){
+                    grid-gap: 10px;
+                    align-items: center;
+                    grid-template-columns: repeat(2, 1fr);
+                    grid-template-rows: repeat(5, 1fr);
+                    grid-row: 2 / span 11;
+                    grid-column: 3;
+                }
+                @media screen and (max-width: $small-screen){
+                    grid-gap: 5px;
+                    align-items: center;
+                    grid-template-columns: repeat(2, 1fr);
+                    grid-template-rows: repeat(5, 1fr);
+                    grid-row: 2 / span 11;
+                    grid-column: 3;
+                }
+            }
+
+            .temp-high,
+            .temp-low{ 
+                font-size: smaller;
+    
+                span {
+                    font-weight: 600;
+                    font-size: larger;
+
+                    @media screen and (max-width: $small-screen){
+                        font-size: 14px;
+                    }
+                }
+            }
+            .temp-high {
+                text-align: right;
+            }
+    
+            .temp-low {
+                text-align: left;
+            }
+    
+            .desc-row {
+                @include forecast-grid-row;
+                grid-template-columns: repeat(5, 1fr);
+                grid-row: 6;
+                grid-column: 1;
+    
+                P {
+                    font-size: 13px;
+                    text-align: center;
+    
+                    @media screen and (max-width: $medium-screen) {
+                        font-size: 12px;
+                    }
+                }
+
+                @media screen and (min-width: $pdf-break){
+                    align-items: center;
+                }
+
+                @media screen and (max-width: $pdf-break){
+                    align-items: end;
+                    grid-column: 2;
+                    grid-row: 2 / span 11;
+                }
+            }
+    
+            .forecast-desc {
+                margin-top: -5px;
+
+                @media screen and (max-width: $pdf-break){
+                    margin-bottom: 5px;
+                }
+            }
+        }
+        
+        .trip-itinerary {
+            grid-template-columns: repeat(8,1fr);
+            grid-template-rows: 2em 1px repeat(8,1.5em) 1px;
+            align-items: center;
+            border: 2px solid $medium-grey;
+            @include modal-section;
+            grid-gap: 5px;
+
+            @media screen and (max-width: $pdf-break){
+                grid-template-rows: 2em repeat(14,1.5em) 1px;
+                grid-gap: 0px;
+            }
+    
+            .itinerary-container {
+                background-color: #d1b6ce;
+                height: 270px;
+                margin-top: -5px;
+                border-radius: $rounded-corners;
+                grid-column: 1 / span 8;
+                grid-row: 3 / span 8;
+
+                @media screen and (max-width: $pdf-break){
+                    grid-row: 2 / span 15;
+                    height: 390px;
+                    margin-top: 10px;
+                }
+            }
+    
+            .modal-section-label {
+                grid-column: 1 / span 8;
+                margin-top: -10px;
+
+                @media screen and (max-width: $small-screen) {
+                    font-size: 16px;
+                }
+            }
+    
+            p:not(.modal-section-label) {
+                font-size: smaller;
+                padding: 5px 15px;
+                margin: 5px 10px 0 5px;
+                background-color: #fff;
+                border-radius: $rounded-corners;
+
+                @media screen and (max-width: $pdf-break){
+                    margin-left: 10px;;
+                }
+            }
+    
+            .label-detail {
+                text-align: right;
+                padding-left: 15px;
+
+                @media screen and (max-width: $pdf-break){
+                    text-align: left;
+                    margin-top: 10px;
+                }
+            }
+    
+            .visa-info-label {
+                grid-column: 1 / span 2;
+                grid-row: 3;
+                padding-left: 15px;
+
+                @media screen and (max-width: $pdf-break){
+                    grid-row: 2;
+                    grid-column: 1 / span 8;
+                }
+            }
+    
+            .visa-info {
+                grid-column: 3 / span 6;
+                grid-row: 3;
+                min-height: 25px;
+
+                @media screen and (max-width: $pdf-break){
+                    grid-column: 1 / span 8;
+                    grid-row: 3;
+                }
+            }
+    
+            .departure-label {
+                grid-column: 2;
+                grid-row: 4;
+                padding-left: 5px;
+                margin-top: 15px;
+
+                @media screen and (max-width: $pdf-break){
+                    grid-column: 1 / span 8;
+                    grid-row: 4;
+                    padding-left: 15px;
+                }
+            }
+    
+            .departure-methods {
+                grid-column: 1 / span 2;
+                grid-row: 5;
+                display: flex;
+                grid-gap: 10px;
+                justify-content: end;
+
+                @media screen and (max-width: $pdf-break){
+                    grid-column: 5 / span 4;
+                    grid-row: 4;
+                    margin-right: 10px;
+
+                    i {
+                        font-size: 16px;
+                        margin-top: 10px;
+                    }
+                }
+            }
+    
+            .departure-details {
+                grid-column: 3 / span 6;
+                grid-row: 4 / span 2;
+                min-height: 50px;
+
+                @media screen and (max-width: $pdf-break){
+                    grid-column: 1 / span 8;
+                    grid-row: 5 / span 2;
+                }
+            }
+    
+            .return-label {
+                grid-column: 2;
+                grid-row: 6;
+                padding-left: 5px;
+                margin-top: 15px;
+
+                @media screen and (max-width: $pdf-break){
+                    grid-column: 1 / span 8;
+                    grid-row: 7;
+                    padding-left: 15px;
+                }
+            }
+    
+            .return-methods {
+                grid-column: 1 / span 2;
+                grid-row: 7;
+                display: flex;
+                grid-gap: 10px;
+                justify-content: end;
+
+                @media screen and (max-width: $pdf-break){
+                    grid-column: 5 / span 4;
+                    grid-row: 7;
+                    margin-right: 10px;
+
+                    i {
+                        font-size: 16px;
+                        margin-top: 10px;
+                    }
+                }
+            }
+    
+            .return-details {
+                grid-column: 3 / span 6;
+                grid-row: 6 / span 2;
+                min-height: 50px;
+
+                @media screen and (max-width: $pdf-break){
+                    grid-column: 1 / span 8;
+                    grid-row: 8 / span 2;
+                }
+            }
+    
+            .accommodations-label {
+                grid-column: 1 / span 2;
+                grid-row: 8;
+                padding-left: 15px;
+
+                @media screen and (max-width: $pdf-break){
+                    grid-column: 1 / span 8;
+                    grid-row: 10;
+                }
+            }
+    
+            .accommodations {
+                grid-column: 3 / span 6;
+                grid-row: 8;
+                min-height: 25px;
+
+                @media screen and (max-width: $pdf-break){
+                    grid-column: 1 / span 8;
+                    grid-row: 11 / span 2;
+                    min-height: 50px;
+                }
+            }
+    
+            .itinerary-misc-label {
+                grid-column: 1 / span 2;
+                grid-row: 9 / span 2;
+                padding-left: 15px;
+
+                @media screen and (max-width: $pdf-break){
+                    grid-column: 1 / span 8;
+                    grid-row: 13;
+                }
+            }
+    
+            .itinerary-misc {
+                grid-column: 3 / span 6;
+                grid-row: 9 / span 2;
+                min-height: 50px;
+
+                @media screen and (max-width: $pdf-break){
+                    grid-column: 1 / span 8;
+                    grid-row: 14 / span 2;
+                }
+            }
+    
+            .no-itinerary {
+                grid-column: 1 / span 8;
+                grid-row: 3;
+                text-align: center;
+            }
+    
+            .itinerary-hint {
+                grid-row: 4 / span 2;
+                text-align: center;
+
+                @media screen and (min-width: $pdf-break){
+                    height: 40px !important;
+                    grid-column: 3 / span 4;
+                }
+
+                @media screen and (max-width: $pdf-break){
+                    height: auto;
+                    padding: 5px;
+                    grid-column: 2 / span 6;
+                }
+            }
+        }
+    }
+    
+    .itinerary-modal {
+        @extend .trip-card-modal;
+        background-color: #d1b6ce !important;
+        height: auto;
+    
+        .modal-body {
+            border-radius: $rounded-corners;
+        }
+    
+        .itinerary {
+            grid-template-columns: repeat(12,8.33%);
+            grid-template-rows: repeat(2,1fr) 10px repeat(2,1fr) 10px repeat(2,1fr) 10px repeat(6,1fr);
+    
+            @media screen and (max-width: $pdf-break){
+                grid-template-rows: 1fr 40px 40px 10px 30px 40px 40px 10px 30px 40px 40px 10px 20px repeat(3,40px) 50px;
+            }
+    
+            .close-modal {
+                grid-column: 3;
+                grid-row: 1;
+            }
+        }
+    
+        #itinerary-header {
+            grid-template-rows: 100%;
+        }
+    
+        #itinerary-title {
+            display: flex;
+            grid-row: 1 / span 1;
+            grid-column: 1 / span 2;
+            font-size: 1.2em;
+    
+            @media screen and (max-width: $pdf-break){
+                font-size: 1em;
+                line-height: 1.4em;
+            }
+        }
+    
+        .label-main {
+            font-size: 1em;
+        }
+    
+        .visas-container {
+            border: 2px solid $medium-grey;
+            background-color: #d3d3d3;
+            border-radius: $rounded-corners;
+            grid-row: 1 / span 2;
+            grid-column: 1 / span 12;
+            height: 80px;
+    
+            @media screen and (min-width: $small-screen) and (max-width: $pdf-break){
+                grid-row: 1 / span 3;
+                margin-top: 5px;
+                height: 125px;
+            }
+    
+            @media screen and (max-width: $small-screen){
+                grid-row: 1 / span 3;
+                height: 140px;
+                margin-top: 10px;
+            }
+        }
+    
+        .country-flag {
+            margin: 5px 0 0 15px;
+            grid-column: 1;
+            grid-row: 1 ;
+    
+            @media screen and (max-width: $small-screen){
+                margin-left: 10px;
+            }
+        }
+    
+        #label-country {
+            margin: 10px 0 0 5px;
+            grid-row: 1 / span 1;
+            grid-column: 2 / span 4;
+    
+            @media screen and (min-width: $small-screen) and (max-width: $pdf-break){
+                grid-column: 2 / span 7;
+                margin-left: 20px;
+            }
+    
+            @media screen and (max-width: $small-screen){
+                grid-column: 3 / span 10;
+                margin: 0 0 0 5px;
+            }
+        }
+    
+        #label-visas {
+            grid-row: 2 / span 1;
+            grid-column: 1 / span 4;
+            margin: -5px 0 0 15px;
+    
+            @media screen and (min-width: $small-screen) and (max-width: $pdf-break){
+                grid-row: 1 / span 1;
+                grid-column: 9 / span 4;
+                margin: 10px 10px 0 0;
+                text-align: right;
+            }
+    
+            @media screen and (max-width: $small-screen){
+                grid-row: 1 / span 1;
+                grid-column: 3 / span 10;
+                margin: 45px 0 0 5px;
+            }
+        }
+        
+        #visas {
+            grid-row: 1 / span 2;
+            grid-column: 6 / span 7;
+            min-height: 60px;
+            height: 60px;
+            margin-right: 10px;
+    
+            @media screen and (max-width: $pdf-break){
+                grid-row: 2 / span 2;
+                grid-column: 1 / span 12;
+                margin: 10px;
+                max-width: 100%;
+            }
+        }
+        #label-departure {
+            grid-row: 4 / span 1;
+            grid-column: 1 / span 4;
+    
+            @media screen and (max-width: $pdf-break){
+                grid-row: 5 / span 1;
+                grid-column: 1 / span 6;
+            }
+        }
+    
+        .travel-methods {
+            display: flex;
+            grid-gap: 5px;
+            margin: -20px 0 0 5px;
+    
+            @media screen and (max-width: $pdf-break){
+                margin: 0 5px 0 0;
+                grid-gap: 3px;
+                justify-content: end;
+            }
+    
+            i {
+                color: $medium-grey;
+                font-size: smaller;
+    
+                &:hover {
+                    color: $go-green !important;
+                    transition-duration: 100ms;
+                    cursor: pointer;
+                }
+        
+                &.selected{
+                    color: $dark-grey;
+                }
+            }
+        }
+    
+        #travel-methods-departure {
+            grid-row: 5 / span 1;
+            grid-column: 1 / span 4;
+    
+            @media screen and (max-width: $pdf-break){
+                grid-row: 5 / span 1;
+                grid-column: 7 / span 6;
+            }
+        }
+    
+        #departure-details {
+            grid-row: 4 / span 2;
+            grid-column: 4 / span 9;
+            min-height: 60px;
+            height: 60px;
+    
+            @media screen and (max-width: $pdf-break){
+                grid-row: 6 / span 2;
+                grid-column: 1 / span 12;
+            }
+        }
+    
+        #label-return {
+            grid-row: 7 / span 1;
+            grid-column: 1 / span 4;
+    
+            @media screen and (max-width: $pdf-break){
+                grid-row: 9 / span 1;
+                grid-column: 1 / span 6;
+            }
+        }
+    
+        #travel-methods-return {
+            grid-row: 8 / span 1;
+            grid-column: 1 / span 4;
+    
+            @media screen and (max-width: $pdf-break){
+                grid-row: 9 / span 1;
+                grid-column: 7 / span 6;
+            }
+        }
+    
+        #return-details {
+            grid-row: 7 / span 2;
+            grid-column: 4 / span 9;
+            min-height: 60px;
+            height: 60px;
+    
+            @media screen and (max-width: $pdf-break){
+                grid-row: 10 / span 2;
+                grid-column: 1 / span 12;
+            }
+        }
+    
+        #label-hotel {
+            grid-row: 10 / span 1;
+            grid-column: 1 / span 3;
+        }
+    
+        #hotel {
+            grid-row: 10 / span 2;
+            grid-column: 4 / span 9;
+            min-height: 60px;
+            height: 60px;
+        }
+    
+        #label-misc {
+            grid-row: 12 / span 1;
+            grid-column: 1 / span 12;
+    
+            @media screen and (min-width: $pdf-break){
+                padding-top: 20px !important;
+            }
+            
+            @media screen and (max-width: $pdf-break){
+                grid-row: 13 / span 1;
+                font-size: smaller;
+            }
+        }
+    
+        #itinerary-misc {
+            grid-row: 13 / span 3;
+            grid-column: 1 / span 12;
+            min-height: 100px;
+            height: 100px;
+    
+            @media screen and (max-width: $pdf-break){
+                grid-row: 14 / span 3;
+            }
+        }
+    
+        #submit-itinerary {
+            @extend #submit-form;
+            grid-row: 16 !important;
+            grid-column: 1 / span 12 !important;
+    
+            @media screen and (max-width: $pdf-break){
+                margin-top: 10px;
+                grid-row: 17 !important;
+            }
+        }
+    }
+}

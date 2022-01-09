@@ -1,5 +1,5 @@
 const validateDateRange = (departDate,returnDate) => {
-    console.log('validating dates . . . ');
+    // console.log('validating dates . . . '); // uncomment for debugging
     
     const dates = [departDate,returnDate]; // save inputs as an array for iteration
 
@@ -37,7 +37,6 @@ const validateDateRange = (departDate,returnDate) => {
             throw new Error('Return date must be at least one day after departure date');
         } 
     } catch(error) {
-        // console.log(error);
         return false; // stops rest of form submission chain from proceeding
     }
 }

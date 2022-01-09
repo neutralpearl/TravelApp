@@ -14,6 +14,7 @@ $error-red: rgb(182, 0, 0);
 $go-green: #79d55b;
 $rounded-corners: 14px;
 $small-screen: 400px;
+$pdf-break: 625px;
 $medium-screen: 836px;
 
 /* ------- Mixins ------ */
@@ -37,8 +38,12 @@ $medium-screen: 836px;
 @mixin forecast-grid-row {
     display: grid;
     justify-items: center;
-    align-items: center;
     grid-template-rows: 100%;
+
+    @media screen and (max-width: $pdf-break){
+        grid-template-rows: repeat(5,20%);
+        grid-template-columns: 100%;
+    }
 }
 
 @mixin featured-button {
@@ -62,19 +67,31 @@ $medium-screen: 836px;
     }
 }
 
+@mixin modal-section {
+    display: grid;
+    padding: 10px;
+    border-radius: $rounded-corners;
+}
+
 /* ------- Structural Elements ------ */
 
 #app-overlay {
     position: fixed;
-    top: -100vh;
-    left: -50vh;
+    top: -150vh;
+    left: -100vh;
     display: none;
-    width: 150vw;
+    width: 300vw;
     height: 300vh;
     background-color: #111;
     opacity: 0; // default transparent
-    z-index: 5;
+    z-index: 10;
     transition-duration: 800ms;
+    overflow-x: hidden;
+    overflow-y: hidden;
+
+    @media screen and (max-width: $medium-screen) {
+        width: 500vh;
+    }
 }
 
 body{
@@ -93,20 +110,6 @@ body{
     // transition-duration: 200ms;
 }
 
-.import-images{
-    visibility: hidden;
-
-    .alt1{
-        background-image: url('../media/temples.jpg');
-    }
-    .alt2{
-        background-image: url('../media/skyline.png');
-    }
-    .alt3{
-        background-image: url('../media/palms.jpg');
-    }
-}
-
 header {
     .logo{
         min-height: 100px;
@@ -123,11 +126,12 @@ nav {
     height: 50px;
     background-color: $dark-grey;
     z-index: 1;
-    position: sticky;
+    position: sticky !important;
 
 
     .dropdown {
         overflow: hidden;
+        z-index: 2;
     
         .dropbtn {
             color: #fff;

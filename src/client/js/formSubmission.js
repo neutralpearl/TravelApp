@@ -1,5 +1,6 @@
 import { byId } from '..';
-import { animateValidation } from './manageValidationUI';
+import { formatCity } from './UIhelperFunctions';
+import { animateValidation } from './UIhelperFunctions';
 import { validateDateRange } from './dateValidation';
 import { handleInvalidCity } from './inputErrorHandler';
 import { addTripCard } from './showNewTrip';
@@ -8,11 +9,11 @@ import { addTripCard } from './showNewTrip';
 const handleSubmit = async event => {
     event.preventDefault(); // block default page reload after form submission
 
-    console.log('form submitted . . . '); // debugging
+    // console.log('form submitted . . . '); // uncomment for debugging
     animateValidation(); // show "verifying your destination" animation while server retrieves data
 
     // save form inputs
-    const city = byId('destination').value;
+    let city = byId('destination').value;
     let departDate = byId('start-date').value;
     let returnDate = byId('end-date').value;
 
@@ -31,6 +32,8 @@ const handleSubmit = async event => {
             byId('no-trips').style.display = 'none'; // remove "You don't have any saved trips" placeholder text
             
             let newTripData = {}; // initialize object to store new trip variables
+
+            city = formatCity(city); // ensures city name is capitalized as a proper noun
 
             //configure POST fetch
             const responseOptions = {
@@ -71,7 +74,7 @@ const handleSubmit = async event => {
             })
             .then(() => {
                 if (tripDataReceived) {
-                    console.log(newTripData); // for debugging
+                    // console.log(newTripData); // uncomment for debugging
                     addTripCard(newTripData); // parses retrieved data and adds corresponding trip card
                     byId('view-trips').scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"}); // scrolls window to newly-added trip card
                 }
