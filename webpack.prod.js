@@ -1,5 +1,10 @@
 const path = require('path');
 const webpack = require('webpack');
+const HtmlWebPackPlugin = require("html-webpack-plugin")
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const TerserPlugin = require('terser-webpack-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
@@ -31,19 +36,15 @@ module.exports = {
         ]
     },
     optimization: {
-        minimizer: [],
+        minimizer: [new TerserPlugin({}), new CssMinimizerPlugin()],
     },
     plugins: [
         new HtmlWebPackPlugin({
             template: "./src/client/html/index.html",
             filename: "./index.html",
         }),
-        new CleanWebpackPlugin({
-            dry: false, 
-            verbose: true, 
-            cleanStaleWebpackAssets: false, 
-            protectWebpackAssets: false 
-        }),
+        new MiniCssExtractPlugin({ filename: "[name].css" }),
+        new WorkboxPlugin.GenerateSW(),
         new webpack.DefinePlugin({
             'process.env': JSON.stringify('process.env')
         }),

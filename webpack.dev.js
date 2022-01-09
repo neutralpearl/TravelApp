@@ -3,10 +3,6 @@ const webpack = require('webpack')
 const HtmlWebPackPlugin = require("html-webpack-plugin")
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const CopyPlugin = require("copy-webpack-plugin");
-// const devMiddleware = require("webpack-dev-middleware");
-// app.use(
-//     devMiddleware(compiler, { publicPath }
-// ));
 
 module.exports = {
     entry: './src/client/index.js',
@@ -42,13 +38,6 @@ module.exports = {
     devServer: {
         port: 4000,
         compress: true,
-        // devMiddleware: {
-        //     index: true,
-        //     mimeTypes: { phtml: 'text/html' },
-        //     publicPath: '/dist',
-        //     serverSideRender: true,
-        //     writeToDisk: true
-        // },
     },
     plugins: [
         new HtmlWebPackPlugin({
