@@ -64,6 +64,13 @@ $medium-screen: 836px;
     }
 }
 
+@mixin travel-method-icons {
+    font-size: 16px;
+    @include for-all-mobile {
+        margin-top: 10px;
+    } 
+}
+
 @mixin featured-button {
     background-color: $dark-grey;
     color: #fff;
