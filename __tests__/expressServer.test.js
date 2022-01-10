@@ -11,11 +11,9 @@ describe("instance of express server", () => {
     const lat = '33.749';
     const lon = '-84.38798';
 
-    test("retrieves JSON from Geonames API", (done) => {
+    test("Geonames API response OK", (done) => {
         supertest(app)
             .get(`/get-geonames/:${city}`)
-            .set('Accept', 'application/json')
-            .expect('Content-Type', /json/)
             .expect(200, done)
     });
 
