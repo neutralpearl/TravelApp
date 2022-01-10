@@ -156,6 +156,7 @@ nav {
     z-index: 1;
     position: sticky !important;
 
+    // adapted from https://www.w3schools.com/howto/howto_css_dropdown.asp
     .dropdown {
         overflow: hidden;
         z-index: 2;
@@ -208,7 +209,8 @@ nav {
             }
         }
     }
-      
+     
+    // adapted from https://www.w3schools.com/howto/howto_css_dropdown.asp
     .about-panel{
         display: none;
         position: absolute;
