@@ -2,6 +2,8 @@
 
 ### Viagem is a single-page application *built for demonstration / portfolio purposes*.
 
+![Viewing your trips in Viagem](https://github.com/neutralpearl/TravelApp/blob/master/viagem-viewtrips.png)
+
 The app integrates data parsed from the responses of four APIs to generate a trip summary card and PDF containing itinerary information input by the user.
 
 ### This project showcases the following front-end dev skills:
