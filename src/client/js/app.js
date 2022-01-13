@@ -37,7 +37,7 @@ app.use((req,res,next) => {
 
 // GET & POST ROUTES //
 
-const serverURL = `http://localhost:3000`;
+const serverURL = `https://viagem-travel.herokuapp.com`;
 
 // posts city to client-side
 app.post('/retrieve-trip-data/', async (req, res) => {
